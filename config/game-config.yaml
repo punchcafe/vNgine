@@ -1,0 +1,16 @@
+nodes:
+  - id: ch_1_1_1
+    state-modification:
+      rapport: "INCREMENT 1"
+    narrative:
+      - text: "You think so?"
+        image-left: resources/mc-smile
+        background: resource/castle
+        music: CONTINUE
+        sfx: resource/sfx/jingle
+        duration: 10s
+    player-choice:
+      - text: "No way!"
+        target: ch_1_1_1a
+      - text: "I sure do!"
+        target: ch_1_1_1b
