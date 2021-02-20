@@ -7,4 +7,11 @@ import dev.punchcafe.vngine.node.SceneNode;
  * relationships. Typically, the {@link GameState} will allow a {@link SceneNode}
  */
 public interface GameState {
+
+    //TODO: throw if po=roperty missing
+
+    int getIntegerProperty(final String property);
+    String getClassificationProperty(final String propertyName);
+    boolean getBooleanProperty(final String propertyName);
+    // TODO: setters
 }

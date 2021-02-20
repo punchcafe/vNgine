@@ -12,4 +12,19 @@ public class AsciiGameState implements GameState {
     public boolean isHappy(){
         return this.isHappy;
     }
+
+    @Override
+    public int getIntegerProperty(String property) {
+        return 0;
+    }
+
+    @Override
+    public String getClassificationProperty(String propertyName) {
+        return null;
+    }
+
+    @Override
+    public boolean getBooleanProperty(String propertyName) {
+        return false;
+    }
 }
