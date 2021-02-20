@@ -5,6 +5,7 @@ import dev.punchcafe.vngine.predicate.GameStatePredicate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -27,11 +28,152 @@ public class ExpressionParser {
         LOGICAL_JOIN, LHS, RHS, OPERATION, BRACKET_OPEN, BRACKET_CLOSE
     }
 
+    private static class PredicateChain {
+
+        enum LogicalLink {
+            OR, AND
+        }
+
+        GameStatePredicate predicate;
+        LogicalLink link;
+
+        public PredicateChain(final GameStatePredicate gameStatePredicate, final LogicalLink logicalLink) {
+            this.predicate = gameStatePredicate;
+            this.link = logicalLink;
+        }
+    }
+
+    private static final String AND_TOKEN = " and ";
+    private static final String OR_TOKEN = " or ";
+
     /**
-     *
      * TODO: instead, let's split by link words!! search through by and AND and OR
-     *
      */
+    public static GameStatePredicate parsePredicate2(final String expression) {
+        final var brokenDownClause = splitByAndOrJoin(expression);
+        validateAndOrJoins(brokenDownClause);
+        if (brokenDownClause.size() == 1) {
+            final var singleClause = brokenDownClause.get(0).trim();
+            if (singleClause.startsWith("(") && singleClause.endsWith(")")) {
+                return parsePredicate2(singleClause.substring(1, singleClause.length() - 1));
+            }
+            final var clauseCompoenents = singleClause.split(" ");
+            final var parseStrategy = getParsingStrategyFromClause(clauseCompoenents[0],
+                    clauseCompoenents[2],
+                    clauseCompoenents[1]);
+            return parseStrategy.apply(singleClause);
+        } else {
+            final var logics = new ArrayList<PredicateChain>();
+            logics.add(new PredicateChain(parsePredicate2(brokenDownClause.get(0)), null));
+            for (int i = 2; i < brokenDownClause.size(); i = i + 2) {
+                final PredicateChain.LogicalLink link;
+                switch (brokenDownClause.get(i - 1)) {
+                    case OR_TOKEN:
+                        link = PredicateChain.LogicalLink.OR;
+                        break;
+                    case AND_TOKEN:
+                        link = PredicateChain.LogicalLink.AND;
+                        break;
+                    default:
+                        throw new UnsupportedOperationException();
+                }
+                logics.add(new PredicateChain(parsePredicate2(brokenDownClause.get(i)), link));
+            }
+            return gameState -> {
+                var result = logics.get(0).predicate.evaluate(gameState);
+                for (var link : logics.subList(1, logics.size())) {
+                    switch (link.link) {
+                        case OR:
+                            result = result || link.predicate.evaluate(gameState);
+                            break;
+                        case AND:
+                            result = result && link.predicate.evaluate(gameState);
+                            break;
+                        default:
+                            throw new UnsupportedOperationException();
+                    }
+                }
+                return result;
+            };
+        }
+    }
+
+    public static List<String> splitByAndOrJoin(final String expression) {
+        final var sanitisedExpression = expression.toLowerCase();
+        int bracketScope = 0;
+        int lastParsedIndex = 0;
+        final List<String> splitByBoolOperations = new ArrayList<>();
+        for (int i = 0; i < expression.length(); i++) {
+            if (sanitisedExpression.charAt(i) == '(') {
+                bracketScope++;
+                continue;
+            } else if (sanitisedExpression.charAt(i) == ')') {
+                bracketScope--;
+                continue;
+            } else if (bracketScope != 0) {
+                continue;
+            }
+            if (AND_TOKEN.equals(substringOrClamp(expression, i, i + AND_TOKEN.length()))) {
+                splitByBoolOperations.add(expression.substring(lastParsedIndex, i));
+                splitByBoolOperations.add(expression.substring(i, i + AND_TOKEN.length()));
+                lastParsedIndex = i + AND_TOKEN.length();
+            } else if (OR_TOKEN.equals(substringOrClamp(expression, i, i + OR_TOKEN.length()))) {
+                splitByBoolOperations.add(expression.substring(lastParsedIndex, i));
+                splitByBoolOperations.add(expression.substring(i, i + OR_TOKEN.length()));
+                lastParsedIndex = i + OR_TOKEN.length();
+            }
+        }
+        splitByBoolOperations.add(expression.substring(lastParsedIndex));
+        return splitByBoolOperations;
+    }
+
+    private static void validateAndOrJoins(final List<String> strings) {
+        if (strings.get(0).equals(AND_TOKEN) || strings.get(0).equals(OR_TOKEN)) {
+            throw new UnsupportedOperationException();
+        }
+
+        if (strings.get(strings.size() - 1).equals(AND_TOKEN) || strings.get(strings.size() - 1).equals(OR_TOKEN)) {
+            throw new UnsupportedOperationException();
+        }
+        if (strings.size() == 1) {
+            return;
+        }
+        boolean lastWasAndOr = false;
+        for (final var str : strings.subList(1, strings.size() - 1)) {
+            if (str.equals(AND_TOKEN) || str.equals(OR_TOKEN)) {
+                if (lastWasAndOr) {
+                    throw new RuntimeException("illegal and ors");
+                }
+                lastWasAndOr = true;
+            } else {
+                lastWasAndOr = false;
+            }
+        }
+    }
+
+    private static String substringOrClamp(final String string, int beginIndex, int endIndex) {
+        if (endIndex > string.length() - 1) {
+            return string.substring(beginIndex, string.length() - 1);
+        } else {
+            return string.substring(beginIndex, endIndex);
+        }
+    }
+
+    private static List<String> extractAndTrimBracketStartAndEnd(final String[] strings) {
+        final var tokenisedWords = new ArrayList<String>();
+        for (final var word : strings) {
+            if (word.startsWith("(") && word.length() > 1) {
+                tokenisedWords.add("(");
+                tokenisedWords.add(word.substring(1).trim());
+            } else if (word.endsWith(")") && word.length() > 1) {
+                tokenisedWords.add(word.substring(0, word.length() - 1).trim());
+                tokenisedWords.add(")");
+            } else {
+                tokenisedWords.add(word.trim());
+            }
+        }
+        return tokenisedWords;
+    }
 
     public static GameStatePredicate parsePredicate(final String expression) {
         final var characters = expression.trim().split(" ");
@@ -41,7 +183,7 @@ public class ExpressionParser {
                 tokenisedWords.add("(");
                 tokenisedWords.add(word.substring(1));
             } else if (word.endsWith(")") && word.length() > 1) {
-                tokenisedWords.add(word.substring(0,word.length() -1));
+                tokenisedWords.add(word.substring(0, word.length() - 1));
                 tokenisedWords.add(")");
             } else {
                 tokenisedWords.add(word);
@@ -74,7 +216,7 @@ public class ExpressionParser {
                             expressionLinks.add(new ExpressionLink(parsePredicate(bracketString), isAnd));
                         }
                         // Extra because we've extracedted the link property
-                        if(getIsAndFromWord(tokenisedWords.get(i + 1)) != null){
+                        if (getIsAndFromWord(tokenisedWords.get(i + 1)) != null) {
                             i += 2;
                         } else {
                             i++;
@@ -92,15 +234,15 @@ public class ExpressionParser {
                         continue;
                     }
                     // Parse a standard clause (can be extracted if need be)
-                    final var clauseElements = tokenisedWords.subList(i, i+3);
+                    final var clauseElements = tokenisedWords.subList(i, i + 3);
                     final var clauseString = String.join(" ", clauseElements);
                     final var parsingStrategy = getParsingStrategyFromClause(clauseElements.get(0),
                             clauseElements.get(2),
                             clauseElements.get(1));
-                    final var isAnd = tokenisedWords.size() < i + 4 + 1 ? null : getIsAndFromWord(tokenisedWords.get(i+4));
+                    final var isAnd = tokenisedWords.size() < i + 4 + 1 ? null : getIsAndFromWord(tokenisedWords.get(i + 4));
                     final var link = new ExpressionLink(parsingStrategy.apply(clauseString), isAnd);
                     expressionLinks.add(link);
-                    if(getIsAndFromWord(tokenisedWords.get(i+4)) == null){
+                    if (getIsAndFromWord(tokenisedWords.get(i + 4)) == null) {
                         i = i + 3;
                     } else {
                         i = i + 4;
@@ -108,19 +250,19 @@ public class ExpressionParser {
             }
         }
         return (gameState -> {
-            if(expressionLinks.size() == 1){
+            if (expressionLinks.size() == 1) {
                 return expressionLinks.get(0).predicate.evaluate(gameState);
             }
             boolean nextLinkIsAnd = expressionLinks.get(0).isAnd;
             boolean result = expressionLinks.get(0).predicate.evaluate(gameState);
-            for(final var link : expressionLinks.subList(1, expressionLinks.size())){
+            for (final var link : expressionLinks.subList(1, expressionLinks.size())) {
                 final var predicate = link.predicate.evaluate(gameState);
-                if(nextLinkIsAnd){
+                if (nextLinkIsAnd) {
                     result = result && predicate;
                 } else {
                     result = result || predicate;
                 }
-                if(link.isAnd == null){
+                if (link.isAnd == null) {
                     // end of chain
                     continue;
                 } else {
@@ -146,14 +288,14 @@ public class ExpressionParser {
         final var lhsVarType = establishVariableType(lhs);
         final var rhsVarType = establishVariableType(rhs);
         final var opVarType = establishPossibleVariableTypesFromOp(op);
-        if(lhsVarType != rhsVarType){
+        if (lhsVarType != rhsVarType) {
             throw new RuntimeException("Non matching operand types");
         }
-        if(!opVarType.contains(lhsVarType)){
+        if (!opVarType.contains(lhsVarType)) {
             throw new RuntimeException("unsupported operation");
         }
 
-        switch (lhsVarType){
+        switch (lhsVarType) {
             case INTEGER:
                 return ExpressionParser::parseIntegerPredicate;
             case BOOLEAN:
@@ -164,17 +306,17 @@ public class ExpressionParser {
         return null;
     }
 
-    private static VariableType establishVariableType(final String variable){
-        if((variable.startsWith("'") && variable.endsWith("'")) || variable.startsWith("$str.")){
+    private static VariableType establishVariableType(final String variable) {
+        if ((variable.startsWith("'") && variable.endsWith("'")) || variable.startsWith("$str.")) {
             return VariableType.STRING;
         }
-        if((variable.equals("true") || variable.equals("false")) || variable.startsWith("$bool.")){
+        if ((variable.equals("true") || variable.equals("false")) || variable.startsWith("$bool.")) {
             return VariableType.BOOLEAN;
         }
-        if(variable.startsWith("$int.")){
+        if (variable.startsWith("$int.")) {
             return VariableType.INTEGER;
         }
-        try{
+        try {
             Integer.parseInt(variable);
             return VariableType.INTEGER;
         } catch (Exception ex) {
@@ -182,8 +324,8 @@ public class ExpressionParser {
         }
     }
 
-    private static Set<VariableType> establishPossibleVariableTypesFromOp(final String op){
-        switch (op.toLowerCase()){
+    private static Set<VariableType> establishPossibleVariableTypesFromOp(final String op) {
+        switch (op.toLowerCase()) {
             case "is":
             case "isnt":
             case "isn't":

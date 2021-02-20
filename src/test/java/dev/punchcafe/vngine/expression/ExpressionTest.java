@@ -39,4 +39,18 @@ public class ExpressionTest {
         assertFalse(unitOne.evaluate(null));
     }
 
+    @Test
+    void evaluates_simpleExpressions_iss_withValueszzz(){
+        final var testStringOne = "(true is true) and (true is false) and (1 more_than 2)";
+        final var unitOne = ExpressionParser.parsePredicate2(testStringOne);
+        assertFalse(unitOne.evaluate(null));
+    }
+
+    @Test
+    void evaluates_simpleExpressions_issss_withValues(){
+        final var testStringOne = "(true is true) and (true is (false isnt true)) and (1 more_than 2)";
+        final var unitOne = ExpressionParser.splitByAndOrJoin(testStringOne);
+        System.out.println("lol");
+    }
+
 }
