@@ -1,7 +1,7 @@
 package dev.punchcafe.vngine.expression;
 
 import dev.punchcafe.vngine.GameStateImplementation;
-import dev.punchcafe.vngine.parse.ExpressionParser;
+import dev.punchcafe.vngine.parse.GameStatePredicateParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,45 +15,45 @@ public class IntegerPredicateExpressionTest {
     @Test
     void evaluates_simpleExpression_lessThan_withValues(){
         final var testStringOne = "1 less_than 2";
-        final var unitOne = ExpressionParser.parseIntegerPredicate(testStringOne);
+        final var unitOne = GameStatePredicateParser.parseIntegerPredicate(testStringOne);
         assertTrue(unitOne.evaluate(null));
 
         final var testStringTwo = "2 less_than 2";
-        final var unitTwo = ExpressionParser.parseIntegerPredicate(testStringTwo);
+        final var unitTwo = GameStatePredicateParser.parseIntegerPredicate(testStringTwo);
         assertFalse(unitTwo.evaluate(null));
 
         final var testStringThree = "3 less_than 2";
-        final var unitThree = ExpressionParser.parseIntegerPredicate(testStringThree);
+        final var unitThree = GameStatePredicateParser.parseIntegerPredicate(testStringThree);
         assertFalse(unitThree.evaluate(null));
     }
 
     @Test
     void evaluates_simpleExpression_moreThan_withValues(){
         final var testStringOne = "1 more_than 2";
-        final var unitOne = ExpressionParser.parseIntegerPredicate(testStringOne);
+        final var unitOne = GameStatePredicateParser.parseIntegerPredicate(testStringOne);
         assertFalse(unitOne.evaluate(null));
 
         final var testStringTwo = "2 more_than 2";
-        final var unitTwo = ExpressionParser.parseIntegerPredicate(testStringTwo);
+        final var unitTwo = GameStatePredicateParser.parseIntegerPredicate(testStringTwo);
         assertFalse(unitTwo.evaluate(null));
 
         final var testStringThree = "3 more_than 2";
-        final var unitThree = ExpressionParser.parseIntegerPredicate(testStringThree);
+        final var unitThree = GameStatePredicateParser.parseIntegerPredicate(testStringThree);
         assertTrue(unitThree.evaluate(null));
     }
 
     @Test
     void evaluates_simpleExpression_equals_withValues(){
         final var testStringOne = "1 equals 2";
-        final var unitOne = ExpressionParser.parseIntegerPredicate(testStringOne);
+        final var unitOne = GameStatePredicateParser.parseIntegerPredicate(testStringOne);
         assertFalse(unitOne.evaluate(null));
 
         final var testStringTwo = "2 equals 2";
-        final var unitTwo = ExpressionParser.parseIntegerPredicate(testStringTwo);
+        final var unitTwo = GameStatePredicateParser.parseIntegerPredicate(testStringTwo);
         assertTrue(unitTwo.evaluate(null));
 
         final var testStringThree = "3 equals 2";
-        final var unitThree = ExpressionParser.parseIntegerPredicate(testStringThree);
+        final var unitThree = GameStatePredicateParser.parseIntegerPredicate(testStringThree);
         assertFalse(unitThree.evaluate(null));
     }
 
@@ -64,19 +64,19 @@ public class IntegerPredicateExpressionTest {
         gameState.changeIntegerPropertyBy(propertyName, 5);
 
         final var testStringOne = "$int.property equals 2";
-        final var unitOne = ExpressionParser.parseIntegerPredicate(testStringOne);
+        final var unitOne = GameStatePredicateParser.parseIntegerPredicate(testStringOne);
         assertFalse(unitOne.evaluate(gameState));
 
         final var testStringTwo = "$int.property equals 5";
-        final var unitTwo = ExpressionParser.parseIntegerPredicate(testStringTwo);
+        final var unitTwo = GameStatePredicateParser.parseIntegerPredicate(testStringTwo);
         assertTrue(unitTwo.evaluate(gameState));
 
         final var testStringThree = "2 equals $int.property";
-        final var unitThree = ExpressionParser.parseIntegerPredicate(testStringThree);
+        final var unitThree = GameStatePredicateParser.parseIntegerPredicate(testStringThree);
         assertFalse(unitThree.evaluate(gameState));
 
         final var testStringFour = "5 equals $int.property";
-        final var unitFour = ExpressionParser.parseIntegerPredicate(testStringFour);
+        final var unitFour = GameStatePredicateParser.parseIntegerPredicate(testStringFour);
         assertTrue(unitFour.evaluate(gameState));
     }
 }

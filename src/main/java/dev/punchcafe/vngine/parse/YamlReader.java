@@ -72,7 +72,7 @@ public class YamlReader {
                 .branches(branches.stream().map(branch ->
                         StateDeterminedNextNodeStrategy.Branch.builder()
                                 .node(ofNullable(nodeCache.get(branch.getNodeId())).orElseThrow())
-                                .predicate(ExpressionParser.parsePredicate(branch.getPredicateExpression()))
+                                .predicate(GameStatePredicateParser.parsePredicate(branch.getPredicateExpression()))
                                 .build())
                         .collect(Collectors.toList()))
                 .build();
