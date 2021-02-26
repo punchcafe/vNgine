@@ -1,15 +1,12 @@
-package dev.punchcafe.vngine.expression;
+package dev.punchcafe.vngine.parse;
 
 import dev.punchcafe.vngine.GameState;
 import dev.punchcafe.vngine.predicate.GameStatePredicate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-
-import static java.util.stream.Collectors.joining;
 
 public class ExpressionParser {
 
@@ -57,6 +54,7 @@ public class ExpressionParser {
             if (singleClause.startsWith("(") && singleClause.endsWith(")")) {
                 return parsePredicate2(singleClause.substring(1, singleClause.length() - 1));
             }
+            // TODO: check here for brackets in expression, if found must be a bool
             final var clauseCompoenents = singleClause.split(" ");
             final var parseStrategy = getParsingStrategyFromClause(clauseCompoenents[0],
                     clauseCompoenents[2],

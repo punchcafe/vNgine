@@ -1,6 +1,7 @@
 package dev.punchcafe.vngine.node.gsm;
 
 import dev.punchcafe.vngine.GameState;
+import lombok.NonNull;
 
 import java.util.List;
 
@@ -8,18 +9,13 @@ public class NodeGameStateChange {
 
     final private List<GameStateModification> modifications;
 
-    public NodeGameStateChange(final List<GameStateModification> modifications){
-        if(modifications == null){
-            throw new NullPointerException();
-        }
+    public NodeGameStateChange(final @NonNull List<GameStateModification> modifications){
         this.modifications = modifications;
     }
 
-    public GameState modify(final GameState initialState){
-        var gameState = initialState;
+    public void modify(final GameState gameState){
         for(final var modification : modifications){
-            gameState = modification.modify(gameState);
+            modification.modify(gameState);
         }
-        return gameState;
     }
 }

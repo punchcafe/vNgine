@@ -30,21 +30,29 @@ public class GameStateImplementation implements GameState {
                 .orElseThrow(() -> new NoSuchPropertyException(property));
     }
 
-    public void increaseIntegerProperty(final String property, final int value){
+    @Override
+    public void changeIntegerPropertyBy(final String property, final int value){
         final var existingValue = Optional.ofNullable(integerPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
         integerPropertyMap.put(property.toLowerCase(), existingValue + value);
     }
 
+    @Override
     public boolean getBooleanProperty(String property) {
         return Optional.ofNullable(booleanPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
     }
 
+    @Override
     public void setBooleanProperty(final String property, final boolean value){
         final var existingValue = Optional.ofNullable(booleanPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
         booleanPropertyMap.put(property.toLowerCase(),  value);
+    }
+
+    @Override
+    public void setClassificationProperty(String property, String value) {
+
     }
 
     @Override

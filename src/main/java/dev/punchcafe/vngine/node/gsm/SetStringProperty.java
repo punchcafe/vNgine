@@ -6,16 +6,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Builder
-@EqualsAndHashCode
 @Getter
-public class ChangeIntegerProperty implements GameStateModification {
-
-    private final int valueChange;
-    private final String propertyName;
-
+@EqualsAndHashCode
+public class SetStringProperty implements GameStateModification {
+    final private String propertyName;
+    final private String propertyValue;
 
     @Override
     public void modify(GameState gameState) {
-        gameState.changeIntegerPropertyBy(propertyName, valueChange);
+        gameState.setClassificationProperty(propertyName, propertyValue);
     }
 }

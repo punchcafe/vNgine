@@ -4,5 +4,5 @@ import dev.punchcafe.vngine.GameState;
 
 public interface GameStateModification {
 
-    GameState modify(final GameState gameState);
+    void modify(final GameState gameState);
 }

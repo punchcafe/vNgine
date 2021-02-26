@@ -1,17 +1,17 @@
 game-state-variables:
-  bishounen-name: STRING
-  bishounen-love: BOOLEAN
-  bishounen-one-relationship: WHOLE_NUMBER
+  bishounen-name: STR
+  bishounen-love: STR
+  bishounen-one-relationship: INT
 
-chapter-variable:
-  did-you-do-this: BOOLEAN
+chapter-variables:
+  did-you-do-this: INT
 
 nodes:
   - id: 1_2_1
     type: AUTOMATIC
     game-state-modifiers:
-      - "increase $bishounen-one-relationship by 1"
-      - "set $name to 'MY NAME VALUE'"
+      - "increase $int.bishounen-one-relationship by 1"
+      - "set $str.name to 'MY NAME VALUE'"
     branches:
       - predicate-expression: "$character-relationship less_than 2"
         node-id: 1_3_2

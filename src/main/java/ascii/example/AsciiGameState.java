@@ -27,4 +27,19 @@ public class AsciiGameState implements GameState {
     public boolean getBooleanProperty(String propertyName) {
         return false;
     }
+
+    @Override
+    public void changeIntegerPropertyBy(String property, int changeValue) {
+
+    }
+
+    @Override
+    public void setBooleanProperty(String property, boolean value) {
+
+    }
+
+    @Override
+    public void setClassificationProperty(String property, String value) {
+
+    }
 }
