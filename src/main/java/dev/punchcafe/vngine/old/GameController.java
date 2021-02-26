@@ -1,16 +1,17 @@
-package dev.punchcafe.vngine;
+package dev.punchcafe.vngine.old;
 
 import dev.punchcafe.vngine.node.oldnode.SceneNode;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 //TODO: make configurable by yaml
 public class GameController {
 
     private final SceneNode firstNode;
     private final NarrativeReader narrativeReader;
-    private final GameState gameState;
+    private final OldGameState gameState;
     private final PlayerObserver playerObserver;
 
-    public GameController(final SceneNode firstNode, final NarrativeReader narrativeReader, final GameState gameState, final PlayerObserver playerObserver) {
+    public GameController(final SceneNode firstNode, final NarrativeReader narrativeReader, final OldGameState gameState, final PlayerObserver playerObserver) {
         this.firstNode = firstNode;
         this.narrativeReader = narrativeReader;
         this.gameState = gameState;

@@ -13,7 +13,9 @@ import java.util.List;
 public class Node {
     private String id;
     private NodeType type;
+    @JsonProperty("narrative-id")
+    private String narrativeId;
     @JsonProperty("game-state-modifiers")
-    List<String> gameStateModifiers;
-    List<Branch> branches;
+    private List<String> gameStateModifiers;
+    private List<Branch> branches;
 }

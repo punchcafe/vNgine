@@ -1,27 +1,30 @@
-package dev.punchcafe.vngine;
+package dev.punchcafe.vngine.game;
+
+import dev.punchcafe.vngine.NoSuchPropertyException;
+import dev.punchcafe.vngine.old.OldGameState;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class GameStateImplementation implements GameState {
+public class GameState implements OldGameState {
 
     private final Map<String, Integer> integerPropertyMap = new HashMap<>();
     private final Map<String, Boolean> booleanPropertyMap = new HashMap<>();
-    private final Map<String, String> classificationPropertyMap;
+    //private final Map<String, String> classificationPropertyMap;
 
 
-    public GameStateImplementation(final List<String> integerProperties,
-                                   final List<String> booleanProperties,
-                                   final Map<String, String> classificationDefaults){
+    public GameState(final List<String> integerProperties,
+                     final List<String> booleanProperties,
+                     final Map<String, String> classificationDefaults){
         for(final var property : integerProperties){
             integerPropertyMap.put(property.toLowerCase(), 0);
         }
         for(final var property : booleanProperties){
             booleanPropertyMap.put(property.toLowerCase(), false);
         }
-        this.classificationPropertyMap = new HashMap<>(classificationDefaults);
+        //this.classificationPropertyMap = new HashMap<>(classificationDefaults);
     }
 
     @Override

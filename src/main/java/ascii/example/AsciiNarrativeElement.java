@@ -1,6 +1,6 @@
 package ascii.example;
 
-import dev.punchcafe.vngine.NarrativeElement;
+import dev.punchcafe.vngine.old.NarrativeElement;
 
 import java.util.Collection;
 import java.util.List;

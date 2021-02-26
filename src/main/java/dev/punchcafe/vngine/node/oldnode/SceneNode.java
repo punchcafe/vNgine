@@ -1,9 +1,9 @@
 package dev.punchcafe.vngine.node.oldnode;
 
-import dev.punchcafe.vngine.GameState;
-import dev.punchcafe.vngine.Narrative;
-import dev.punchcafe.vngine.NarrativeReader;
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.old.Narrative;
+import dev.punchcafe.vngine.old.NarrativeReader;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 /**
  * The core class for individual nodes in a game. Nodes are designed to have atomic chunks of story, followed by a prompt
@@ -27,11 +27,11 @@ public interface SceneNode {
     /**
      * Any node may modify the game state as a result of it being invoked. For example, a node being invoked may
      * indicate a player has chosen a good / bad route for one of their character relationships, and the
-     * {@link GameState} should be incremented accordingly.
+     * {@link OldGameState} should be incremented accordingly.
      *
      * @param gameState
      */
-    default void modifyGameState(GameState gameState){};
+    default void modifyGameState(OldGameState gameState){};
 
     /**
      * This return a {@link Narrative} object, which contains all the story elements in the particular node before
@@ -41,7 +41,7 @@ public interface SceneNode {
      */
     Narrative getNarrative();
 
-    SceneNode prompt(PlayerObserver playerObserver, GameState gameState);
+    SceneNode prompt(PlayerObserver playerObserver, OldGameState gameState);
 
     /**
      * A method which will return the Scene's unique identifying id.

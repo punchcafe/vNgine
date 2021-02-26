@@ -1,7 +1,7 @@
 package dev.punchcafe.vngine.parse;
 
-import dev.punchcafe.vngine.GameState;
-import dev.punchcafe.vngine.predicate.GameStatePredicate;
+import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.node.GameStatePredicate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,7 +246,7 @@ public class GameStatePredicateParser {
         }
     }
 
-    private static int evaluateIntegerVariable(final String variable, GameState gameState) {
+    private static int evaluateIntegerVariable(final String variable, OldGameState gameState) {
         if (variable.startsWith("$int.")) {
             return gameState.getIntegerProperty(variable.substring(5));
         } else {
@@ -254,7 +254,7 @@ public class GameStatePredicateParser {
         }
     }
 
-    private static boolean evaluateBooleanVariable(final String variable, GameState gameState) {
+    private static boolean evaluateBooleanVariable(final String variable, OldGameState gameState) {
         if (variable.startsWith("$bool.")) {
             return gameState.getBooleanProperty(variable.substring(6));
         } else {
@@ -262,7 +262,7 @@ public class GameStatePredicateParser {
         }
     }
 
-    private static String evaluateStringVariable(final String variable, GameState gameState) {
+    private static String evaluateStringVariable(final String variable, OldGameState gameState) {
         if (variable.startsWith("$str.")) {
             return gameState.getClassificationProperty(variable.substring(5));
         }

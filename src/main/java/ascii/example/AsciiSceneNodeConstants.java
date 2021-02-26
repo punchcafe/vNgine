@@ -1,10 +1,11 @@
 package ascii.example;
 
-import dev.punchcafe.vngine.*;
 import dev.punchcafe.vngine.node.oldnode.AutomaticSceneNode;
 import dev.punchcafe.vngine.node.oldnode.FinalSceneNode;
 import dev.punchcafe.vngine.node.oldnode.PlayerInputSceneNode;
 import dev.punchcafe.vngine.node.oldnode.SceneNode;
+import dev.punchcafe.vngine.old.Narrative;
+import dev.punchcafe.vngine.old.OldGameState;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -20,10 +21,10 @@ public interface AsciiSceneNodeConstants {
     String NODE_LAST_GOOD_ID = "NODE_LAST_GOOD";
     String NODE_LAST_BAD_ID = "NODE_LAST_BAD";
 
-    Consumer<GameState> NODE_1A_SET_STATE_HAPPY = gameState -> {
+    Consumer<OldGameState> NODE_1A_SET_STATE_HAPPY = gameState -> {
         ((AsciiGameState) gameState).setHappy(true);
     };
-    Consumer<GameState> NODE_1B_SET_STATE_UNHAPPY = gameState -> {
+    Consumer<OldGameState> NODE_1B_SET_STATE_UNHAPPY = gameState -> {
         ((AsciiGameState) gameState).setHappy(false);
     };
 

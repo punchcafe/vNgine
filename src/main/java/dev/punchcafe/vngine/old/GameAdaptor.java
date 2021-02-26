@@ -1,6 +1,7 @@
-package dev.punchcafe.vngine;
+package dev.punchcafe.vngine.old;
 
 import dev.punchcafe.vngine.node.oldnode.SceneNode;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 /**
  * Any platform-specific implementation of {@link GameAdaptor} may be passed to the {@link GameController} constructor
@@ -12,7 +13,7 @@ public interface GameAdaptor {
 
     NarrativeReader getNarrativeReader();
 
-    GameState getGameState();
+    OldGameState getGameState();
 
     PlayerObserver getPlayerObserver();
 

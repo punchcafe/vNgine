@@ -12,4 +12,9 @@ public class Node {
     private final NodeGameStateChange nodeGameStateChange;
     @Setter
     private NextNodeStrategy nextNodeStrategy;
+    private String narrativeId;
+
+    public Node getNextNode(){
+        return nextNodeStrategy.getNextNode();
+    }
 }

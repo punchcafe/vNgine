@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node;
 
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.player.PlayerObserver;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,6 +27,9 @@ public class PlayerDeterminedNextNodeStrategy implements NextNodeStrategy {
 
     @Override
     public Node getNextNode() {
+        if(branches == null || branches.isEmpty()){
+            return null;
+        }
         final var promptToBranch = branches.stream().collect(toMap(Branch::getPrompt, identity()));
         final var response = playerObserver.getFromChoice(branches.stream()
                 .map(Branch::getPrompt)

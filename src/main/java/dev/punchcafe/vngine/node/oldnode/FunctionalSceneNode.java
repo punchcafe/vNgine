@@ -1,8 +1,8 @@
 package dev.punchcafe.vngine.node.oldnode;
 
-import dev.punchcafe.vngine.GameState;
-import dev.punchcafe.vngine.Narrative;
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.old.Narrative;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 /**
  * This node is meant to act as a simple node to edit game state, then pass on to the next {@link SceneNode}. The next
@@ -26,7 +26,7 @@ public class FunctionalSceneNode implements SceneNode {
     }
 
     @Override
-    public SceneNode prompt(PlayerObserver playerObserver, GameState gameState) {
+    public SceneNode prompt(PlayerObserver playerObserver, OldGameState gameState) {
         return nextScene;
     }
 

@@ -1,6 +1,6 @@
 package ascii.example;
 
-import dev.punchcafe.vngine.GameController;
+import dev.punchcafe.vngine.old.GameController;
 
 public class AsciiGamePlayer {
     public static void main(String[] args){

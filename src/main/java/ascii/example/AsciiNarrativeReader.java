@@ -1,7 +1,7 @@
 package ascii.example;
 
-import dev.punchcafe.vngine.Narrative;
-import dev.punchcafe.vngine.NarrativeReader;
+import dev.punchcafe.vngine.old.Narrative;
+import dev.punchcafe.vngine.old.NarrativeReader;
 
 public class AsciiNarrativeReader implements NarrativeReader {
 

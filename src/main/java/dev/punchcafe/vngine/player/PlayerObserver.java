@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine;
+package dev.punchcafe.vngine.player;
 
 import java.util.List;
 

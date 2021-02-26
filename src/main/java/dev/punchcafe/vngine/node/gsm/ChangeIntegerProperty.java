@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.gsm;
 
-import dev.punchcafe.vngine.GameState;
+import dev.punchcafe.vngine.old.OldGameState;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,7 +15,7 @@ public class ChangeIntegerProperty implements GameStateModification {
 
 
     @Override
-    public void modify(GameState gameState) {
+    public void modify(OldGameState gameState) {
         gameState.changeIntegerPropertyBy(propertyName, valueChange);
     }
 }

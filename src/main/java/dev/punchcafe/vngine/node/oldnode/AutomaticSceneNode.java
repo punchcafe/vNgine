@@ -1,8 +1,8 @@
 package dev.punchcafe.vngine.node.oldnode;
 
-import dev.punchcafe.vngine.GameState;
-import dev.punchcafe.vngine.Narrative;
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.old.Narrative;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 import java.util.List;
 import java.util.Map;
@@ -11,22 +11,22 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * A {@link SceneNode} whose {@link SceneNode#prompt(PlayerObserver, GameState)} result is automatically decided by the
- * {@link GameState}.
+ * A {@link SceneNode} whose {@link SceneNode#prompt(PlayerObserver, OldGameState)} result is automatically decided by the
+ * {@link OldGameState}.
  */
 public final class AutomaticSceneNode implements SceneNode {
 
     private final String id;
     private final Narrative narrative;
-    private final Function<GameState, String> determineNextNodeIdStrategy;
+    private final Function<OldGameState, String> determineNextNodeIdStrategy;
     private final Map<String, SceneNode> idToSceneNodeMap;
-    private final Consumer<GameState> gameStateModifier;
+    private final Consumer<OldGameState> gameStateModifier;
 
     public AutomaticSceneNode(final String id,
                               final Narrative narrative,
-                              final Function<GameState, String> determineNextNodeIdStrategy,
+                              final Function<OldGameState, String> determineNextNodeIdStrategy,
                               final List<SceneNode> subsequentScenes,
-                              final Consumer<GameState> gameStateModifier) {
+                              final Consumer<OldGameState> gameStateModifier) {
         this.id = id;
         this.narrative = narrative;
         this.determineNextNodeIdStrategy = determineNextNodeIdStrategy;
@@ -36,7 +36,7 @@ public final class AutomaticSceneNode implements SceneNode {
 
 
     @Override
-    public void modifyGameState(GameState gameState) {
+    public void modifyGameState(OldGameState gameState) {
         if(this.gameStateModifier != null){
             this.gameStateModifier.accept(gameState);
         }
@@ -48,7 +48,7 @@ public final class AutomaticSceneNode implements SceneNode {
     }
 
     @Override
-    public SceneNode prompt(PlayerObserver playerObserver, GameState gameState) {
+    public SceneNode prompt(PlayerObserver playerObserver, OldGameState gameState) {
         return this.idToSceneNodeMap.get(determineNextNodeIdStrategy.apply(gameState));
     }
 

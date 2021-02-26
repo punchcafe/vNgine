@@ -1,6 +1,6 @@
 package ascii.example;
 
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 import java.util.List;
 import java.util.Scanner;

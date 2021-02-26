@@ -1,8 +1,8 @@
 package dev.punchcafe.vngine.node.gsm;
 
-import dev.punchcafe.vngine.GameState;
+import dev.punchcafe.vngine.old.OldGameState;
 
 public interface GameStateModification {
 
-    void modify(final GameState gameState);
+    void modify(final OldGameState gameState);
 }

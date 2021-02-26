@@ -1,8 +1,8 @@
 package dev.punchcafe.vngine.node.oldnode;
 
-import dev.punchcafe.vngine.GameState;
-import dev.punchcafe.vngine.Narrative;
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.old.Narrative;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 //TODO: implement Hybrid of player input and automatic? or rely on correct graph creation?
 
 /**
- * A {@link SceneNode} whose {@link SceneNode#prompt(PlayerObserver, GameState)} result depends on manual player input.
+ * A {@link SceneNode} whose {@link SceneNode#prompt(PlayerObserver, OldGameState)} result depends on manual player input.
  *
  */
 public final class PlayerInputSceneNode implements SceneNode {
@@ -23,14 +23,14 @@ public final class PlayerInputSceneNode implements SceneNode {
     private final Map<String, SceneNode> idToSceneNodeMap;
     private final Function<String, String> playerChoiceToNodeId;
     private final List<String> playerChoices;
-    private final Consumer<GameState> modifyGameStateFunction;
+    private final Consumer<OldGameState> modifyGameStateFunction;
 
     public PlayerInputSceneNode(final String id,
                                 final Narrative narrative,
                                 final Function<String, String> playerChoiceToNodeId,
                                 final List<SceneNode> subsequentScenes,
                                 final List<String> playerChoices,
-                                final Consumer<GameState> modifyGameStateFunction) {
+                                final Consumer<OldGameState> modifyGameStateFunction) {
         this.id = id;
         this.narrative = narrative;
         this.idToSceneNodeMap = subsequentScenes.stream().collect(Collectors.toMap(SceneNode::getId, Function.identity()));
@@ -41,7 +41,7 @@ public final class PlayerInputSceneNode implements SceneNode {
 
 
     @Override
-    public void modifyGameState(GameState gameState) {
+    public void modifyGameState(OldGameState gameState) {
         if(modifyGameStateFunction != null){
             modifyGameStateFunction.accept(gameState);
         }
@@ -53,7 +53,7 @@ public final class PlayerInputSceneNode implements SceneNode {
     }
 
     @Override
-    public SceneNode prompt(PlayerObserver playerObserver, GameState gameState) {
+    public SceneNode prompt(PlayerObserver playerObserver, OldGameState gameState) {
 
         return this.idToSceneNodeMap.get(playerChoiceToNodeId.apply(playerObserver.getFromChoice(playerChoices)));
     }

@@ -1,9 +1,9 @@
 package ascii.example;
 
-import dev.punchcafe.vngine.GameAdaptor;
-import dev.punchcafe.vngine.GameState;
-import dev.punchcafe.vngine.NarrativeReader;
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.old.GameAdaptor;
+import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.old.NarrativeReader;
+import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.node.oldnode.SceneNode;
 
 import static ascii.example.AsciiSceneNodeConstants.NODE_1;
@@ -18,7 +18,7 @@ public class AsciiGameAdaptor implements GameAdaptor {
         return new AsciiNarrativeReader();
     }
 
-    public static GameState generateNewGameState(){
+    public static OldGameState generateNewGameState(){
         return new AsciiGameState();
     }
 
@@ -37,7 +37,7 @@ public class AsciiGameAdaptor implements GameAdaptor {
     }
 
     @Override
-    public GameState getGameState() {
+    public OldGameState getGameState() {
         return generateNewGameState();
     }
 

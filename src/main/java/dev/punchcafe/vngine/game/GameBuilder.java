@@ -1,20 +1,23 @@
-package dev.punchcafe.vngine.parse;
+package dev.punchcafe.vngine.game;
 
 import ascii.example.AsciiPlayerObserver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import dev.punchcafe.vngine.old.OldGameState;
-import dev.punchcafe.vngine.game.GameState;
-import dev.punchcafe.vngine.player.PlayerObserver;
+import dev.punchcafe.vngine.narrative.NarrativeReader;
+import dev.punchcafe.vngine.narrative.NarrativeService;
 import dev.punchcafe.vngine.node.Node;
 import dev.punchcafe.vngine.node.PlayerDeterminedNextNodeStrategy;
 import dev.punchcafe.vngine.node.StateDeterminedNextNodeStrategy;
+import dev.punchcafe.vngine.parse.GameStateModifierParser;
+import dev.punchcafe.vngine.parse.GameStatePredicateParser;
 import dev.punchcafe.vngine.parse.yaml.Branch;
 import dev.punchcafe.vngine.parse.yaml.GameConfig;
 import dev.punchcafe.vngine.parse.yaml.VariableTypes;
+import dev.punchcafe.vngine.player.PlayerObserver;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,13 +27,23 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toMap;
 
-public class YamlReader {
-    public static void main(String[] args) throws IOException {
-        final var mapper = new ObjectMapper(new YAMLFactory());
-        final var config = mapper.readValue(new File("src/main/resources/game-config/chapter_1.yaml"), GameConfig.class);
+@Setter
+@Getter
+//TODO: implement builder pattern
+public class GameBuilder {
+    private NarrativeService narrativeService;
+    private NarrativeReader narrativeReader;
+    private PlayerObserver playerObserver;
+    private File nodeConfigurationFile;
 
-        // TODO: make generic
-        final PlayerObserver playerObserver = new AsciiPlayerObserver();
+    public Game build(){
+        final var mapper = new ObjectMapper(new YAMLFactory());
+        final GameConfig config;
+        try {
+            config = mapper.readValue(nodeConfigurationFile, GameConfig.class);
+        } catch (Exception ex){
+            throw new RuntimeException();
+        }
 
         // Configure game state
         final Map<VariableTypes, List<Map.Entry<String,VariableTypes>>> gameStateVariableMap =
@@ -51,7 +64,7 @@ public class YamlReader {
         final var gameState = new GameState(integerVariableNames, booleanVariableNames, null);
 
         final var initialModelNodes = config.getNodes().stream()
-                .map(YamlReader::convertToNodeWithoutLinks)
+                .map(this::convertToNodeWithoutLinks)
                 .collect(toMap(Node::getId, identity()));
         for (final var yamlNode : config.getNodes()) {
             final var modelNode = initialModelNodes.get(yamlNode.getId());
@@ -72,10 +85,18 @@ public class YamlReader {
                     throw new RuntimeException();
             }
         }
+
+        final var firstNode = initialModelNodes.get(config.getNodes().get(0).getId());
         System.out.println("Done!");
+        return Game.builder()
+                .gameState(gameState)
+                .firstNode(firstNode)
+                .narrativeReader(narrativeReader)
+                .narrativeService(narrativeService)
+                .build();
     }
 
-    private static Node convertToNodeWithoutLinks(final dev.punchcafe.vngine.parse.yaml.Node node) {
+    private Node convertToNodeWithoutLinks(final dev.punchcafe.vngine.parse.yaml.Node node) {
         return Node.builder()
                 .id(node.getId())
                 .narrativeId(node.getNarrativeId())
@@ -83,7 +104,7 @@ public class YamlReader {
                 .build();
     }
 
-    private static PlayerDeterminedNextNodeStrategy convertPlayerDeterminedBranches(final List<Branch> branches,
+    private PlayerDeterminedNextNodeStrategy convertPlayerDeterminedBranches(final List<Branch> branches,
                                                                                     final PlayerObserver playerObserver,
                                                                                     final Map<String, Node> nodeCache) {
         return PlayerDeterminedNextNodeStrategy
@@ -98,8 +119,8 @@ public class YamlReader {
                 .build();
     }
 
-    private static StateDeterminedNextNodeStrategy convertStateDeterminedBranches(final List<Branch> branches,
-                                                                                  final OldGameState gameState,
+    private StateDeterminedNextNodeStrategy convertStateDeterminedBranches(final List<Branch> branches,
+                                                                                  final GameState gameState,
                                                                                   final Map<String, Node> nodeCache) {
         return StateDeterminedNextNodeStrategy
                 .builder()

@@ -1,12 +1,12 @@
-package dev.punchcafe.vngine;
+package dev.punchcafe.vngine.old;
 
 import dev.punchcafe.vngine.node.oldnode.SceneNode;
 
 /**
  * The global game state. This class is responsible for keeping track of all state in the game, i.e. character
- * relationships. Typically, the {@link GameState} will allow a {@link SceneNode}
+ * relationships. Typically, the {@link OldGameState} will allow a {@link SceneNode}
  */
-public interface GameState {
+public interface OldGameState {
 
     //TODO: throw if po=roperty missing
 

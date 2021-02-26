@@ -1,12 +1,12 @@
 package dev.punchcafe.vngine.node.oldnode;
 
-import dev.punchcafe.vngine.GameState;
-import dev.punchcafe.vngine.Narrative;
-import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.old.Narrative;
+import dev.punchcafe.vngine.player.PlayerObserver;
 
 /**
- * A {@link SceneNode} whose {@link SceneNode#prompt(PlayerObserver, GameState)} result is automatically decided by the
- * {@link GameState}.
+ * A {@link SceneNode} whose {@link SceneNode#prompt(PlayerObserver, OldGameState)} result is automatically decided by the
+ * {@link OldGameState}.
  */
 public final class FinalSceneNode implements SceneNode {
 
@@ -21,7 +21,7 @@ public final class FinalSceneNode implements SceneNode {
 
 
     @Override
-    public void modifyGameState(GameState gameState) {
+    public void modifyGameState(OldGameState gameState) {
     }
 
     @Override
@@ -30,7 +30,7 @@ public final class FinalSceneNode implements SceneNode {
     }
 
     @Override
-    public SceneNode prompt(PlayerObserver playerObserver, GameState gameState) {
+    public SceneNode prompt(PlayerObserver playerObserver, OldGameState gameState) {
         return null;
     }
 

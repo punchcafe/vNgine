@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.gsm;
 
-import dev.punchcafe.vngine.GameState;
+import dev.punchcafe.vngine.old.OldGameState;
 import lombok.Builder;
 import lombok.NonNull;
 
@@ -15,7 +15,7 @@ public class NodeGameStateChange {
         this.modifications = modifications;
     }
 
-    public void modify(final GameState gameState){
+    public void modify(final OldGameState gameState){
         for(final var modification : modifications){
             modification.modify(gameState);
         }
