@@ -240,7 +240,7 @@ public class ExpressionParser {
                     final var isAnd = tokenisedWords.size() < i + 4 + 1 ? null : getIsAndFromWord(tokenisedWords.get(i + 4));
                     final var link = new ExpressionLink(parsingStrategy.apply(clauseString), isAnd);
                     expressionLinks.add(link);
-                    if (getIsAndFromWord(tokenisedWords.get(i + 4)) == null) {
+                    if (isAnd == null) {
                         i = i + 3;
                     } else {
                         i = i + 4;

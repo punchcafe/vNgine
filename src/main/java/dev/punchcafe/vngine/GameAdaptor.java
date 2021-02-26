@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine;
 
-import dev.punchcafe.vngine.node.SceneNode;
+import dev.punchcafe.vngine.node.oldnode.SceneNode;
 
 /**
  * Any platform-specific implementation of {@link GameAdaptor} may be passed to the {@link GameController} constructor

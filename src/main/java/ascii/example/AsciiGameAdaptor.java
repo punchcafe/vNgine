@@ -1,7 +1,10 @@
 package ascii.example;
 
-import dev.punchcafe.vngine.*;
-import dev.punchcafe.vngine.node.SceneNode;
+import dev.punchcafe.vngine.GameAdaptor;
+import dev.punchcafe.vngine.GameState;
+import dev.punchcafe.vngine.NarrativeReader;
+import dev.punchcafe.vngine.PlayerObserver;
+import dev.punchcafe.vngine.node.oldnode.SceneNode;
 
 import static ascii.example.AsciiSceneNodeConstants.NODE_1;
 

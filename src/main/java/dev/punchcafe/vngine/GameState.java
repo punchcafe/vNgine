@@ -1,8 +1,6 @@
 package dev.punchcafe.vngine;
 
-import dev.punchcafe.vngine.node.SceneNode;
-
-import java.util.Optional;
+import dev.punchcafe.vngine.node.oldnode.SceneNode;
 
 /**
  * The global game state. This class is responsible for keeping track of all state in the game, i.e. character

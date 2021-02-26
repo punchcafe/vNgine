@@ -1,10 +1,10 @@
 package ascii.example;
 
 import dev.punchcafe.vngine.*;
-import dev.punchcafe.vngine.node.AutomaticSceneNode;
-import dev.punchcafe.vngine.node.FinalSceneNode;
-import dev.punchcafe.vngine.node.PlayerInputSceneNode;
-import dev.punchcafe.vngine.node.SceneNode;
+import dev.punchcafe.vngine.node.oldnode.AutomaticSceneNode;
+import dev.punchcafe.vngine.node.oldnode.FinalSceneNode;
+import dev.punchcafe.vngine.node.oldnode.PlayerInputSceneNode;
+import dev.punchcafe.vngine.node.oldnode.SceneNode;
 
 import java.util.List;
 import java.util.function.Consumer;

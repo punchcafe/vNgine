@@ -1,10 +1,12 @@
 package dev.punchcafe.vngine.node.gsm;
 
 import dev.punchcafe.vngine.GameState;
+import lombok.Builder;
 import lombok.NonNull;
 
 import java.util.List;
 
+@Builder
 public class NodeGameStateChange {
 
     final private List<GameStateModification> modifications;

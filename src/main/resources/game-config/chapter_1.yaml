@@ -13,18 +13,36 @@ nodes:
       - "increase $int.bishounen-one-relationship by 1"
       - "set $str.name to 'MY NAME VALUE'"
     branches:
-      - predicate-expression: "$character-relationship less_than 2"
+      - predicate-expression: "$int.character-relationship less_than 2"
         node-id: 1_3_2
-      - predicate-expression: "($name is 'HI') and ($name isnt 'HI') and ($bishounen-love isn't true) and ($bishounen-love is false)"
+      - predicate-expression: "($str.name is 'HI') and ($str.name isnt 'HI') and ($bool.bishounen-love isn't true) and ($bool.bishounen-love is false)"
         node-id: 1_3_1
   - id: 1_2_2
     type: PLAYER
     game-state-modifiers:
-      - "set $bishounen-love to true"
-      - "set $name to 'MY NAME VALUE'"
+      - "set $bool.bishounen-love to true"
+      - "set $str.name to 'MY NAME VALUE'"
     branches:
       - prompt: "Get Angry"
         node-id: 1_2_3
       - prompt: "Stay Cool"
         node-id: 1_2_3
+  - id: 1_2_3
+    type: PLAYER
+    game-state-modifiers:
+      - "set $bool.bishounen-love to false"
+      - "set $str.name to 'MY OTHER NAME VALUE'"
+    branches:
+  - id: 1_3_2
+    type: PLAYER
+    game-state-modifiers:
+      - "set $bool.bishounen-love to false"
+      - "set $str.name to 'MY OTHER NAME VALUE'"
+    branches:
+  - id: 1_3_1
+    type: PLAYER
+    game-state-modifiers:
+      - "set $bool.bishounen-love to false"
+      - "set $str.name to 'MY OTHER NAME VALUE'"
+    branches:
 

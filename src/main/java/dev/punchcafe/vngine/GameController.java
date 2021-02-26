@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine;
 
-import dev.punchcafe.vngine.node.SceneNode;
+import dev.punchcafe.vngine.node.oldnode.SceneNode;
 
 //TODO: make configurable by yaml
 public class GameController {

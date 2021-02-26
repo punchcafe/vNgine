@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.node;
+package dev.punchcafe.vngine.node.oldnode;
 
 import dev.punchcafe.vngine.GameState;
 import dev.punchcafe.vngine.Narrative;

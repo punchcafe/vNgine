@@ -1,18 +1,25 @@
 package dev.punchcafe.vngine.parse;
 
-import dev.punchcafe.vngine.node.gsm.ChangeIntegerProperty;
-import dev.punchcafe.vngine.node.gsm.GameStateModification;
-import dev.punchcafe.vngine.node.gsm.SetBooleanProperty;
-import dev.punchcafe.vngine.node.gsm.SetStringProperty;
+import dev.punchcafe.vngine.node.gsm.*;
 
+import java.util.List;
 import java.util.regex.Pattern;
+
+import static java.util.stream.Collectors.toList;
 
 public class GameStateModifierParser {
 
-    private static Pattern SET_STRING_VARIABLE_PATTERN = Pattern.compile("^ *set +\\$str\\.([^ ]+)+ +to +'([^ ]+)' *$");
+    private static Pattern SET_STRING_VARIABLE_PATTERN = Pattern.compile("^ *set +\\$str\\.([^ ]+)+ +to +'([^']+)' *$");
     private static Pattern SET_BOOLEAN_VARIABLE_PATTERN = Pattern.compile("^ *set +\\$bool\\.([^ ]+)+ +to +(true|false) *$");
     private static Pattern INCREASE_INT_VARIABLE_PATTERN = Pattern.compile("^ *increase \\$int\\.([^ ]+) by (\\d+)$");
     private static Pattern DECREASE_INT_VARIABLE_PATTERN = Pattern.compile("^ *decrease \\$int\\.([^ ]+) by (\\d+)$");
+
+    public static NodeGameStateChange parse(final List<String> expressions) {
+        final var modifiers =  expressions.stream()
+                .map(GameStateModifierParser::parse)
+                .collect(toList());
+        return NodeGameStateChange.builder().modifications(modifiers).build();
+    }
 
     public static GameStateModification parse(final String expression) {
         final var setStringPropertyMatcher = SET_STRING_VARIABLE_PATTERN.matcher(expression);
