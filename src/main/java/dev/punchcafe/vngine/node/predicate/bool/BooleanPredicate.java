@@ -2,9 +2,12 @@ package dev.punchcafe.vngine.node.predicate.bool;
 
 import dev.punchcafe.vngine.game.GameState;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
+import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.PredicateValue;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@Getter
 @AllArgsConstructor
 public class BooleanPredicate implements GameStatePredicate {
 
@@ -12,9 +15,9 @@ public class BooleanPredicate implements GameStatePredicate {
         IS, ISNT
     }
 
-    private PredicateValue<Boolean> leftHandSide;
-    private PredicateValue<Boolean> rightHandSide;
-    private Operation operation;
+    private final PredicateValue<Boolean> leftHandSide;
+    private final PredicateValue<Boolean> rightHandSide;
+    private final Operation operation;
 
     @Override
     public boolean evaluate(GameState gameState) {
@@ -26,5 +29,10 @@ public class BooleanPredicate implements GameStatePredicate {
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+    @Override
+    public <T> T acceptVisitor(GameStatePredicateVisitor<T> visitor) {
+        return visitor.visitBooleanPredicate(this);
     }
 }

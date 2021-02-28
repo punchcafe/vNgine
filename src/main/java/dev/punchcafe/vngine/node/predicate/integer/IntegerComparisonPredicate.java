@@ -2,19 +2,22 @@ package dev.punchcafe.vngine.node.predicate.integer;
 
 import dev.punchcafe.vngine.game.GameState;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
+import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.PredicateValue;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public class IntegerComparisonPredicate implements GameStatePredicate {
 
     public enum Comparison {
         LESS_THAN, MORE_THAN, EQUALS
     }
 
-    private PredicateValue<Integer> leftHandSide;
-    private PredicateValue<Integer> rightHandSide;
-    private Comparison comparison;
+    private final PredicateValue<Integer> leftHandSide;
+    private final PredicateValue<Integer> rightHandSide;
+    private final Comparison comparison;
 
 
     @Override
@@ -29,5 +32,10 @@ public class IntegerComparisonPredicate implements GameStatePredicate {
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+    @Override
+    public <T> T acceptVisitor(GameStatePredicateVisitor<T> visitor) {
+        return visitor.visitIntegerPredicate(this);
     }
 }

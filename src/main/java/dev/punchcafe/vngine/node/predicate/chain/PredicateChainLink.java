@@ -1,7 +1,9 @@
 package dev.punchcafe.vngine.node.predicate.chain;
 
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
+import lombok.Getter;
 
+@Getter
 public class PredicateChainLink {
 
     public enum LogicalLink {

@@ -12,4 +12,9 @@ public class SimpleValue<T> implements PredicateValue<T> {
     public T getValue(final GameState gameState) {
         return value;
     }
+
+    @Override
+    public <R> R acceptVisitor(GameStatePredicateVisitor<R> visitor) {
+        return visitor.visitSimpleValue(this);
+    }
 }

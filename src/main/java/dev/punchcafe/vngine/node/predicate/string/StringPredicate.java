@@ -2,10 +2,13 @@ package dev.punchcafe.vngine.node.predicate.string;
 
 import dev.punchcafe.vngine.game.GameState;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
+import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.PredicateValue;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public class StringPredicate implements GameStatePredicate {
 
     public enum Operation {
@@ -26,5 +29,10 @@ public class StringPredicate implements GameStatePredicate {
             default:
                 throw new UnsupportedOperationException();
         }
+    }
+
+    @Override
+    public <T> T acceptVisitor(GameStatePredicateVisitor<T> visitor) {
+        return visitor.visitStringPredicate(this);
     }
 }

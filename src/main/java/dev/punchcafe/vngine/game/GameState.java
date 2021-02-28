@@ -27,6 +27,14 @@ public class GameState implements OldGameState {
         //this.classificationPropertyMap = new HashMap<>(classificationDefaults);
     }
 
+    public boolean doesIntegerPropertyExist(String propertyName){
+        return integerPropertyMap.get(propertyName) != null;
+    }
+
+    public boolean doesBooleanPropertyExist(String propertyName){
+        return booleanPropertyMap.get(propertyName) != null;
+    }
+
     @Override
     public int getIntegerProperty(String property) {
         return Optional.ofNullable(integerPropertyMap.get(property.toLowerCase()))

@@ -2,14 +2,17 @@ package dev.punchcafe.vngine.node.predicate.chain;
 
 import dev.punchcafe.vngine.game.GameState;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
+import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.List;
 
 @AllArgsConstructor
+@Getter
 public class PredicateChain implements GameStatePredicate {
 
-    private List<PredicateChainLink> predicateChainLinks;
+    private final List<PredicateChainLink> predicateChainLinks;
 
 
     @Override
@@ -28,5 +31,10 @@ public class PredicateChain implements GameStatePredicate {
             }
         }
         return result;
+    }
+
+    @Override
+    public <T> T acceptVisitor(GameStatePredicateVisitor<T> visitor) {
+        return visitor.visitChainPredicate(this);
     }
 }

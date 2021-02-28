@@ -8,6 +8,7 @@ import dev.punchcafe.vngine.narrative.NarrativeService;
 import dev.punchcafe.vngine.node.Node;
 import dev.punchcafe.vngine.node.PlayerDeterminedNextNodeStrategy;
 import dev.punchcafe.vngine.node.StateDeterminedNextNodeStrategy;
+import dev.punchcafe.vngine.node.predicate.visitors.ValidatePredicateVisitor;
 import dev.punchcafe.vngine.parse.GameStateModifierParser;
 import dev.punchcafe.vngine.parse.GameStatePredicateParser;
 import dev.punchcafe.vngine.parse.yaml.Branch;
@@ -83,6 +84,23 @@ public class GameBuilder {
                     break;
                 default:
                     throw new RuntimeException();
+            }
+        }
+
+        final var predicateValidationVisitor = new ValidatePredicateVisitor(gameState);
+
+        for(var node : initialModelNodes.values()){
+            final var nextNodeStrategy = node.getNextNodeStrategy();
+            if(nextNodeStrategy instanceof StateDeterminedNextNodeStrategy){
+                final var castNode = (StateDeterminedNextNodeStrategy) nextNodeStrategy;
+                final var nodeValidations = castNode.getBranches().stream()
+                        .map(StateDeterminedNextNodeStrategy.Branch::getPredicate)
+                        .map(gameStatePredicate -> gameStatePredicate.acceptVisitor(predicateValidationVisitor))
+                        .flatMap(List::stream)
+                        .collect(Collectors.toList());
+                if(!nodeValidations.isEmpty()){
+                    throw new RuntimeException();
+                }
             }
         }
 
