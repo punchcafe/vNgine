@@ -15,7 +15,7 @@ public interface GameStatePredicateVisitor<T> {
     T visitBooleanPredicate(final BooleanPredicate booleanPredicate);
     T visitChainPredicate(final PredicateChain predicateChain);
 
-    T visitSimpleValue(final SimpleValue<?> value);
+    T visitSimpleValue(final SimplePredicateValue<?> value);
     T visitIntegerVariableValue(final IntegerVariableValue integerVariableValue);
     T visitStringVariableValue(final StringVariableValue stringVariableValue);
     T visitBooleanVariableValue(final BooleanVariableValue stringVariableValue);

@@ -16,10 +16,8 @@ public class PlayerDeterminedNextNodeStrategy implements NextNodeStrategy {
     @Builder
     @Getter
     public static class Branch {
-        String prompt;
-        // TODO: consider if this is easier with a nodeId Repository concept.
-        // Or something injected by a node factory
-        Node node;
+        private final String prompt;
+        private final Node node;
     }
 
     private final PlayerObserver playerObserver;

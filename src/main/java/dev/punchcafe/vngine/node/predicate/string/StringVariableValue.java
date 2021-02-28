@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class StringVariableValue implements PredicateValue<String> {
 
-    private String variableName;
+    private final String variableName;
 
 
     @Override

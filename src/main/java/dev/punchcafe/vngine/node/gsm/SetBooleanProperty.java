@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.gsm;
 
-import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.game.GameState;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +13,7 @@ public class SetBooleanProperty implements GameStateModification {
     final private boolean booleanValue;
 
     @Override
-    public void modify(OldGameState gameState) {
+    public void modify(GameState gameState) {
         gameState.setBooleanProperty(propertyName, booleanValue);
     }
 }

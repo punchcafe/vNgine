@@ -1,9 +1,8 @@
 package dev.punchcafe.vngine.parse;
 
-import ascii.example.AsciiPlayerObserver;
+import dev.punchcafe.vngine.player.SimplePlayerObserver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import dev.punchcafe.vngine.old.OldGameState;
 import dev.punchcafe.vngine.game.GameState;
 import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.node.Node;
@@ -30,7 +29,7 @@ public class YamlReader {
         final var config = mapper.readValue(new File("src/main/resources/game-config/chapter_1.yaml"), GameConfig.class);
 
         // TODO: make generic
-        final PlayerObserver playerObserver = new AsciiPlayerObserver();
+        final PlayerObserver playerObserver = new SimplePlayerObserver();
 
         // Configure game state
         final Map<VariableTypes, List<Map.Entry<String,VariableTypes>>> gameStateVariableMap =

@@ -10,9 +10,9 @@ import lombok.Setter;
 public class Node {
     private final String id;
     private final NodeGameStateChange nodeGameStateChange;
+    private String narrativeId;
     @Setter
     private NextNodeStrategy nextNodeStrategy;
-    private String narrativeId;
 
     public Node getNextNode(){
         return nextNodeStrategy.getNextNode();

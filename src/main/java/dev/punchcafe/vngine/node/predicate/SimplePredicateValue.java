@@ -4,7 +4,7 @@ import dev.punchcafe.vngine.game.GameState;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class SimpleValue<T> implements PredicateValue<T> {
+public class SimplePredicateValue<T> implements PredicateValue<T> {
 
     private T value;
 

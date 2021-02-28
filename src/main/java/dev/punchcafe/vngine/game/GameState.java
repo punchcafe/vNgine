@@ -1,14 +1,13 @@
 package dev.punchcafe.vngine.game;
 
 import dev.punchcafe.vngine.NoSuchPropertyException;
-import dev.punchcafe.vngine.old.OldGameState;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class GameState implements OldGameState {
+public class GameState {
 
     private final Map<String, Integer> integerPropertyMap = new HashMap<>();
     private final Map<String, Boolean> booleanPropertyMap = new HashMap<>();
@@ -35,38 +34,32 @@ public class GameState implements OldGameState {
         return booleanPropertyMap.get(propertyName) != null;
     }
 
-    @Override
     public int getIntegerProperty(String property) {
         return Optional.ofNullable(integerPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
     }
 
-    @Override
     public void changeIntegerPropertyBy(final String property, final int value){
         final var existingValue = Optional.ofNullable(integerPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
         integerPropertyMap.put(property.toLowerCase(), existingValue + value);
     }
 
-    @Override
     public boolean getBooleanProperty(String property) {
         return Optional.ofNullable(booleanPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
     }
 
-    @Override
     public void setBooleanProperty(final String property, final boolean value){
         final var existingValue = Optional.ofNullable(booleanPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
         booleanPropertyMap.put(property.toLowerCase(),  value);
     }
 
-    @Override
     public void setClassificationProperty(String property, String value) {
 
     }
 
-    @Override
     public String getClassificationProperty(String propertyName) {
         return null;
     }

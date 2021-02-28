@@ -240,7 +240,7 @@ public class GameStatePredicateParser {
         if (variable.startsWith("$int.")) {
             return new IntegerVariableValue(variable.substring(5));
         } else {
-            return new SimpleValue<>(Integer.parseInt(variable));
+            return new SimplePredicateValue<>(Integer.parseInt(variable));
         }
     }
 
@@ -248,7 +248,7 @@ public class GameStatePredicateParser {
         if (variable.startsWith("$bool.")) {
             return new BooleanVariableValue(variable.substring(6));
         } else {
-            return new SimpleValue<>(Boolean.parseBoolean(variable.toLowerCase()));
+            return new SimplePredicateValue<>(Boolean.parseBoolean(variable.toLowerCase()));
         }
     }
 
@@ -257,7 +257,7 @@ public class GameStatePredicateParser {
             return new StringVariableValue(variable.substring(5));
         }
         if (variable.startsWith("'") && variable.endsWith("'")) {
-            return new SimpleValue<>(variable.substring(1, variable.length() - 1));
+            return new SimplePredicateValue<>(variable.substring(1, variable.length() - 1));
         } else {
             throw new UnsupportedOperationException();
         }

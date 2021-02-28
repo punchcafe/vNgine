@@ -2,7 +2,7 @@ package dev.punchcafe.vngine.node.predicate.visitors;
 
 import dev.punchcafe.vngine.game.GameState;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
-import dev.punchcafe.vngine.node.predicate.SimpleValue;
+import dev.punchcafe.vngine.node.predicate.SimplePredicateValue;
 import dev.punchcafe.vngine.node.predicate.bool.BooleanPredicate;
 import dev.punchcafe.vngine.node.predicate.bool.BooleanVariableValue;
 import dev.punchcafe.vngine.node.predicate.chain.PredicateChain;
@@ -65,7 +65,7 @@ public class ValidatePredicateVisitor implements GameStatePredicateVisitor<List<
     }
 
     @Override
-    public List<String> visitSimpleValue(SimpleValue<?> value) {
+    public List<String> visitSimpleValue(SimplePredicateValue<?> value) {
         if (value.getValue(null) == null) {
             return List.of("NULL VALUE");
         }

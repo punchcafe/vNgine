@@ -15,9 +15,9 @@ public class StringPredicate implements GameStatePredicate {
         IS, ISNT
     }
 
-    private PredicateValue<String> leftHandSide;
-    private PredicateValue<String> rightHandSide;
-    private Operation operation;
+    private final PredicateValue<String> leftHandSide;
+    private final PredicateValue<String> rightHandSide;
+    private final Operation operation;
 
     @Override
     public boolean evaluate(GameState gameState) {

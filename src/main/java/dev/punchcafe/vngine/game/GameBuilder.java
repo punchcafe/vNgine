@@ -1,6 +1,5 @@
 package dev.punchcafe.vngine.game;
 
-import ascii.example.AsciiPlayerObserver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import dev.punchcafe.vngine.narrative.NarrativeReader;

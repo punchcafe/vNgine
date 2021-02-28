@@ -10,8 +10,8 @@ public class PredicateChainLink {
         OR, AND
     }
 
-    GameStatePredicate predicate;
-    LogicalLink link;
+    private final GameStatePredicate predicate;
+    private final LogicalLink link;
 
     public PredicateChainLink(final GameStatePredicate gameStatePredicate, final LogicalLink logicalLink) {
         this.predicate = gameStatePredicate;

@@ -17,14 +17,14 @@ public class PredicateChain implements GameStatePredicate {
 
     @Override
     public boolean evaluate(GameState gameState) {
-        var result = predicateChainLinks.get(0).predicate.evaluate(gameState);
+        var result = predicateChainLinks.get(0).getPredicate().evaluate(gameState);
         for (var link : predicateChainLinks.subList(1, predicateChainLinks.size())) {
-            switch (link.link) {
+            switch (link.getLink()) {
                 case OR:
-                    result = result || link.predicate.evaluate(gameState);
+                    result = result || link.getPredicate().evaluate(gameState);
                     break;
                 case AND:
-                    result = result && link.predicate.evaluate(gameState);
+                    result = result && link.getPredicate().evaluate(gameState);
                     break;
                 default:
                     throw new UnsupportedOperationException();

@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.game;
 
-import ascii.example.AsciiPlayerObserver;
+import dev.punchcafe.vngine.player.SimplePlayerObserver;
 import dev.punchcafe.vngine.narrative.NarrativeReader;
 import dev.punchcafe.vngine.narrative.NarrativeService;
 import dev.punchcafe.vngine.narrative.imp.NarrativeReaderImp;
@@ -32,7 +32,7 @@ public class Game {
         final var gameBuilder = new dev.punchcafe.vngine.game.GameBuilder();
         gameBuilder.setNarrativeReader(new NarrativeReaderImp());
         gameBuilder.setNarrativeService(new NarrativeServiceImp());
-        gameBuilder.setPlayerObserver(new AsciiPlayerObserver());
+        gameBuilder.setPlayerObserver(new SimplePlayerObserver());
         gameBuilder.setNodeConfigurationFile(new File("src/main/resources/game-config/chapter_1.yaml"));
         gameBuilder.build().play();
     }

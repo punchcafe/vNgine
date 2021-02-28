@@ -1,11 +1,11 @@
-package ascii.example;
+package dev.punchcafe.vngine.player;
 
 import dev.punchcafe.vngine.player.PlayerObserver;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class AsciiPlayerObserver implements PlayerObserver {
+public class SimplePlayerObserver implements PlayerObserver {
     @Override
     public String getFromChoice(List<String> choices) {
         for(int i = 0; i < choices.size(); i++){
