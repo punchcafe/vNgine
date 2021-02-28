@@ -3,6 +3,8 @@ package dev.punchcafe.vngine.parse;
 import dev.punchcafe.vngine.node.predicate.*;
 import dev.punchcafe.vngine.node.predicate.bool.BooleanPredicate;
 import dev.punchcafe.vngine.node.predicate.bool.BooleanVariableValue;
+import dev.punchcafe.vngine.node.predicate.chain.PredicateChain;
+import dev.punchcafe.vngine.node.predicate.chain.PredicateChainLink;
 import dev.punchcafe.vngine.node.predicate.integer.IntegerComparisonPredicate;
 import dev.punchcafe.vngine.node.predicate.integer.IntegerVariableValue;
 import dev.punchcafe.vngine.node.predicate.string.StringPredicate;
@@ -19,20 +21,7 @@ public class GameStatePredicateParser {
         INTEGER, STRING, BOOLEAN
     }
 
-    private static class PredicateChain {
 
-        enum LogicalLink {
-            OR, AND
-        }
-
-        GameStatePredicate predicate;
-        LogicalLink link;
-
-        public PredicateChain(final GameStatePredicate gameStatePredicate, final LogicalLink logicalLink) {
-            this.predicate = gameStatePredicate;
-            this.link = logicalLink;
-        }
-    }
 
     private static final String AND_TOKEN = " and ";
     private static final String OR_TOKEN = " or ";
@@ -52,38 +41,23 @@ public class GameStatePredicateParser {
                     clauseCompoenents[1]);
             return parseStrategy.apply(singleClause);
         } else {
-            final var logics = new ArrayList<PredicateChain>();
-            logics.add(new PredicateChain(parsePredicate(brokenDownClause.get(0)), null));
+            final var logics = new ArrayList<PredicateChainLink>();
+            logics.add(new PredicateChainLink(parsePredicate(brokenDownClause.get(0)), null));
             for (int i = 2; i < brokenDownClause.size(); i = i + 2) {
-                final PredicateChain.LogicalLink link;
+                final PredicateChainLink.LogicalLink link;
                 switch (brokenDownClause.get(i - 1)) {
                     case OR_TOKEN:
-                        link = PredicateChain.LogicalLink.OR;
+                        link = PredicateChainLink.LogicalLink.OR;
                         break;
                     case AND_TOKEN:
-                        link = PredicateChain.LogicalLink.AND;
+                        link = PredicateChainLink.LogicalLink.AND;
                         break;
                     default:
                         throw new UnsupportedOperationException();
                 }
-                logics.add(new PredicateChain(parsePredicate(brokenDownClause.get(i)), link));
+                logics.add(new PredicateChainLink(parsePredicate(brokenDownClause.get(i)), link));
             }
-            return gameState -> {
-                var result = logics.get(0).predicate.evaluate(gameState);
-                for (var link : logics.subList(1, logics.size())) {
-                    switch (link.link) {
-                        case OR:
-                            result = result || link.predicate.evaluate(gameState);
-                            break;
-                        case AND:
-                            result = result && link.predicate.evaluate(gameState);
-                            break;
-                        default:
-                            throw new UnsupportedOperationException();
-                    }
-                }
-                return result;
-            };
+            return new PredicateChain(logics);
         }
     }
 
