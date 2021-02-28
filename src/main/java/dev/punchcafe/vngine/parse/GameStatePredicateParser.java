@@ -1,7 +1,12 @@
 package dev.punchcafe.vngine.parse;
 
-import dev.punchcafe.vngine.old.OldGameState;
-import dev.punchcafe.vngine.node.GameStatePredicate;
+import dev.punchcafe.vngine.node.predicate.*;
+import dev.punchcafe.vngine.node.predicate.bool.BooleanPredicate;
+import dev.punchcafe.vngine.node.predicate.bool.BooleanVariableValue;
+import dev.punchcafe.vngine.node.predicate.integer.IntegerComparisonPredicate;
+import dev.punchcafe.vngine.node.predicate.integer.IntegerVariableValue;
+import dev.punchcafe.vngine.node.predicate.string.StringPredicate;
+import dev.punchcafe.vngine.node.predicate.string.StringVariableValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,11 +208,17 @@ public class GameStatePredicateParser {
         final var tokens = atomicExpression.split(" ");
         switch (tokens[1].toUpperCase()) {
             case "MORE_THAN":
-                return (gameState) -> evaluateIntegerVariable(tokens[0], gameState) > evaluateIntegerVariable(tokens[2], gameState);
+                return new IntegerComparisonPredicate(evaluateIntegerVariable(tokens[0]),
+                        evaluateIntegerVariable(tokens[2]),
+                        IntegerComparisonPredicate.Comparison.MORE_THAN);
             case "LESS_THAN":
-                return (gameState) -> evaluateIntegerVariable(tokens[0], gameState) < evaluateIntegerVariable(tokens[2], gameState);
+                return new IntegerComparisonPredicate(evaluateIntegerVariable(tokens[0]),
+                        evaluateIntegerVariable(tokens[2]),
+                        IntegerComparisonPredicate.Comparison.LESS_THAN);
             case "EQUALS":
-                return (gameState) -> evaluateIntegerVariable(tokens[0], gameState) == evaluateIntegerVariable(tokens[2], gameState);
+                return new IntegerComparisonPredicate(evaluateIntegerVariable(tokens[0]),
+                        evaluateIntegerVariable(tokens[2]),
+                        IntegerComparisonPredicate.Comparison.EQUALS);
             default:
                 // TODO: make checked exception
                 throw new UnsupportedOperationException();
@@ -218,12 +229,14 @@ public class GameStatePredicateParser {
         final var tokens = atomicExpression.split(" ");
         switch (tokens[1].toUpperCase()) {
             case "IS":
-                return (gameState) -> evaluateBooleanVariable(tokens[0], gameState)
-                        == evaluateBooleanVariable(tokens[2], gameState);
+                return new BooleanPredicate(evaluateBooleanVariable(tokens[0]),
+                        evaluateBooleanVariable(tokens[2]),
+                        BooleanPredicate.Operation.IS);
             case "ISNT":
             case "ISN'T":
-                return (gameState) -> evaluateBooleanVariable(tokens[0], gameState)
-                        != evaluateBooleanVariable(tokens[2], gameState);
+                return new BooleanPredicate(evaluateBooleanVariable(tokens[0]),
+                        evaluateBooleanVariable(tokens[2]),
+                        BooleanPredicate.Operation.ISNT);
             default:
                 // TODO: make checked exception
                 throw new UnsupportedOperationException();
@@ -231,43 +244,46 @@ public class GameStatePredicateParser {
     }
 
     public static GameStatePredicate parseClassificationPredicate(final String atomicExpression) {
+
         final var tokens = atomicExpression.split(" ");
         switch (tokens[1].toUpperCase()) {
             case "IS":
-                return (gameState) ->
-                        evaluateStringVariable(tokens[0], gameState).equals(evaluateStringVariable(tokens[2], gameState));
+                return new StringPredicate(evaluateStringVariable(tokens[0]),
+                    evaluateStringVariable(tokens[2]),
+                    StringPredicate.Operation.IS);
             case "ISNT":
             case "ISN'T":
-                return (gameState) ->
-                        !evaluateStringVariable(tokens[0], gameState).equals(evaluateStringVariable(tokens[2], gameState));
+                return new StringPredicate(evaluateStringVariable(tokens[0]),
+                        evaluateStringVariable(tokens[2]),
+                        StringPredicate.Operation.ISNT);
             default:
                 // TODO: make checked exception
                 throw new UnsupportedOperationException();
         }
     }
 
-    private static int evaluateIntegerVariable(final String variable, OldGameState gameState) {
+    private static PredicateValue<Integer> evaluateIntegerVariable(final String variable) {
         if (variable.startsWith("$int.")) {
-            return gameState.getIntegerProperty(variable.substring(5));
+            return new IntegerVariableValue(variable.substring(5));
         } else {
-            return Integer.parseInt(variable);
+            return new SimpleValue<>(Integer.parseInt(variable));
         }
     }
 
-    private static boolean evaluateBooleanVariable(final String variable, OldGameState gameState) {
+    private static PredicateValue<Boolean> evaluateBooleanVariable(final String variable) {
         if (variable.startsWith("$bool.")) {
-            return gameState.getBooleanProperty(variable.substring(6));
+            return new BooleanVariableValue(variable.substring(6));
         } else {
-            return Boolean.parseBoolean(variable.toLowerCase());
+            return new SimpleValue<>(Boolean.parseBoolean(variable.toLowerCase()));
         }
     }
 
-    private static String evaluateStringVariable(final String variable, OldGameState gameState) {
+    private static PredicateValue<String> evaluateStringVariable(final String variable) {
         if (variable.startsWith("$str.")) {
-            return gameState.getClassificationProperty(variable.substring(5));
+            return new StringVariableValue(variable.substring(5));
         }
         if (variable.startsWith("'") && variable.endsWith("'")) {
-            return variable.substring(1, variable.length() - 1);
+            return new SimpleValue<>(variable.substring(1, variable.length() - 1));
         } else {
             throw new UnsupportedOperationException();
         }

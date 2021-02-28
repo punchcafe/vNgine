@@ -99,7 +99,7 @@ public class YamlReader {
     }
 
     private static StateDeterminedNextNodeStrategy convertStateDeterminedBranches(final List<Branch> branches,
-                                                                                  final OldGameState gameState,
+                                                                                  final GameState gameState,
                                                                                   final Map<String, Node> nodeCache) {
         return StateDeterminedNextNodeStrategy
                 .builder()

@@ -1,6 +1,6 @@
-package dev.punchcafe.vngine.node;
+package dev.punchcafe.vngine.node.predicate;
 
-import dev.punchcafe.vngine.old.OldGameState;
+import dev.punchcafe.vngine.game.GameState;
 
 // To be built up by yaml expressions.
 /*
@@ -9,6 +9,6 @@ sewt of predicates which are checked
  */
 @FunctionalInterface
 public interface GameStatePredicate {
-    boolean evaluate(OldGameState gameState);
+    boolean evaluate(GameState gameState);
 
 }
