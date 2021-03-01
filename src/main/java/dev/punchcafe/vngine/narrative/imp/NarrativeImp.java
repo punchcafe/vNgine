@@ -1,6 +1,5 @@
 package dev.punchcafe.vngine.narrative.imp;
 
-import dev.punchcafe.vngine.narrative.Narrative;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class NarrativeImp implements Narrative {
+public class NarrativeImp {
     private final String id;
     private final String characterName;
     private final String message;

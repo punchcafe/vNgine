@@ -8,21 +8,20 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.Optional.ofNullable;
-import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-public class NarrativeServiceImp implements NarrativeService {
+public class NarrativeServiceImp implements NarrativeService<NarrativeImp> {
 
-    private final Map<String, Narrative> narratives;
+    private final Map<String, NarrativeImp> narratives;
 
-    public NarrativeServiceImp(final Stream<Narrative> allNarratives){
-        this.narratives = allNarratives.map(narrative -> (NarrativeImp) narrative)
-                .collect(toMap(NarrativeImp::getId, identity()));
+    public NarrativeServiceImp(final Stream<NarrativeImp> allNarratives) {
+        this.narratives = allNarratives
+                .collect(toMap(NarrativeImp::getId, narrativeImp -> narrativeImp));
     }
 
     @Override
-    public Narrative getNarrative(String narrativeId) {
-        return ofNullable(narratives.get(narrativeId)).orElseThrow();
+    public Narrative<NarrativeImp> getNarrative(String narrativeId) {
+        return ofNullable(narratives.get(narrativeId)).map(Narrative::of).orElseThrow();
     }
 
     @Override

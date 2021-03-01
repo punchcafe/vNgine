@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class NarrativeParser {
 
-    public static Stream<dev.punchcafe.vngine.narrative.Narrative> parseNarrative(final File narrativeFile)
+    public static Stream<NarrativeImp> parseNarrative(final File narrativeFile)
             throws IOException {
         final var mapper = new ObjectMapper(new YAMLFactory());
         final var narratives = mapper.readValue(narrativeFile, NarrativeConfig.class);
@@ -18,7 +18,7 @@ public class NarrativeParser {
                 .map(NarrativeParser::parseSingleNarrative);
     }
 
-    private static dev.punchcafe.vngine.narrative.Narrative parseSingleNarrative(final Narrative yamlModel) {
+    private static NarrativeImp parseSingleNarrative(final Narrative yamlModel) {
         return NarrativeImp.builder()
                 .id(yamlModel.getNarrativeId())
                 .characterName(yamlModel.getCharacterName())

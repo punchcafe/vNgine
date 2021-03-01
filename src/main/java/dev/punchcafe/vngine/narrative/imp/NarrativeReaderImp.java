@@ -3,15 +3,14 @@ package dev.punchcafe.vngine.narrative.imp;
 import dev.punchcafe.vngine.narrative.Narrative;
 import dev.punchcafe.vngine.narrative.NarrativeReader;
 
-public class NarrativeReaderImp implements NarrativeReader {
+public class NarrativeReaderImp implements NarrativeReader<NarrativeImp> {
     @Override
-    public void readNarrative(Narrative narrative) {
-        // TODO: use Generics to make this more user friendly without having to cast
-        final var castNarrative = (NarrativeImp) narrative;
-        if(castNarrative.getCharacterName() != null ){
-            System.out.println(castNarrative.getCharacterName()+":");
+    public void readNarrative(Narrative<NarrativeImp> narrative) {
+        final var contents = narrative.getContents();
+        if(contents != null ){
+            System.out.println(contents.getCharacterName()+":");
         }
-        System.out.println(castNarrative.getMessage());
+        System.out.println(contents.getMessage());
         System.out.println("");
     }
 }

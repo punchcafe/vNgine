@@ -28,9 +28,9 @@ import static java.util.stream.Collectors.*;
 
 @Setter
 @Getter
-public class GameBuilder {
-    private NarrativeService narrativeService;
-    private NarrativeReader narrativeReader;
+public class GameBuilder<N> {
+    private NarrativeService<N> narrativeService;
+    private NarrativeReader<N> narrativeReader;
     private PlayerObserver playerObserver;
     private File nodeConfigurationFile;
 
@@ -93,7 +93,7 @@ public class GameBuilder {
 
 
         final var firstNode = initialModelNodes.get(config.getNodes().get(0).getId());
-        return Game.builder()
+        return Game.<N>builder()
                 .gameState(gameState)
                 .firstNode(firstNode)
                 .narrativeReader(narrativeReader)
