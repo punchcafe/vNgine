@@ -16,4 +16,9 @@ public class SetStringProperty implements GameStateModification {
     public void modify(GameState gameState) {
         gameState.setClassificationProperty(propertyName, propertyValue);
     }
+
+    @Override
+    public <T> T acceptVisitor(GameStateModificationVisitor<T> visitor) {
+        return visitor.visitSetStringProperty(this);
+    }
 }

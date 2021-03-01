@@ -7,6 +7,7 @@ import dev.punchcafe.vngine.narrative.NarrativeService;
 import dev.punchcafe.vngine.node.Node;
 import dev.punchcafe.vngine.node.PlayerDeterminedNextNodeStrategy;
 import dev.punchcafe.vngine.node.StateDeterminedNextNodeStrategy;
+import dev.punchcafe.vngine.node.gsm.ValidationVisitor;
 import dev.punchcafe.vngine.node.predicate.visitors.ValidatePredicateVisitor;
 import dev.punchcafe.vngine.parse.GameStateModifierParser;
 import dev.punchcafe.vngine.parse.GameStatePredicateParser;
@@ -18,14 +19,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 @Setter
 @Getter
@@ -86,9 +88,43 @@ public class GameBuilder {
             }
         }
 
-        final var predicateValidationVisitor = new ValidatePredicateVisitor(gameState);
+        final var compileErrors = validateNodes(initialModelNodes.values(), gameState);
 
-        for(var node : initialModelNodes.values()){
+        if(compileErrors.size() > 0){
+            final var errorString = compileErrors.stream().collect(joining("\n"));
+            throw new RuntimeException(String.format("Encountered the following errors: \n %s", errorString));
+        }
+
+
+        final var firstNode = initialModelNodes.get(config.getNodes().get(0).getId());
+        return Game.builder()
+                .gameState(gameState)
+                .firstNode(firstNode)
+                .narrativeReader(narrativeReader)
+                .narrativeService(narrativeService)
+                .build();
+    }
+
+    private List<String> validateNodes(final Collection<Node> nodes, final GameState gameState){
+
+        final var predicateValidationVisitor = new ValidatePredicateVisitor(gameState);
+        final var stateModifierValidationVisitor = new ValidationVisitor(gameState);
+
+        final List<String> compileErrors = new ArrayList<>();
+
+        for(var node : nodes){
+
+            final var stateChangeValidations = node.getNodeGameStateChange().getModifications().stream()
+                    .map(stateChange -> stateChange.acceptVisitor(stateModifierValidationVisitor))
+                    .flatMap(List::stream)
+                    .collect(Collectors.toList());
+
+            if(stateChangeValidations.size() > 0){
+                compileErrors.add(String.format("Encountered errors with state modifications on node %s: %s",
+                        node.getId(),
+                        stateChangeValidations.toString()));
+            }
+
             final var nextNodeStrategy = node.getNextNodeStrategy();
             if(nextNodeStrategy instanceof StateDeterminedNextNodeStrategy){
                 final var castNode = (StateDeterminedNextNodeStrategy) nextNodeStrategy;
@@ -98,19 +134,13 @@ public class GameBuilder {
                         .flatMap(List::stream)
                         .collect(Collectors.toList());
                 if(!nodeValidations.isEmpty()){
-                    throw new RuntimeException();
+                    compileErrors.add(String.format("Encountered errors with branch predicates on node %s: %s",
+                            node.getId(),
+                            nodeValidations.toString()));
                 }
             }
         }
-
-        final var firstNode = initialModelNodes.get(config.getNodes().get(0).getId());
-        System.out.println("Done!");
-        return Game.builder()
-                .gameState(gameState)
-                .firstNode(firstNode)
-                .narrativeReader(narrativeReader)
-                .narrativeService(narrativeService)
-                .build();
+        return compileErrors;
     }
 
     private Node convertToNodeWithoutLinks(final dev.punchcafe.vngine.parse.yaml.Node node) {

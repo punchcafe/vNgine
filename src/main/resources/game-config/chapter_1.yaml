@@ -50,4 +50,3 @@ nodes:
       - "set $bool.bishounen-love to false"
       - "set $str.name to 'MY OTHER NAME VALUE'"
     branches:
-

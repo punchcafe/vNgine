@@ -16,4 +16,9 @@ public class SetBooleanProperty implements GameStateModification {
     public void modify(GameState gameState) {
         gameState.setBooleanProperty(propertyName, booleanValue);
     }
+
+    @Override
+    public <T> T acceptVisitor(GameStateModificationVisitor<T> visitor) {
+        return visitor.visitSetBooleanProperty(this);
+    }
 }

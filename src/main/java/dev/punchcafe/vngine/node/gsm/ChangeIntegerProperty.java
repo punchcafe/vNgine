@@ -18,4 +18,9 @@ public class ChangeIntegerProperty implements GameStateModification {
     public void modify(GameState gameState) {
         gameState.changeIntegerPropertyBy(propertyName, valueChange);
     }
+
+    @Override
+    public <T> T acceptVisitor(GameStateModificationVisitor<T> visitor) {
+        return visitor.visitChangeIntegerProperty(this);
+    }
 }
