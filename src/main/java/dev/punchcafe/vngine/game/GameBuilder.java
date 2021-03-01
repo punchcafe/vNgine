@@ -19,10 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
@@ -31,24 +28,23 @@ import static java.util.stream.Collectors.*;
 
 @Setter
 @Getter
-//TODO: implement builder pattern
 public class GameBuilder {
     private NarrativeService narrativeService;
     private NarrativeReader narrativeReader;
     private PlayerObserver playerObserver;
     private File nodeConfigurationFile;
 
-    public Game build(){
+    public Game build() {
         final var mapper = new ObjectMapper(new YAMLFactory());
         final GameConfig config;
         try {
             config = mapper.readValue(nodeConfigurationFile, GameConfig.class);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException();
         }
 
         // Configure game state
-        final Map<VariableTypes, List<Map.Entry<String,VariableTypes>>> gameStateVariableMap =
+        final Map<VariableTypes, List<Map.Entry<String, VariableTypes>>> gameStateVariableMap =
                 config.getGameStateVariables().entrySet().stream().collect(groupingBy(Map.Entry::getValue));
 
         final List<String> integerVariableNames = ofNullable(gameStateVariableMap.get(VariableTypes.INT))
@@ -88,9 +84,9 @@ public class GameBuilder {
             }
         }
 
-        final var compileErrors = validateNodes(initialModelNodes.values(), gameState);
+        final var compileErrors = validateNodes(initialModelNodes.values(), gameState, narrativeService);
 
-        if(compileErrors.size() > 0){
+        if (compileErrors.size() > 0) {
             final var errorString = compileErrors.stream().collect(joining("\n"));
             throw new RuntimeException(String.format("Encountered the following errors: \n %s", errorString));
         }
@@ -105,35 +101,42 @@ public class GameBuilder {
                 .build();
     }
 
-    private List<String> validateNodes(final Collection<Node> nodes, final GameState gameState){
+    private List<String> validateNodes(final Collection<Node> nodes,
+                                       final GameState gameState,
+                                       final NarrativeService narrativeService) {
 
         final var predicateValidationVisitor = new ValidatePredicateVisitor(gameState);
         final var stateModifierValidationVisitor = new ValidationVisitor(gameState);
+        final var allNarrativeIds = new HashSet<>(narrativeService.allNarrativeIds());
 
         final List<String> compileErrors = new ArrayList<>();
 
-        for(var node : nodes){
+        for (var node : nodes) {
 
             final var stateChangeValidations = node.getNodeGameStateChange().getModifications().stream()
                     .map(stateChange -> stateChange.acceptVisitor(stateModifierValidationVisitor))
                     .flatMap(List::stream)
                     .collect(Collectors.toList());
 
-            if(stateChangeValidations.size() > 0){
+            if (stateChangeValidations.size() > 0) {
                 compileErrors.add(String.format("Encountered errors with state modifications on node %s: %s",
                         node.getId(),
                         stateChangeValidations.toString()));
             }
 
+            if (!allNarrativeIds.contains(node.getNarrativeId())) {
+                compileErrors.add(String.format("Node: %s references unknown narrative: %s", node.getId(), node.getNarrativeId()));
+            }
+
             final var nextNodeStrategy = node.getNextNodeStrategy();
-            if(nextNodeStrategy instanceof StateDeterminedNextNodeStrategy){
+            if (nextNodeStrategy instanceof StateDeterminedNextNodeStrategy) {
                 final var castNode = (StateDeterminedNextNodeStrategy) nextNodeStrategy;
                 final var nodeValidations = castNode.getBranches().stream()
                         .map(StateDeterminedNextNodeStrategy.Branch::getPredicate)
                         .map(gameStatePredicate -> gameStatePredicate.acceptVisitor(predicateValidationVisitor))
                         .flatMap(List::stream)
                         .collect(Collectors.toList());
-                if(!nodeValidations.isEmpty()){
+                if (!nodeValidations.isEmpty()) {
                     compileErrors.add(String.format("Encountered errors with branch predicates on node %s: %s",
                             node.getId(),
                             nodeValidations.toString()));
@@ -152,8 +155,8 @@ public class GameBuilder {
     }
 
     private PlayerDeterminedNextNodeStrategy convertPlayerDeterminedBranches(final List<Branch> branches,
-                                                                                    final PlayerObserver playerObserver,
-                                                                                    final Map<String, Node> nodeCache) {
+                                                                             final PlayerObserver playerObserver,
+                                                                             final Map<String, Node> nodeCache) {
         return PlayerDeterminedNextNodeStrategy
                 .builder()
                 .playerObserver(playerObserver)
@@ -167,8 +170,8 @@ public class GameBuilder {
     }
 
     private StateDeterminedNextNodeStrategy convertStateDeterminedBranches(final List<Branch> branches,
-                                                                                  final GameState gameState,
-                                                                                  final Map<String, Node> nodeCache) {
+                                                                           final GameState gameState,
+                                                                           final Map<String, Node> nodeCache) {
         return StateDeterminedNextNodeStrategy
                 .builder()
                 .gameState(gameState)
