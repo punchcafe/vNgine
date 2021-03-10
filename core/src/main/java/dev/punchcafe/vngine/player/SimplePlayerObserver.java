@@ -1,5 +1,7 @@
 package dev.punchcafe.vngine.player;
 
+import dev.punchcafe.vngine.player.PlayerObserver;
+
 import java.util.List;
 import java.util.Scanner;
 

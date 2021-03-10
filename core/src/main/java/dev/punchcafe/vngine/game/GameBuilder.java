@@ -34,7 +34,7 @@ public class GameBuilder<N> {
     private PlayerObserver playerObserver;
     private File nodeConfigurationFile;
 
-    public Game build() {
+    public Game<N> build() {
         final var mapper = new ObjectMapper(new YAMLFactory());
         final GameConfig config;
         try {

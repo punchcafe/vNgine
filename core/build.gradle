@@ -9,7 +9,6 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
-    id "io.freefair.lombok" version "5.0.0-rc6"
 }
 
 repositories {
@@ -23,7 +22,6 @@ dependencies {
     api 'org.apache.commons:commons-math3:3.6.1'
 
     compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.1'
-    compile project(':core')
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
