@@ -14,12 +14,12 @@ public class GamePlayer {
     public static void main(String[] args) throws IOException {
         // TODO: extract to adaptor
         final dev.punchcafe.vngine.game.GameBuilder<NarrativeImp> gameBuilder = new dev.punchcafe.vngine.game.GameBuilder();
-        final var narratives = NarrativeParser.parseNarrative(new File("src/main/resources/game-config/chapter_1_nar.yaml"));
+        final var narratives = NarrativeParser.parseNarrative(new File("command-line/src/main/resources/game-config/chapter_1_nar.yaml"));
         final var narrativeService = new NarrativeServiceImp(narratives);
         gameBuilder.setNarrativeReader(new NarrativeReaderImp());
         gameBuilder.setNarrativeService(narrativeService);
         gameBuilder.setPlayerObserver(new SimplePlayerObserver());
-        gameBuilder.setNodeConfigurationFile(new File("src/main/resources/game-config/chapter_1.yaml"));
+        gameBuilder.setNodeConfigurationFile(new File("command-line/src/main/resources/game-config/chapter_1.yaml"));
         gameBuilder.build().play();
     }
 }
