@@ -58,8 +58,14 @@ public class GameBuilder<N> {
                 .stream()
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-        //TODO: classifications
-        final var gameState = new GameState(integerVariableNames, booleanVariableNames, null);
+
+        final List<String> stringVariableNames = ofNullable(gameStateVariableMap.get(VariableTypes.STR))
+                .orElse(List.of())
+                .stream()
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        final var gameState = new GameState(integerVariableNames, booleanVariableNames, stringVariableNames);
 
         final var initialModelNodes = config.getNodes().stream()
                 .map(this::convertToNodeWithoutLinks)

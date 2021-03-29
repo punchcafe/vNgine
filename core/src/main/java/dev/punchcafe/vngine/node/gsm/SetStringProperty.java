@@ -14,7 +14,7 @@ public class SetStringProperty implements GameStateModification {
 
     @Override
     public void modify(GameState gameState) {
-        gameState.setClassificationProperty(propertyName, propertyValue);
+        gameState.setStringProperty(propertyName, propertyValue);
     }
 
     @Override

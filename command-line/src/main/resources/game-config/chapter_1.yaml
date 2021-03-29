@@ -2,6 +2,9 @@ game-state-variables:
   bishounen-name: BOOL
   bishounen-love: BOOL
   bishounen-one-relationship: INT
+  bishounen-one-birthday-month: STR
+  name: STR
+  first: STR
 
 chapter-variables:
   did-you-do-this: INT
@@ -13,6 +16,8 @@ nodes:
     game-state-modifiers:
       - "increase $int.bishounen-one-relationship by 1"
     branches:
+      - predicate-expression: "$str.first is 'none'"
+        node-id: 1_3_3
       - predicate-expression: "$int.bishounen-one-relationship less_than 2"
         node-id: 1_2_2
       - predicate-expression: "$int.bishounen-one-relationship more_than 1"
@@ -50,3 +55,11 @@ nodes:
       - "set $bool.bishounen-love to false"
       - "set $str.name to 'MY OTHER NAME VALUE'"
     branches:
+  - id: 1_3_3
+    type: AUTOMATIC
+    narrative-id: 6
+    game-state-modifiers:
+      - "set $str.first to 'yes'"
+    branches:
+      - predicate-expression: "$str.first is 'yes'"
+        node-id: 1_2_1

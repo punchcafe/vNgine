@@ -82,6 +82,9 @@ public class ValidatePredicateVisitor implements GameStatePredicateVisitor<List<
 
     @Override
     public List<String> visitStringVariableValue(StringVariableValue stringVariableValue) {
+        if (!gameState.doesStringPropertyExist(stringVariableValue.getVariableName())) {
+            return List.of(String.format("No STR variable with name %s", stringVariableValue.getVariableName()));
+        }
         return List.of();
     }
 

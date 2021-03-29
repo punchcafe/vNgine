@@ -14,3 +14,6 @@ narrative:
   - id: 5
     name: "OTACON"
     dialogue: "JUST LIKE ONE OF MY JAPANESE ANIMES!!1!"
+  - id: 6
+    name: "FIRST CHECK"
+    dialogue: "Correctly read str var"

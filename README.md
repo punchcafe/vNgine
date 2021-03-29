@@ -9,8 +9,8 @@
 ### 0.0.3
 - Persistence
 
-### 0.0.4 - command line release
+### 0.0.5 - command line release
+- Testing suite
 - File selection
 - Run script
 - User guide documentation
-
