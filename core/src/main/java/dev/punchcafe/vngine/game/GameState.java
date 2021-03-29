@@ -12,6 +12,7 @@ public class GameState {
     private final Map<String, Integer> integerPropertyMap = new HashMap<>();
     private final Map<String, Boolean> booleanPropertyMap = new HashMap<>();
     //private final Map<String, String> classificationPropertyMap;
+    //default to none, provide defaults in a separate builder method
 
 
     public GameState(final List<String> integerProperties,
