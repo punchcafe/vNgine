@@ -1,10 +1,4 @@
-game-state-variables:
-  bishounen-name: BOOL
-  bishounen-love: BOOL
-  bishounen-one-relationship: INT
-  bishounen-one-birthday-month: STR
-  name: STR
-  first: STR
+chapter-id: c1_2_3
 
 chapter-variables:
   did-you-do-this: INT

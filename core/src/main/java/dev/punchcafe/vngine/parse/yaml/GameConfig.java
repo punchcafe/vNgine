@@ -14,5 +14,6 @@ public class GameConfig {
     private Map<String, VariableTypes> gameStateVariables;
     @JsonProperty("chapter-variables")
     private Map<String, VariableTypes> chapterVariables;
-    private List<Node> nodes;
+    private List<ChapterConfig> chapters;
+    //TODO: add chapter here
 }

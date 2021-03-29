@@ -1,5 +1,6 @@
 package dev.punchcafe.vngine.game;
 
+import com.google.common.collect.ImmutableMap;
 import dev.punchcafe.vngine.NoSuchPropertyException;
 import lombok.NonNull;
 
@@ -73,5 +74,19 @@ public class GameState {
     public String getStringProperty(String propertyName) {
         return Optional.ofNullable(stringPropertyMap.get(propertyName))
                 .orElseThrow(() -> new NoSuchPropertyException(propertyName));
+    }
+
+    public GameStateSnapshot takeSnapshot() {
+        return GameStateSnapshot.builder()
+                .booleanPropertyMap(ImmutableMap.<String, Boolean>builder().putAll(this.booleanPropertyMap).build())
+                .stringPropertyMap(ImmutableMap.<String, String>builder().putAll(this.stringPropertyMap).build())
+                .integerPropertyMap(ImmutableMap.<String, Integer>builder().putAll(this.integerPropertyMap).build())
+                .build();
+    }
+
+    public static GameState fromSnapshot(final GameStateSnapshot snapshot) {
+        return new GameState(snapshot.getIntegerPropertyMap(),
+                snapshot.getBooleanPropertyMap(),
+                snapshot.getStringPropertyMap());
     }
 }

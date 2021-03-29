@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Builder
 @Getter
-public class Node {
+public class Node implements INode {
     private final String id;
     private final NodeGameStateChange nodeGameStateChange;
     private String narrativeId;
