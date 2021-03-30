@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.predicate.integer;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.PredicateValue;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ public class IntegerVariableValue implements PredicateValue<Integer> {
 
 
     @Override
-    public Integer getValue(final GameState gameState) {
+    public Integer getValue(final StateContainer gameState) {
         return gameState.getIntegerProperty(variableName);
     }
 

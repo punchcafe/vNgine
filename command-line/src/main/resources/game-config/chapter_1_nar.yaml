@@ -17,3 +17,6 @@ narrative:
   - id: 6
     name: "FIRST CHECK"
     dialogue: "Correctly read str var"
+  - id: 2_1
+    name: "WELCOMMER"
+    dialogue: "Welcome to the next chapter"

@@ -19,7 +19,7 @@ public class GamePlayer {
         gameBuilder.setNarrativeReader(new NarrativeReaderImp());
         gameBuilder.setNarrativeService(narrativeService);
         gameBuilder.setPlayerObserver(new SimplePlayerObserver());
-        gameBuilder.setNodeConfigurationFile(new File("command-line/src/main/resources/game-config/chapter_1.yaml"));
+        gameBuilder.setNodeConfigurationFile(new File("command-line/src/main/resources/game-config/game_config.yaml"));
         gameBuilder.build().play();
     }
 }

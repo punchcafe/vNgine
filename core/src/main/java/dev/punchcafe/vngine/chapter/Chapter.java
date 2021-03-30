@@ -1,27 +1,46 @@
 package dev.punchcafe.vngine.chapter;
 
-import dev.punchcafe.vngine.game.GameState;
-import dev.punchcafe.vngine.node.INode;
+import dev.punchcafe.vngine.node.gsm.ChangeChapterState;
+import dev.punchcafe.vngine.node.gsm.GameStateModification;
+import dev.punchcafe.vngine.state.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.Node;
+import dev.punchcafe.vngine.node.StoryNode;
 import dev.punchcafe.vngine.node.gsm.NodeGameStateChange;
 import dev.punchcafe.vngine.parse.yaml.ChapterConfig;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
-public class Chapter implements INode {
+import java.util.List;
 
-    private final ChapterConfig yamlconfig;
-    private final GameState chapterState;
+/**
+ * A chapter can act as a node, but provides a logical way to manage large games.
+ * A chapter can bootstrap new nodes into existence, and continue like a regular node.
+ * <p>
+ * TODO: Instead of a game builder having the onus of building all nodes, instead it only needs to get all the
+ * chapter configuration values (although we can allow it to do it by file directories if need be). All chapter nodes
+ * should be instantiated, but the don't bootstrap the chapter until getNextNode is called. Hopefully, since it keeps
+ * no internal track of next node, it should be able to clear memory as we pass thru chapters.
+ */
+@AllArgsConstructor
+public class Chapter implements Node {
+
+    private final ChapterConfig chapterConfig;
     private final ChapterBuilder chapterBuilder;
-    private final Node entryNode;
 
     @Override
     public String getId() {
-        return null;
+        return chapterConfig.getChapterId();
     }
 
+    /**
+     * Sets the chapter state to the new state.
+     *
+     * @return
+     */
     @Override
     public NodeGameStateChange getNodeGameStateChange() {
-        // Set chapter state?
-        return null;
+        return new NodeGameStateChange(List.of(new ChangeChapterState(chapterConfig)));
     }
 
     @Override
@@ -30,10 +49,7 @@ public class Chapter implements INode {
     }
 
     @Override
-    public INode getNextNode() {
-        chapterBuilder.buildChapter(yamlconfig)
-        // BUILD CHapter, and pass head node
-        // Switch out game
-        return null;
+    public Node getNextNode() {
+        return chapterBuilder.buildChapter(chapterConfig);
     }
 }

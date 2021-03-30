@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.predicate.bool;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.PredicateValue;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ public class BooleanVariableValue implements PredicateValue<Boolean> {
 
 
     @Override
-    public Boolean getValue(final GameState gameState) {
+    public Boolean getValue(final StateContainer gameState) {
         return gameState.getBooleanProperty(variableName);
     }
 

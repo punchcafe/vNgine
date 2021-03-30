@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.predicate.chain;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class PredicateChain implements GameStatePredicate {
 
 
     @Override
-    public boolean evaluate(GameState gameState) {
+    public boolean evaluate(StateContainer gameState) {
         var result = predicateChainLinks.get(0).getPredicate().evaluate(gameState);
         for (var link : predicateChainLinks.subList(1, predicateChainLinks.size())) {
             switch (link.getLink()) {

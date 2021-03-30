@@ -1,9 +1,9 @@
 package dev.punchcafe.vngine.node.predicate;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 
 public interface GameStatePredicate {
-    boolean evaluate(GameState gameState);
+    boolean evaluate(StateContainer gameState);
 
     <T> T acceptVisitor(GameStatePredicateVisitor<T> visitor);
 }

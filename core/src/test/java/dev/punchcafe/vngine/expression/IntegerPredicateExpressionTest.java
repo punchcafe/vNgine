@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.expression;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.parse.GameStatePredicateParser;
 import org.junit.jupiter.api.Test;
 
@@ -60,7 +60,7 @@ public class IntegerPredicateExpressionTest {
     @Test
     void evaluates_complexExpression_equals_withValues(){
         final var propertyName = "PROPERTY";
-        final var gameState = new GameState(List.of(propertyName), List.of(), Map.of());
+        final var gameState = new StateContainer(List.of(propertyName), List.of(), Map.of());
         gameState.changeIntegerPropertyBy(propertyName, 5);
 
         final var testStringOne = "$int.property equals 2";

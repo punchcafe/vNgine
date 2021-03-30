@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.expression;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.parse.GameStatePredicateParser;
 import org.junit.jupiter.api.Test;
 
@@ -69,7 +69,7 @@ public class BooleanPredicateExpressionTest {
     @Test
     void evaluates_complexExpression_is_withValues(){
         final var propertyName = "PROPERTY";
-        final var gameState = new GameState(List.of(), List.of(propertyName), Map.of());
+        final var gameState = new StateContainer(List.of(), List.of(propertyName), Map.of());
         gameState.setBooleanProperty(propertyName, true);
 
         final var testStringOne = "$bool.property is true";
@@ -88,7 +88,7 @@ public class BooleanPredicateExpressionTest {
     @Test
     void evaluates_complexExpression_isnt_withValues(){
         final var propertyName = "PROPERTY";
-        final var gameState = new GameState(List.of(), List.of(propertyName), Map.of());
+        final var gameState = new StateContainer(List.of(), List.of(propertyName), Map.of());
         gameState.setBooleanProperty(propertyName, true);
 
         final var testStringOne = "$bool.property isnt true";

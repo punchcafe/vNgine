@@ -1,6 +1,7 @@
 package dev.punchcafe.vngine.node.gsm;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

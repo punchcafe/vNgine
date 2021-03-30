@@ -1,15 +1,14 @@
 package dev.punchcafe.vngine.node.gsm;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 
 import java.util.List;
 
 @AllArgsConstructor
 public class ValidationVisitor implements GameStateModificationVisitor<List<String>> {
 
-    private final GameState gameState;
+    private final StateContainer gameState;
 
     @Override
     public List<String> visitChangeIntegerProperty(final ChangeIntegerProperty changeIntegerProperty){
@@ -28,5 +27,10 @@ public class ValidationVisitor implements GameStateModificationVisitor<List<Stri
 
     public List<String> visitSetStringProperty(final SetStringProperty changeIntegerProperty){
         return List.of();
+    }
+
+    @Override
+    public List<String> visitChangeChapterState(ChangeChapterState changeChapterState) {
+        throw new UnsupportedOperationException();
     }
 };

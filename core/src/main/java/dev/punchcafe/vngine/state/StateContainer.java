@@ -1,7 +1,8 @@
-package dev.punchcafe.vngine.game;
+package dev.punchcafe.vngine.state;
 
 import com.google.common.collect.ImmutableMap;
 import dev.punchcafe.vngine.NoSuchPropertyException;
+import dev.punchcafe.vngine.game.GameStateSnapshot;
 import lombok.NonNull;
 
 import java.util.HashMap;
@@ -9,16 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class GameState {
+public abstract class StateContainer {
 
-    private final Map<String, Integer> integerPropertyMap = new HashMap<>();
-    private final Map<String, Boolean> booleanPropertyMap = new HashMap<>();
-    private final Map<String, String> stringPropertyMap = new HashMap<>();
+    protected final Map<String, Integer> integerPropertyMap = new HashMap<>();
+    protected final Map<String, Boolean> booleanPropertyMap = new HashMap<>();
+    protected final Map<String, String> stringPropertyMap = new HashMap<>();
 
-
-    public GameState(@NonNull final List<String> integerProperties,
-                     @NonNull final List<String> booleanProperties,
-                     @NonNull final List<String> stringProperties) {
+    public StateContainer(@NonNull final List<String> integerProperties,
+                        @NonNull final List<String> booleanProperties,
+                        @NonNull final List<String> stringProperties) {
         for (final var property : integerProperties) {
             integerPropertyMap.put(property.toLowerCase(), 0);
         }
@@ -74,19 +74,5 @@ public class GameState {
     public String getStringProperty(String propertyName) {
         return Optional.ofNullable(stringPropertyMap.get(propertyName))
                 .orElseThrow(() -> new NoSuchPropertyException(propertyName));
-    }
-
-    public GameStateSnapshot takeSnapshot() {
-        return GameStateSnapshot.builder()
-                .booleanPropertyMap(ImmutableMap.<String, Boolean>builder().putAll(this.booleanPropertyMap).build())
-                .stringPropertyMap(ImmutableMap.<String, String>builder().putAll(this.stringPropertyMap).build())
-                .integerPropertyMap(ImmutableMap.<String, Integer>builder().putAll(this.integerPropertyMap).build())
-                .build();
-    }
-
-    public static GameState fromSnapshot(final GameStateSnapshot snapshot) {
-        return new GameState(snapshot.getIntegerPropertyMap(),
-                snapshot.getBooleanPropertyMap(),
-                snapshot.getStringPropertyMap());
     }
 }

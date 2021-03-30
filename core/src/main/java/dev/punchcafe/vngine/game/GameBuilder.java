@@ -2,9 +2,11 @@ package dev.punchcafe.vngine.game;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import dev.punchcafe.vngine.chapter.Chapter;
+import dev.punchcafe.vngine.chapter.ChapterBuilder;
 import dev.punchcafe.vngine.narrative.NarrativeReader;
 import dev.punchcafe.vngine.narrative.NarrativeService;
-import dev.punchcafe.vngine.node.Node;
+import dev.punchcafe.vngine.node.StoryNode;
 import dev.punchcafe.vngine.node.PlayerDeterminedNextNodeStrategy;
 import dev.punchcafe.vngine.node.StateDeterminedNextNodeStrategy;
 import dev.punchcafe.vngine.node.gsm.ValidationVisitor;
@@ -12,9 +14,12 @@ import dev.punchcafe.vngine.node.predicate.visitors.ValidatePredicateVisitor;
 import dev.punchcafe.vngine.parse.GameStateModifierParser;
 import dev.punchcafe.vngine.parse.GameStatePredicateParser;
 import dev.punchcafe.vngine.parse.yaml.Branch;
+import dev.punchcafe.vngine.parse.yaml.ChapterConfig;
 import dev.punchcafe.vngine.parse.yaml.GameConfig;
 import dev.punchcafe.vngine.parse.yaml.VariableTypes;
 import dev.punchcafe.vngine.player.PlayerObserver;
+import dev.punchcafe.vngine.state.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -67,126 +72,23 @@ public class GameBuilder<N> {
 
         final var gameState = new GameState(integerVariableNames, booleanVariableNames, stringVariableNames);
 
-        final var initialModelNodes = config.getNodes().stream()
-                .map(this::convertToNodeWithoutLinks)
-                .collect(toMap(Node::getId, identity()));
-        for (final var yamlNode : config.getNodes()) {
-            final var modelNode = initialModelNodes.get(yamlNode.getId());
-            switch (yamlNode.getType()) {
-                case PLAYER:
-                    modelNode.setNextNodeStrategy(convertPlayerDeterminedBranches(
-                            ofNullable(yamlNode.getBranches()).orElse(List.of()),
-                            playerObserver,
-                            initialModelNodes));
-                    break;
-                case AUTOMATIC:
-                    modelNode.setNextNodeStrategy(convertStateDeterminedBranches(
-                            ofNullable(yamlNode.getBranches()).orElse(List.of()),
-                            gameState,
-                            initialModelNodes));
-                    break;
-                default:
-                    throw new RuntimeException();
-            }
-        }
-
-        final var compileErrors = validateNodes(initialModelNodes.values(), gameState, narrativeService);
-
-        if (compileErrors.size() > 0) {
-            final var errorString = compileErrors.stream().collect(joining("\n"));
-            throw new RuntimeException(String.format("Encountered the following errors: \n %s", errorString));
-        }
-
-
-        final var firstNode = initialModelNodes.get(config.getNodes().get(0).getId());
-        return Game.<N>builder()
+        final var chapterBuilder = ChapterBuilder.<N>builder()
                 .gameState(gameState)
-                .firstNode(firstNode)
                 .narrativeReader(narrativeReader)
                 .narrativeService(narrativeService)
-                .build();
-    }
-
-    private List<String> validateNodes(final Collection<Node> nodes,
-                                       final GameState gameState,
-                                       final NarrativeService narrativeService) {
-
-        final var predicateValidationVisitor = new ValidatePredicateVisitor(gameState);
-        final var stateModifierValidationVisitor = new ValidationVisitor(gameState);
-        final var allNarrativeIds = new HashSet<>(narrativeService.allNarrativeIds());
-
-        final List<String> compileErrors = new ArrayList<>();
-
-        for (var node : nodes) {
-
-            final var stateChangeValidations = node.getNodeGameStateChange().getModifications().stream()
-                    .map(stateChange -> stateChange.acceptVisitor(stateModifierValidationVisitor))
-                    .flatMap(List::stream)
-                    .collect(Collectors.toList());
-
-            if (stateChangeValidations.size() > 0) {
-                compileErrors.add(String.format("Encountered errors with state modifications on node %s: %s",
-                        node.getId(),
-                        stateChangeValidations.toString()));
-            }
-
-            if (!allNarrativeIds.contains(node.getNarrativeId())) {
-                compileErrors.add(String.format("Node: %s references unknown narrative: %s", node.getId(), node.getNarrativeId()));
-            }
-
-            final var nextNodeStrategy = node.getNextNodeStrategy();
-            if (nextNodeStrategy instanceof StateDeterminedNextNodeStrategy) {
-                final var castNode = (StateDeterminedNextNodeStrategy) nextNodeStrategy;
-                final var nodeValidations = castNode.getBranches().stream()
-                        .map(StateDeterminedNextNodeStrategy.Branch::getPredicate)
-                        .map(gameStatePredicate -> gameStatePredicate.acceptVisitor(predicateValidationVisitor))
-                        .flatMap(List::stream)
-                        .collect(Collectors.toList());
-                if (!nodeValidations.isEmpty()) {
-                    compileErrors.add(String.format("Encountered errors with branch predicates on node %s: %s",
-                            node.getId(),
-                            nodeValidations.toString()));
-                }
-            }
-        }
-        return compileErrors;
-    }
-
-    private Node convertToNodeWithoutLinks(final dev.punchcafe.vngine.parse.yaml.Node node) {
-        return Node.builder()
-                .id(node.getId())
-                .narrativeId(node.getNarrativeId())
-                .nodeGameStateChange(GameStateModifierParser.parse(node.getGameStateModifiers()))
-                .build();
-    }
-
-    private PlayerDeterminedNextNodeStrategy convertPlayerDeterminedBranches(final List<Branch> branches,
-                                                                             final PlayerObserver playerObserver,
-                                                                             final Map<String, Node> nodeCache) {
-        return PlayerDeterminedNextNodeStrategy
-                .builder()
                 .playerObserver(playerObserver)
-                .branches(branches.stream().map(branch ->
-                        PlayerDeterminedNextNodeStrategy.Branch.builder()
-                                .node(ofNullable(nodeCache.get(branch.getNodeId())).orElseThrow())
-                                .prompt(branch.getPrompt())
-                                .build())
-                        .collect(Collectors.toList()))
+                .chapterConfigCache(config.getChapters().stream().collect(toMap(ChapterConfig::getChapterId, identity())))
                 .build();
-    }
 
-    private StateDeterminedNextNodeStrategy convertStateDeterminedBranches(final List<Branch> branches,
-                                                                           final GameState gameState,
-                                                                           final Map<String, Node> nodeCache) {
-        return StateDeterminedNextNodeStrategy
-                .builder()
+
+        //TODO: make this customisable
+        final var firstChapter = new Chapter(config.getChapters().get(0), chapterBuilder);
+
+        return Game.<N>builder()
                 .gameState(gameState)
-                .branches(branches.stream().map(branch ->
-                        StateDeterminedNextNodeStrategy.Branch.builder()
-                                .node(ofNullable(nodeCache.get(branch.getNodeId())).orElseThrow())
-                                .predicate(GameStatePredicateParser.parsePredicate(branch.getPredicateExpression()))
-                                .build())
-                        .collect(Collectors.toList()))
+                .firstNode(firstChapter)
+                .narrativeReader(narrativeReader)
+                .narrativeService(narrativeService)
                 .build();
     }
 }

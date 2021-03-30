@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.predicate.visitors;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.SimplePredicateValue;
 import dev.punchcafe.vngine.node.predicate.bool.BooleanPredicate;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ValidatePredicateVisitor implements GameStatePredicateVisitor<List<String>> {
 
-    private GameState gameState;
+    private StateContainer gameState;
 
     @Override
     public List<String> visitStringPredicate(StringPredicate stringPredicate) {

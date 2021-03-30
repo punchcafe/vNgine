@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.node.predicate.bool;
 
-import dev.punchcafe.vngine.game.GameState;
+import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.PredicateValue;
@@ -20,7 +20,7 @@ public class BooleanPredicate implements GameStatePredicate {
     private final Operation operation;
 
     @Override
-    public boolean evaluate(GameState gameState) {
+    public boolean evaluate(StateContainer gameState) {
         switch (operation){
             case IS:
                 return leftHandSide.getValue(gameState) == rightHandSide.getValue(gameState);
