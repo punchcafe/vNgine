@@ -1,5 +1,6 @@
 package dev.punchcafe.vngine.node.predicate.integer;
 
+import dev.punchcafe.vngine.state.GameState;
 import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
@@ -21,7 +22,7 @@ public class IntegerComparisonPredicate implements GameStatePredicate {
 
 
     @Override
-    public boolean evaluate(StateContainer gameState) {
+    public boolean evaluate(GameState gameState) {
         switch (comparison){
             case EQUALS:
                 return leftHandSide.getValue(gameState).equals(rightHandSide.getValue(gameState));

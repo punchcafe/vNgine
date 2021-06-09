@@ -6,7 +6,9 @@ import java.util.List;
 
 public class ChapterState extends StateContainer {
 
-    public ChapterState(@NonNull List<String> integerProperties, @NonNull List<String> booleanProperties, @NonNull List<String> stringProperties) {
+    public ChapterState(@NonNull final List<String> integerProperties,
+                        @NonNull final List<String> booleanProperties,
+                        @NonNull final List<String> stringProperties) {
         super(integerProperties, booleanProperties, stringProperties);
     }
 }

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
+import static dev.punchcafe.vngine.parse.GameStateParseUtils.parseStateLevelFromVarPrefix;
+
 public class GameStatePredicateParser {
 
     private enum VariableType {
@@ -237,24 +239,27 @@ public class GameStatePredicateParser {
     }
 
     private static PredicateValue<Integer> evaluateIntegerVariable(final String variable) {
-        if (variable.startsWith("$int.")) {
-            return new IntegerVariableValue(variable.substring(5));
+        if (variable.startsWith("$int.") || variable.startsWith("@int.")) {
+            return new IntegerVariableValue(variable.substring(5),
+                    parseStateLevelFromVarPrefix(variable.substring(0,1)));
         } else {
             return new SimplePredicateValue<>(Integer.parseInt(variable));
         }
     }
 
     private static PredicateValue<Boolean> evaluateBooleanVariable(final String variable) {
-        if (variable.startsWith("$bool.")) {
-            return new BooleanVariableValue(variable.substring(6));
+        if (variable.startsWith("$bool.") || variable.startsWith("@bool.")) {
+            return new BooleanVariableValue(variable.substring(6),
+                    parseStateLevelFromVarPrefix(variable.substring(0,1)));
         } else {
             return new SimplePredicateValue<>(Boolean.parseBoolean(variable.toLowerCase()));
         }
     }
 
     private static PredicateValue<String> evaluateStringVariable(final String variable) {
-        if (variable.startsWith("$str.")) {
-            return new StringVariableValue(variable.substring(5));
+        if (variable.startsWith("$str.") || variable.startsWith("@str.")) {
+            return new StringVariableValue(variable.substring(5),
+                    parseStateLevelFromVarPrefix(variable.substring(0,1)));
         }
         if (variable.startsWith("'") && variable.endsWith("'")) {
             return new SimplePredicateValue<>(variable.substring(1, variable.length() - 1));

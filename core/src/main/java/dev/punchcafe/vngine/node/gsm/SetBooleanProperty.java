@@ -10,12 +10,20 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class SetBooleanProperty implements GameStateModification {
-    final private String propertyName;
-    final private boolean booleanValue;
+    private final String propertyName;
+    private final boolean booleanValue;
+    private final StateLevel stateLevel;
 
     @Override
     public void modify(GameState gameState) {
-        gameState.setBooleanProperty(propertyName, booleanValue);
+        switch (stateLevel) {
+            case GAME:
+                gameState.setBooleanProperty(propertyName, booleanValue);
+                break;
+            case CHAPTER:
+                gameState.getChapterState().setBooleanProperty(propertyName, booleanValue);
+                break;
+        }
     }
 
     @Override

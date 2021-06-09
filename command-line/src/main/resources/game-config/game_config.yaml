@@ -15,6 +15,7 @@ chapters:
         narrative-id: 1
         game-state-modifiers:
           - "increase $int.bishounen-one-relationship by 1"
+          - "increase @int.did-you-do-this by 1"
         branches:
           - predicate-expression: "$str.first is 'none'"
             node-id: c2

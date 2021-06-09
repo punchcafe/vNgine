@@ -1,8 +1,6 @@
 package dev.punchcafe.vngine.state;
 
-import com.google.common.collect.ImmutableMap;
 import dev.punchcafe.vngine.NoSuchPropertyException;
-import dev.punchcafe.vngine.game.GameStateSnapshot;
 import lombok.NonNull;
 
 import java.util.HashMap;

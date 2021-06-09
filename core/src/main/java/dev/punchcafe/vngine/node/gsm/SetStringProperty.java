@@ -10,12 +10,20 @@ import lombok.Getter;
 @Getter
 @EqualsAndHashCode
 public class SetStringProperty implements GameStateModification {
-    final private String propertyName;
-    final private String propertyValue;
+    private final String propertyName;
+    private final String propertyValue;
+    private final StateLevel stateLevel;
 
     @Override
     public void modify(GameState gameState) {
-        gameState.setStringProperty(propertyName, propertyValue);
+        switch (stateLevel){
+            case GAME:
+                gameState.setStringProperty(propertyName, propertyValue);
+                break;
+            case CHAPTER:
+                gameState.getChapterState().setStringProperty(propertyName, propertyValue);
+                break;
+        }
     }
 
     @Override

@@ -13,11 +13,18 @@ public class ChangeIntegerProperty implements GameStateModification {
 
     private final int valueChange;
     private final String propertyName;
-
+    private final StateLevel stateLevel;
 
     @Override
     public void modify(GameState gameState) {
-        gameState.changeIntegerPropertyBy(propertyName, valueChange);
+        switch (stateLevel) {
+            case GAME:
+                gameState.changeIntegerPropertyBy(propertyName, valueChange);
+                break;
+            case CHAPTER:
+                gameState.getChapterState().changeIntegerPropertyBy(propertyName, valueChange);
+                break;
+        }
     }
 
     @Override

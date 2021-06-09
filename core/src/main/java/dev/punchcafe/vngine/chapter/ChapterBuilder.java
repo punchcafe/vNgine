@@ -27,6 +27,7 @@ import static java.util.stream.Collectors.*;
 
 /**
  * Class responsible for being able to bootstrap a chapter config and load it into memory.
+ *
  * @param <N>
  */
 @Builder
@@ -110,7 +111,7 @@ public class ChapterBuilder<N> {
     }
 
     private StateDeterminedNextNodeStrategy convertStateDeterminedBranches(final List<Branch> branches,
-                                                                           final StateContainer gameState,
+                                                                           final GameState gameState,
                                                                            final Map<String, StoryNode> nodeCache) {
         return StateDeterminedNextNodeStrategy
                 .builder()
@@ -124,14 +125,14 @@ public class ChapterBuilder<N> {
                 .build();
     }
 
-    private Node retrieveNode(final String nodeId, final Map<String, StoryNode> storyNodeCache){
+    private Node retrieveNode(final String nodeId, final Map<String, StoryNode> storyNodeCache) {
         // Assume never have duplicates, and that that has been validated earlier
         final var storyNode = storyNodeCache.get(nodeId);
-        if(storyNode != null){
+        if (storyNode != null) {
             return storyNode;
         }
         final var chapterNodeConfig = chapterConfigCache.get(nodeId);
-        if(chapterNodeConfig == null){
+        if (chapterNodeConfig == null) {
             throw new RuntimeException("node not found");
         }
         return new Chapter(chapterNodeConfig, this);

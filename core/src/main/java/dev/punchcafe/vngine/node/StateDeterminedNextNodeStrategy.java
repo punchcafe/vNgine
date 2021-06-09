@@ -1,5 +1,6 @@
 package dev.punchcafe.vngine.node;
 
+import dev.punchcafe.vngine.state.GameState;
 import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicate;
 import lombok.Builder;
@@ -18,7 +19,7 @@ public class StateDeterminedNextNodeStrategy implements NextNodeStrategy {
         private final Node node;
     }
 
-    private final StateContainer gameState;
+    private final GameState gameState;
     private final List<Branch> branches;
 
     @Override

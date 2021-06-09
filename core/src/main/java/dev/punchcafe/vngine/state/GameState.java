@@ -24,16 +24,8 @@ public class GameState extends StateContainer {
         this.chapterState = new ChapterState(integerPropertyNames, booleanPropertyNames, stringPropertyNames);
     }
 
-    public String getStringChapterProperty(final String propertyName){
-        return chapterState.getStringProperty(propertyName);
-    }
-
-    public Integer getIntegerChapterProperty(final String propertyName){
-        return chapterState.getIntegerProperty(propertyName);
-    }
-
-    public Boolean getBooleanChapterProperty(final String propertyName){
-        return chapterState.getBooleanProperty(propertyName);
+    public ChapterState getChapterState(){
+        return this.chapterState;
     }
 
     /*
