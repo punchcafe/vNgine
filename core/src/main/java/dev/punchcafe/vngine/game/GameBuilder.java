@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import dev.punchcafe.vngine.chapter.Chapter;
 import dev.punchcafe.vngine.chapter.ChapterBuilder;
+import dev.punchcafe.vngine.config.PomConversionUtils;
 import dev.punchcafe.vngine.config.yaml.ChapterConfig;
 import dev.punchcafe.vngine.config.yaml.GameConfig;
 import dev.punchcafe.vngine.config.yaml.VariableTypes;
@@ -35,7 +36,7 @@ public class GameBuilder<N> {
 
     public Game<N> build() {
         final var mapper = new ObjectMapper(new YAMLFactory());
-        final GameConfig config = GameConfig.parseFromPom(projectObjectModel);
+        final GameConfig config = PomConversionUtils.parseFromPom(projectObjectModel);
 
         // Configure game state
         final Map<VariableTypes, List<Map.Entry<String, VariableTypes>>> gameStateVariableMap =

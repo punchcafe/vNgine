@@ -12,26 +12,6 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 public class Node {
-
-    public static Node parseFromPomNode(final dev.punchcafe.vngine.pom.model.Node pomNode) {
-        return Node.builder()
-                .id(pomNode.getId())
-                .narrativeId(pomNode.getNarrativeId())
-                .branches(convertListOfBranches(pomNode.getBranches()))
-                .gameStateModifiers(pomNode.getGameStateModifiers())
-                .type(NodeType.valueOf(pomNode.getType().toString()))
-                .build();
-    }
-
-    private static List<Branch> convertListOfBranches(final List<dev.punchcafe.vngine.pom.model.Branch> branches){
-        if(branches == null){
-            return List.of();
-        }
-        return branches.stream()
-                .map(Branch::mapFromPomBranch)
-                .collect(Collectors.toList());
-    }
-
     private String id;
     private NodeType type;
     @JsonProperty("narrative-id")
