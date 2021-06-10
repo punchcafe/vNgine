@@ -15,5 +15,6 @@ public class ProjectObjectModel<N> {
 
     private GameStateVariableConfig gameStateVariableConfig;
     private List<ChapterConfig> chapterConfigs;
+    private Spec spec;
     private List<N> narrativeConfigs;
 }

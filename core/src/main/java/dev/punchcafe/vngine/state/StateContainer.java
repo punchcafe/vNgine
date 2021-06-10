@@ -28,6 +28,18 @@ public abstract class StateContainer {
         }
     }
 
+    public void clearState(){
+        for(final var key : integerPropertyMap.keySet()){
+            integerPropertyMap.put(key, 0);
+        }
+        for(final var key : booleanPropertyMap.keySet()){
+            booleanPropertyMap.put(key, false);
+        }
+        for(final var key : stringPropertyMap.keySet()){
+            stringPropertyMap.put(key, "none");
+        }
+    }
+
     public boolean doesIntegerPropertyExist(String propertyName) {
         return integerPropertyMap.get(propertyName) != null;
     }
@@ -49,6 +61,12 @@ public abstract class StateContainer {
         final var existingValue = Optional.ofNullable(integerPropertyMap.get(property.toLowerCase()))
                 .orElseThrow(() -> new NoSuchPropertyException(property));
         integerPropertyMap.put(property.toLowerCase(), existingValue + value);
+    }
+
+    public void setIntegerProperty(final String property, final int value) {
+        final var existingValue = Optional.ofNullable(integerPropertyMap.get(property.toLowerCase()))
+                .orElseThrow(() -> new NoSuchPropertyException(property));
+        integerPropertyMap.put(property.toLowerCase(), value);
     }
 
     public boolean getBooleanProperty(String property) {

@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.game;
+package dev.punchcafe.vngine.game.save;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,5 +7,6 @@ import lombok.Getter;
 @Getter
 public class GameSave {
     private String nodeId;
-    private GameStateSnapshot gameState;
+    private String chapterId;
+    private SavedGameState savedGameState;
 }

@@ -13,4 +13,5 @@ import java.util.Map;
 public class GameConfig {
     private Map<String, VariableTypes> gameStateVariables;
     private List<ChapterConfig> chapters;
+    private ChapterConfig firstChapter;
 }

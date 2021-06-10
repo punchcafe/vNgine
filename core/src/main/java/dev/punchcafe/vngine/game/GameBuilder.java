@@ -1,17 +1,15 @@
 package dev.punchcafe.vngine.game;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import dev.punchcafe.vngine.chapter.Chapter;
 import dev.punchcafe.vngine.chapter.ChapterBuilder;
+import dev.punchcafe.vngine.chapter.ChapterConfigCache;
 import dev.punchcafe.vngine.config.PomConversionUtils;
 import dev.punchcafe.vngine.config.yaml.ChapterConfig;
 import dev.punchcafe.vngine.config.yaml.GameConfig;
 import dev.punchcafe.vngine.config.yaml.VariableTypes;
+import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.pom.model.ProjectObjectModel;
 import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
 import dev.punchcafe.vngine.pom.narrative.NarrativeService;
-import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.state.GameState;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +33,6 @@ public class GameBuilder<N> {
     private ProjectObjectModel<?> projectObjectModel;
 
     public Game<N> build() {
-        final var mapper = new ObjectMapper(new YAMLFactory());
         final GameConfig config = PomConversionUtils.parseFromPom(projectObjectModel);
 
         // Configure game state
@@ -62,23 +59,25 @@ public class GameBuilder<N> {
 
         final var gameState = new GameState(integerVariableNames, booleanVariableNames, stringVariableNames);
 
+        final var chapterConfigCache = ChapterConfigCache.builder()
+                .chapterConfigMap(config.getChapters().stream().collect(toMap(ChapterConfig::getChapterId, identity())))
+                .firstChapter(config.getFirstChapter())
+                .build();
+
         final var chapterBuilder = ChapterBuilder.<N>builder()
                 .gameState(gameState)
                 .narrativeReader(narrativeReader)
                 .narrativeService(narrativeService)
                 .playerObserver(playerObserver)
-                .chapterConfigCache(config.getChapters().stream().collect(toMap(ChapterConfig::getChapterId, identity())))
+                .chapterConfigCache(chapterConfigCache)
                 .build();
-
-
-        //TODO: make this customisable
-        final var firstChapter = new Chapter(config.getChapters().get(0), chapterBuilder);
 
         return Game.<N>builder()
                 .gameState(gameState)
-                .firstNode(firstChapter)
                 .narrativeReader(narrativeReader)
                 .narrativeService(narrativeService)
+                .chapterBuilder(chapterBuilder)
+                .chapterConfigCache(chapterConfigCache)
                 .build();
     }
 }

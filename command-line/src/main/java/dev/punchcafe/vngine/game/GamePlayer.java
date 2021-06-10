@@ -1,6 +1,10 @@
 package dev.punchcafe.vngine.game;
 
+import com.google.common.collect.ImmutableMap;
 import dev.punchcafe.vngine.config.narrative.NarrativeParser;
+import dev.punchcafe.vngine.game.save.GameSave;
+import dev.punchcafe.vngine.game.save.SavedGameState;
+import dev.punchcafe.vngine.game.save.StateSnapshot;
 import dev.punchcafe.vngine.pom.narrative.imp.NarrativeImp;
 import dev.punchcafe.vngine.pom.narrative.imp.NarrativeReaderImp;
 import dev.punchcafe.vngine.pom.narrative.imp.NarrativeServiceImp;
@@ -11,6 +15,7 @@ import dev.punchcafe.vngine.pom.PomLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class GamePlayer {
 
@@ -25,6 +30,24 @@ public class GamePlayer {
         gameBuilder.setNarrativeService(narrativeService);
         gameBuilder.setPlayerObserver(new SimplePlayerObserver());
         gameBuilder.setProjectObjectModel(pom);
-        gameBuilder.build().play();
+        final var game = gameBuilder.build();
+        //game.startNewGame();
+        final var saveFile = GameSave.builder()
+                .chapterId("ch_01")
+                .nodeId("1_2_2")
+                .savedGameState(SavedGameState.builder()
+                        .chapterStateSnapshot(StateSnapshot.builder()
+                                .booleanPropertyMap(Map.of())
+                                .integerPropertyMap(Map.of())
+                                .stringPropertyMap(Map.of())
+                                .build())
+                        .gameStateSnapshot(StateSnapshot.builder()
+                                .booleanPropertyMap(Map.of())
+                                .integerPropertyMap(Map.of())
+                                .stringPropertyMap(Map.of())
+                                .build())
+                        .build())
+                .build();
+        game.loadGame(saveFile);
     }
 }

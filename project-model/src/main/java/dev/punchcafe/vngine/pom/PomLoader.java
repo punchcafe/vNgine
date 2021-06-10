@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import dev.punchcafe.vngine.pom.model.GameStateVariableConfig;
 import dev.punchcafe.vngine.pom.model.ChapterConfig;
 import dev.punchcafe.vngine.pom.model.ProjectObjectModel;
+import dev.punchcafe.vngine.pom.model.Spec;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 
@@ -32,6 +33,7 @@ public class PomLoader<N> {
                 .map(this::loadGameStateVariables)
                 .map(this::loadChapterConfigs)
                 .map(this::loadNarrativeConfig)
+                .map(this::loadSpec)
                 .get();
     }
 
@@ -46,6 +48,20 @@ public class PomLoader<N> {
         } catch (IOException e) {
             e.printStackTrace();
             throw new InvalidConfigurationFile(GAME_STATE_VARIABLE_DECLARATION_FILE_NAME);
+        }
+    }
+
+    private ProjectObjectModel loadSpec(final ProjectObjectModel existingConfig) {
+        final var specFile = findFile(SPEC_DIRECTORY_NAME,
+                this.rootProjectDirectory);
+        try {
+            final var specObject = mapper.readValue(specFile, Spec.class);
+            return existingConfig.toBuilder()
+                    .spec(specObject)
+                    .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new InvalidConfigurationFile(SPEC_DIRECTORY_NAME);
         }
     }
 

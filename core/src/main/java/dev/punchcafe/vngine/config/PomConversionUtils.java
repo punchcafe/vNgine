@@ -11,13 +11,14 @@ import static dev.punchcafe.vngine.config.yaml.VariableTypes.*;
 import static java.util.stream.Collectors.toMap;
 
 public class PomConversionUtils {
-    public static Branch mapFromPomBranch(final dev.punchcafe.vngine.pom.model.Branch pomBranch ){
+    public static Branch mapFromPomBranch(final dev.punchcafe.vngine.pom.model.Branch pomBranch) {
         return Branch.builder()
                 .nodeId(pomBranch.getNodeId())
                 .predicateExpression(pomBranch.getPredicateExpression())
                 .prompt(pomBranch.getPrompt())
                 .build();
     }
+
     public static ChapterConfig parseFromPom(final dev.punchcafe.vngine.pom.model.ChapterConfig chapterPom) {
         return ChapterConfig.builder()
                 .chapterId(chapterPom.getChapterId())
@@ -30,16 +31,22 @@ public class PomConversionUtils {
     }
 
     public static Map<String, VariableTypes> convertPomVariableTypesMap(
-            final Map<String, dev.punchcafe.vngine.pom.model.VariableTypes> pomMap){
+            final Map<String, dev.punchcafe.vngine.pom.model.VariableTypes> pomMap) {
         return pomMap.entrySet().stream()
                 .collect(toMap(Map.Entry::getKey, entry -> convertFromPom(entry.getValue())));
     }
-    public static GameConfig parseFromPom(final ProjectObjectModel<?> pom){
+
+    public static GameConfig parseFromPom(final ProjectObjectModel<?> pom) {
+        final var chapterConfigs = pom.getChapterConfigs().stream()
+                .map(PomConversionUtils::parseFromPom)
+                .collect(Collectors.toList());
+        final var firstChapterId = pom.getSpec().getStartingChapter();
         return GameConfig.builder()
                 .gameStateVariables(convertPomVariableTypesMap(pom.getGameStateVariableConfig().getGameStateVariables()))
-                .chapters(pom.getChapterConfigs().stream()
-                        .map(PomConversionUtils::parseFromPom)
-                        .collect(Collectors.toList()))
+                .chapters(chapterConfigs)
+                .firstChapter(chapterConfigs.stream()
+                        .filter(chapterConfig -> chapterConfig.getChapterId().equals(firstChapterId)).findAny()
+                        .orElseThrow(() -> new IllegalArgumentException(String.format("First chapter node: %s not found", firstChapterId))))
                 .build();
     }
 
@@ -53,8 +60,8 @@ public class PomConversionUtils {
                 .build();
     }
 
-    private static List<Branch> convertListOfBranches(final List<dev.punchcafe.vngine.pom.model.Branch> branches){
-        if(branches == null){
+    private static List<Branch> convertListOfBranches(final List<dev.punchcafe.vngine.pom.model.Branch> branches) {
+        if (branches == null) {
             return List.of();
         }
         return branches.stream()
@@ -62,8 +69,8 @@ public class PomConversionUtils {
                 .collect(Collectors.toList());
     }
 
-    public static VariableTypes convertFromPom(final dev.punchcafe.vngine.pom.model.VariableTypes variableTypes){
-        switch (variableTypes){
+    public static VariableTypes convertFromPom(final dev.punchcafe.vngine.pom.model.VariableTypes variableTypes) {
+        switch (variableTypes) {
             case INT:
                 return INT;
             case STR:

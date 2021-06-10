@@ -35,7 +35,7 @@ public class ChapterBuilder<N> {
     private final NarrativeReader<N> narrativeReader;
     private final PlayerObserver playerObserver;
     private final GameState gameState;
-    private final Map<String, ChapterConfig> chapterConfigCache;
+    private final ChapterConfigCache chapterConfigCache;
 
     /**
      * Build a chapter from the chapter config, and passes the first story node
@@ -44,46 +44,60 @@ public class ChapterBuilder<N> {
      * @return
      */
     public Node buildChapter(final ChapterConfig chapterConfig) {
+        final var nodes = buildChapterNodeCache(chapterConfig);
+        return determineFirstNode(nodes, chapterConfig);
+    }
 
-        final var initialModelNodes = chapterConfig.getNodes().stream()
+    public Node buildChapterAndStartAtNode(final String chapterConfigId, final String startingNodeId) {
+        final var nodes = buildChapterNodeCache(chapterConfigCache.get(chapterConfigId).get());
+        return Optional.ofNullable(nodes.get(startingNodeId))
+                .orElseThrow(() -> new IllegalArgumentException(String.format("No node found with ID: %s", startingNodeId)));
+    }
+
+    private Map<String, Node> buildChapterNodeCache(final ChapterConfig chapterConfig) {
+        final var modelNodes = chapterConfig.getNodes().stream()
                 .map(this::convertToNodeWithoutLinks)
                 .collect(toMap(StoryNode::getId, identity()));
+        wireNodeEdges(modelNodes, chapterConfig);
+        final var compileErrors = validateNodes(modelNodes.values(), gameState, narrativeService);
+        if (compileErrors.size() > 0) {
+            final var errorString = compileErrors.stream().collect(joining("\n"));
+            throw new RuntimeException(String.format("Encountered the following errors: \n %s", errorString));
+        }
+        return modelNodes.entrySet().stream()
+                .collect(toMap(Map.Entry::getKey, entry -> (Node) entry.getValue()));
+    }
+
+    private Node determineFirstNode(final Map<String, Node> nodeCache, final ChapterConfig chapterConfig) {
+        if (chapterConfig.getFirstNodeId() != null && !chapterConfig.getFirstNodeId().equals("")) {
+            return Optional.ofNullable(nodeCache.get(chapterConfig.getFirstNodeId()))
+                    .orElseThrow(() -> new NoSuchElementException("No element with that id"));
+        } else {
+            return Optional.ofNullable(nodeCache.get(chapterConfig.getNodes().get(0).getId()))
+                    .orElseThrow(() -> new NoSuchElementException("No element with that id"));
+        }
+    }
+
+    private void wireNodeEdges(final Map<String, StoryNode> nodeCache, final ChapterConfig chapterConfig) {
         for (final var yamlNode : chapterConfig.getNodes()) {
-            final var modelNode = initialModelNodes.get(yamlNode.getId());
+            final var modelNode = nodeCache.get(yamlNode.getId());
             switch (yamlNode.getType()) {
                 case PLAYER:
                     modelNode.setNextNodeStrategy(convertPlayerDeterminedBranches(
                             ofNullable(yamlNode.getBranches()).orElse(List.of()),
                             playerObserver,
-                            initialModelNodes));
+                            nodeCache));
                     break;
                 case AUTOMATIC:
                     modelNode.setNextNodeStrategy(convertStateDeterminedBranches(
                             ofNullable(yamlNode.getBranches()).orElse(List.of()),
                             gameState,
-                            initialModelNodes));
+                            nodeCache));
                     break;
                 default:
                     throw new RuntimeException();
             }
         }
-        final Node firstNode;
-        if (chapterConfig.getFirstNodeId() != null && !chapterConfig.getFirstNodeId().equals("")) {
-            firstNode = Optional.ofNullable(initialModelNodes.get(chapterConfig.getFirstNodeId()))
-                    .orElseThrow(() -> new NoSuchElementException("No element with that id lol"));
-        } else {
-            firstNode = Optional.ofNullable(initialModelNodes.get(chapterConfig.getNodes().get(0).getId()))
-                    .orElseThrow(() -> new NoSuchElementException("No element with that id lol"));
-        }
-
-        final var compileErrors = validateNodes(initialModelNodes.values(), gameState, narrativeService);
-
-        if (compileErrors.size() > 0) {
-            final var errorString = compileErrors.stream().collect(joining("\n"));
-            throw new RuntimeException(String.format("Encountered the following errors: \n %s", errorString));
-        }
-
-        return firstNode;
     }
 
     private StoryNode convertToNodeWithoutLinks(final dev.punchcafe.vngine.config.yaml.Node node) {
@@ -130,10 +144,8 @@ public class ChapterBuilder<N> {
         if (storyNode != null) {
             return storyNode;
         }
-        final var chapterNodeConfig = chapterConfigCache.get(nodeId);
-        if (chapterNodeConfig == null) {
-            throw new RuntimeException("node not found");
-        }
+        final var chapterNodeConfig = chapterConfigCache.get(nodeId)
+                .orElseThrow(() -> new RuntimeException("node not found"));
         return new Chapter(chapterNodeConfig, this);
     }
 

@@ -2,6 +2,7 @@ package dev.punchcafe.vngine.node.gsm;
 
 import dev.punchcafe.vngine.config.yaml.ChapterConfig;
 import dev.punchcafe.vngine.config.yaml.VariableTypes;
+import dev.punchcafe.vngine.node.NodeUtils;
 import dev.punchcafe.vngine.state.GameState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,28 +29,7 @@ public class ChangeChapterState implements GameStateModification {
 
     @Override
     public void modify(GameState gameState) {
-        final Map<VariableTypes, List<Map.Entry<String, VariableTypes>>> chapterStateVariableMap =
-                chapterConfig.getChapterVariables().entrySet().stream().collect(groupingBy(Map.Entry::getValue));
-
-        final List<String> integerVariableNames = ofNullable(chapterStateVariableMap.get(VariableTypes.INT))
-                .orElse(List.of())
-                .stream()
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-
-        final List<String> booleanVariableNames = ofNullable(chapterStateVariableMap.get(VariableTypes.BOOL))
-                .orElse(List.of())
-                .stream()
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-
-        final List<String> stringVariableNames = ofNullable(chapterStateVariableMap.get(VariableTypes.STR))
-                .orElse(List.of())
-                .stream()
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
-
-        gameState.initialiseNewChapterState(integerVariableNames, booleanVariableNames, stringVariableNames);
+        NodeUtils.initialiseNewChapterState(gameState, chapterConfig);
     }
 
     @Override
