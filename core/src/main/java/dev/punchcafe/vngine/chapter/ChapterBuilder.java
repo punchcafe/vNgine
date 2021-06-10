@@ -140,7 +140,7 @@ public class ChapterBuilder<N> {
 
 
     private List<String> validateNodes(final Collection<StoryNode> storyNodes,
-                                       final StateContainer gameState,
+                                       final GameState gameState,
                                        final NarrativeService narrativeService) {
 
         final var predicateValidationVisitor = new ValidatePredicateVisitor(gameState);

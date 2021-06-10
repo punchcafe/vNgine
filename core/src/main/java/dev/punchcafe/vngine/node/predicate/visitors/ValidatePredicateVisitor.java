@@ -1,5 +1,6 @@
 package dev.punchcafe.vngine.node.predicate.visitors;
 
+import dev.punchcafe.vngine.state.GameState;
 import dev.punchcafe.vngine.state.StateContainer;
 import dev.punchcafe.vngine.node.predicate.GameStatePredicateVisitor;
 import dev.punchcafe.vngine.node.predicate.SimplePredicateValue;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ValidatePredicateVisitor implements GameStatePredicateVisitor<List<String>> {
 
-    private StateContainer gameState;
+    private GameState gameState;
 
     @Override
     public List<String> visitStringPredicate(StringPredicate stringPredicate) {
@@ -74,24 +75,33 @@ public class ValidatePredicateVisitor implements GameStatePredicateVisitor<List<
 
     @Override
     public List<String> visitIntegerVariableValue(IntegerVariableValue integerVariableValue) {
-        if (!gameState.doesIntegerPropertyExist(integerVariableValue.getVariableName())) {
-            return List.of(String.format("No INT variable with name %s", integerVariableValue.getVariableName()));
+        if (!gameState.doesIntegerPropertyExistWithLevel(integerVariableValue.getVariableName(),
+                integerVariableValue.getStateLevel())) {
+            return List.of(String.format("No INT variable with name %s for level: %s",
+                    integerVariableValue.getVariableName(),
+                    integerVariableValue.getStateLevel()));
         }
         return List.of();
     }
 
     @Override
     public List<String> visitStringVariableValue(StringVariableValue stringVariableValue) {
-        if (!gameState.doesStringPropertyExist(stringVariableValue.getVariableName())) {
-            return List.of(String.format("No STR variable with name %s", stringVariableValue.getVariableName()));
+        if (!gameState.doesStringPropertyExistWithLevel(stringVariableValue.getVariableName(),
+                stringVariableValue.getStateLevel())) {
+            return List.of(String.format("No STR variable with name %s for level: %s",
+                    stringVariableValue.getVariableName(),
+                    stringVariableValue.getStateLevel()));
         }
         return List.of();
     }
 
     @Override
     public List<String> visitBooleanVariableValue(BooleanVariableValue booleanVariableValue) {
-        if (!gameState.doesBooleanPropertyExist(booleanVariableValue.getVariableName())) {
-            return List.of(String.format("No BOOL variable with name %s", booleanVariableValue.getVariableName()));
+        if (!gameState.doesBooleanPropertyExistWithLevel(booleanVariableValue.getVariableName(),
+                booleanVariableValue.getStateLevel())) {
+            return List.of(String.format("No BOOL variable with name %s for level: %s",
+                    booleanVariableValue.getVariableName(),
+                    booleanVariableValue.getStateLevel()));
         }
         return List.of();
     }

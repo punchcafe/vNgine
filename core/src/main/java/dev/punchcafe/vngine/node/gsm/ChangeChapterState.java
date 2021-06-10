@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.groupingBy;
 
+/**
+ * This Game State Modification initialises a new set of chapter variables.
+ */
 @Builder
 @EqualsAndHashCode
 @Getter

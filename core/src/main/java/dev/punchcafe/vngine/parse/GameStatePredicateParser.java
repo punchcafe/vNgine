@@ -24,7 +24,6 @@ public class GameStatePredicateParser {
     }
 
 
-
     private static final String AND_TOKEN = " and ";
     private static final String OR_TOKEN = " or ";
 
@@ -149,13 +148,17 @@ public class GameStatePredicateParser {
     }
 
     private static VariableType establishVariableType(final String variable) {
-        if ((variable.startsWith("'") && variable.endsWith("'")) || variable.startsWith("$str.")) {
+        if ((variable.startsWith("'") && variable.endsWith("'"))
+                || variable.startsWith("$str.") || variable.startsWith("@str.")) {
             return VariableType.STRING;
         }
-        if ((variable.equals("true") || variable.equals("false")) || variable.startsWith("$bool.")) {
+        if ((variable.equals("true")
+                || variable.equals("false"))
+                || variable.startsWith("$bool.")
+                || variable.startsWith("@bool.")) {
             return VariableType.BOOLEAN;
         }
-        if (variable.startsWith("$int.")) {
+        if (variable.startsWith("$int.") || variable.startsWith("@int.")) {
             return VariableType.INTEGER;
         }
         try {
@@ -225,8 +228,8 @@ public class GameStatePredicateParser {
         switch (tokens[1].toUpperCase()) {
             case "IS":
                 return new StringPredicate(evaluateStringVariable(tokens[0]),
-                    evaluateStringVariable(tokens[2]),
-                    StringPredicate.Operation.IS);
+                        evaluateStringVariable(tokens[2]),
+                        StringPredicate.Operation.IS);
             case "ISNT":
             case "ISN'T":
                 return new StringPredicate(evaluateStringVariable(tokens[0]),
@@ -241,7 +244,7 @@ public class GameStatePredicateParser {
     private static PredicateValue<Integer> evaluateIntegerVariable(final String variable) {
         if (variable.startsWith("$int.") || variable.startsWith("@int.")) {
             return new IntegerVariableValue(variable.substring(5),
-                    parseStateLevelFromVarPrefix(variable.substring(0,1)));
+                    parseStateLevelFromVarPrefix(variable.substring(0, 1)));
         } else {
             return new SimplePredicateValue<>(Integer.parseInt(variable));
         }
@@ -250,7 +253,7 @@ public class GameStatePredicateParser {
     private static PredicateValue<Boolean> evaluateBooleanVariable(final String variable) {
         if (variable.startsWith("$bool.") || variable.startsWith("@bool.")) {
             return new BooleanVariableValue(variable.substring(6),
-                    parseStateLevelFromVarPrefix(variable.substring(0,1)));
+                    parseStateLevelFromVarPrefix(variable.substring(0, 1)));
         } else {
             return new SimplePredicateValue<>(Boolean.parseBoolean(variable.toLowerCase()));
         }
@@ -259,7 +262,7 @@ public class GameStatePredicateParser {
     private static PredicateValue<String> evaluateStringVariable(final String variable) {
         if (variable.startsWith("$str.") || variable.startsWith("@str.")) {
             return new StringVariableValue(variable.substring(5),
-                    parseStateLevelFromVarPrefix(variable.substring(0,1)));
+                    parseStateLevelFromVarPrefix(variable.substring(0, 1)));
         }
         if (variable.startsWith("'") && variable.endsWith("'")) {
             return new SimplePredicateValue<>(variable.substring(1, variable.length() - 1));

@@ -1,12 +1,10 @@
 package dev.punchcafe.vngine.state;
 
-import com.google.common.collect.ImmutableMap;
-import dev.punchcafe.vngine.game.GameStateSnapshot;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
+import dev.punchcafe.vngine.node.gsm.StateLevel;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class GameState extends StateContainer {
 
@@ -20,12 +18,49 @@ public class GameState extends StateContainer {
 
     public void initialiseNewChapterState(final List<String> integerPropertyNames,
                                           final List<String> booleanPropertyNames,
-                                          final List<String> stringPropertyNames){
+                                          final List<String> stringPropertyNames) {
         this.chapterState = new ChapterState(integerPropertyNames, booleanPropertyNames, stringPropertyNames);
     }
 
-    public ChapterState getChapterState(){
+    public ChapterState getChapterState() {
         return this.chapterState;
+    }
+
+    public boolean doesBooleanPropertyExistWithLevel(final String property,
+                                                     @NonNull final StateLevel stateLevel) {
+        return checkPropertyExistenceForStateLevel(property,
+                stateLevel,
+                this::doesBooleanPropertyExist,
+                this.chapterState::doesBooleanPropertyExist);
+    }
+
+    public boolean doesIntegerPropertyExistWithLevel(final String property,
+                                                     @NonNull final StateLevel stateLevel) {
+        return checkPropertyExistenceForStateLevel(property,
+                stateLevel,
+                this::doesIntegerPropertyExist,
+                this.chapterState::doesIntegerPropertyExist);
+    }
+
+    public boolean doesStringPropertyExistWithLevel(final String property,
+                                                     @NonNull final StateLevel stateLevel) {
+        return checkPropertyExistenceForStateLevel(property,
+                stateLevel,
+                this::doesStringPropertyExist,
+                this.chapterState::doesStringPropertyExist);
+    }
+
+    private boolean checkPropertyExistenceForStateLevel(final String propertyName,
+                                                        final StateLevel stateLevel,
+                                                        final Function<String, Boolean> checkExistenceOnGameState,
+                                                        final Function<String, Boolean> checkExistenceOnChapterState) {
+        switch (stateLevel) {
+            case GAME:
+            default:
+                return checkExistenceOnGameState.apply(propertyName);
+            case CHAPTER:
+                return checkExistenceOnChapterState.apply(propertyName);
+        }
     }
 
     /*
