@@ -3,7 +3,7 @@ package dev.punchcafe.vngine.chapter;
 import dev.punchcafe.vngine.node.Node;
 import dev.punchcafe.vngine.node.gsm.ChangeChapterState;
 import dev.punchcafe.vngine.node.gsm.NodeGameStateChange;
-import dev.punchcafe.vngine.parse.yaml.ChapterConfig;
+import dev.punchcafe.vngine.config.yaml.ChapterConfig;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

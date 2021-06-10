@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.parse.yaml;
+package dev.punchcafe.vngine.pom.model;
 
 public enum VariableTypes {
     STR, BOOL, INT;

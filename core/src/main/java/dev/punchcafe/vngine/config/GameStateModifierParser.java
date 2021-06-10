@@ -1,11 +1,11 @@
-package dev.punchcafe.vngine.parse;
+package dev.punchcafe.vngine.config;
 
 import dev.punchcafe.vngine.node.gsm.*;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static dev.punchcafe.vngine.parse.GameStateParseUtils.parseStateLevelFromVarPrefix;
+import static dev.punchcafe.vngine.config.GameStateParseUtils.parseStateLevelFromVarPrefix;
 import static java.util.stream.Collectors.toList;
 
 public class GameStateModifierParser {

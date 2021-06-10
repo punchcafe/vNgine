@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.parse.narrative;
+package dev.punchcafe.vngine.config.narrative;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;

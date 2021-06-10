@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.parse.narrative;
+package dev.punchcafe.vngine.config.narrative;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

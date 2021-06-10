@@ -1,7 +1,7 @@
 package dev.punchcafe.vngine.node.gsm;
 
-import dev.punchcafe.vngine.parse.yaml.ChapterConfig;
-import dev.punchcafe.vngine.parse.yaml.VariableTypes;
+import dev.punchcafe.vngine.config.yaml.ChapterConfig;
+import dev.punchcafe.vngine.config.yaml.VariableTypes;
 import dev.punchcafe.vngine.state.GameState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

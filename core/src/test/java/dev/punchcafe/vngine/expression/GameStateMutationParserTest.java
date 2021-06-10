@@ -3,7 +3,7 @@ package dev.punchcafe.vngine.expression;
 import dev.punchcafe.vngine.node.gsm.ChangeIntegerProperty;
 import dev.punchcafe.vngine.node.gsm.SetBooleanProperty;
 import dev.punchcafe.vngine.node.gsm.SetStringProperty;
-import dev.punchcafe.vngine.parse.GameStateModifierParser;
+import dev.punchcafe.vngine.config.GameStateModifierParser;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

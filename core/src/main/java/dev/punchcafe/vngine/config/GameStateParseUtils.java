@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.parse;
+package dev.punchcafe.vngine.config;
 
 import dev.punchcafe.vngine.node.gsm.StateLevel;
 

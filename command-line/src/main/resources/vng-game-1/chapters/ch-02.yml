@@ -1,0 +1,10 @@
+chapter-id: ch_02
+chapter-variables:
+  did-you-do-this: INT
+nodes:
+  - id: 1_2_1
+    type: AUTOMATIC
+    narrative-id: 2_1
+    game-state-modifiers:
+      - "increase $int.bishounen-one-relationship by 1"
+    branches:

@@ -1,7 +1,7 @@
 package dev.punchcafe.vngine.expression;
 
 import dev.punchcafe.vngine.state.StateContainer;
-import dev.punchcafe.vngine.parse.GameStatePredicateParser;
+import dev.punchcafe.vngine.config.GameStatePredicateParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

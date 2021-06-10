@@ -8,10 +8,10 @@ import dev.punchcafe.vngine.node.StateDeterminedNextNodeStrategy;
 import dev.punchcafe.vngine.node.StoryNode;
 import dev.punchcafe.vngine.node.gsm.ValidationVisitor;
 import dev.punchcafe.vngine.node.predicate.visitors.ValidatePredicateVisitor;
-import dev.punchcafe.vngine.parse.GameStateModifierParser;
-import dev.punchcafe.vngine.parse.GameStatePredicateParser;
-import dev.punchcafe.vngine.parse.yaml.Branch;
-import dev.punchcafe.vngine.parse.yaml.ChapterConfig;
+import dev.punchcafe.vngine.config.GameStateModifierParser;
+import dev.punchcafe.vngine.config.GameStatePredicateParser;
+import dev.punchcafe.vngine.config.yaml.Branch;
+import dev.punchcafe.vngine.config.yaml.ChapterConfig;
 import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.state.GameState;
 import lombok.Builder;
@@ -86,7 +86,7 @@ public class ChapterBuilder<N> {
         return firstNode;
     }
 
-    private StoryNode convertToNodeWithoutLinks(final dev.punchcafe.vngine.parse.yaml.Node node) {
+    private StoryNode convertToNodeWithoutLinks(final dev.punchcafe.vngine.config.yaml.Node node) {
         return StoryNode.builder()
                 .id(node.getId())
                 .narrativeId(node.getNarrativeId())

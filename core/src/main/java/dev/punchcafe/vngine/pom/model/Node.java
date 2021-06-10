@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.parse.yaml;
+package dev.punchcafe.vngine.pom.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

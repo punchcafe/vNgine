@@ -1,17 +1,18 @@
-chapter-id: c1_2_3
-
+chapter-id: ch_01
 chapter-variables:
   did-you-do-this: INT
-
 nodes:
   - id: 1_2_1
     type: AUTOMATIC
     narrative-id: 1
     game-state-modifiers:
       - "increase $int.bishounen-one-relationship by 1"
+      - "increase @int.did-you-do-this by 1"
     branches:
+      - predicate-expression: "@int.did-you-do-this less_than 2"
+        node-id: 1_2_1
       - predicate-expression: "$str.first is 'none'"
-        node-id: 1_3_3
+        node-id: ch_02
       - predicate-expression: "$int.bishounen-one-relationship less_than 2"
         node-id: 1_2_2
       - predicate-expression: "$int.bishounen-one-relationship more_than 1"

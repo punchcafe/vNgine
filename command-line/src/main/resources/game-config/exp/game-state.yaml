@@ -1,4 +1,0 @@
-game-state-variables:
-  bishounen-name: BOOL
-  bishounen-love: BOOL
-  bishounen-one-relationship: INT

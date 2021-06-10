@@ -1,17 +1,16 @@
-package dev.punchcafe.vngine.parse.yaml;
+package dev.punchcafe.vngine.pom.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Map;
 
 @Getter
 @Setter
-public class GameConfig {
+@NoArgsConstructor
+public class GameStateVariableConfig {
     @JsonProperty("game-state-variables")
     private Map<String, VariableTypes> gameStateVariables;
-    private List<ChapterConfig> chapters;
-    //TODO: add chapter here
 }

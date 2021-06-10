@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.parse;
+package dev.punchcafe.vngine.config;
 
 import dev.punchcafe.vngine.node.predicate.*;
 import dev.punchcafe.vngine.node.predicate.bool.BooleanPredicate;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
-import static dev.punchcafe.vngine.parse.GameStateParseUtils.parseStateLevelFromVarPrefix;
+import static dev.punchcafe.vngine.config.GameStateParseUtils.parseStateLevelFromVarPrefix;
 
 public class GameStatePredicateParser {
 

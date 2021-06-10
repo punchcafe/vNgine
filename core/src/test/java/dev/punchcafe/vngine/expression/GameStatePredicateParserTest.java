@@ -1,6 +1,6 @@
 package dev.punchcafe.vngine.expression;
 
-import dev.punchcafe.vngine.parse.GameStatePredicateParser;
+import dev.punchcafe.vngine.config.GameStatePredicateParser;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
