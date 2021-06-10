@@ -12,10 +12,8 @@ import dev.punchcafe.vngine.parse.GameStateModifierParser;
 import dev.punchcafe.vngine.parse.GameStatePredicateParser;
 import dev.punchcafe.vngine.parse.yaml.Branch;
 import dev.punchcafe.vngine.parse.yaml.ChapterConfig;
-import dev.punchcafe.vngine.parse.yaml.VariableTypes;
 import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.state.GameState;
-import dev.punchcafe.vngine.state.StateContainer;
 import lombok.Builder;
 
 import java.util.*;
@@ -23,7 +21,8 @@ import java.util.stream.Collectors;
 
 import static java.util.Optional.ofNullable;
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * Class responsible for being able to bootstrap a chapter config and load it into memory.
