@@ -10,3 +10,5 @@
 rootProject.name = 'vNgine'
 include "core"
 include "command-line"
+include "project-model"
+

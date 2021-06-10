@@ -1,7 +1,7 @@
 package dev.punchcafe.vngine.chapter;
 
-import dev.punchcafe.vngine.narrative.NarrativeReader;
-import dev.punchcafe.vngine.narrative.NarrativeService;
+import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
+import dev.punchcafe.vngine.pom.narrative.NarrativeService;
 import dev.punchcafe.vngine.node.Node;
 import dev.punchcafe.vngine.node.PlayerDeterminedNextNodeStrategy;
 import dev.punchcafe.vngine.node.StateDeterminedNextNodeStrategy;

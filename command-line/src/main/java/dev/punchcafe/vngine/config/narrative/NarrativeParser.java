@@ -2,7 +2,7 @@ package dev.punchcafe.vngine.config.narrative;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import dev.punchcafe.vngine.narrative.imp.NarrativeImp;
+import dev.punchcafe.vngine.pom.narrative.imp.NarrativeImp;
 
 import java.io.File;
 import java.io.IOException;

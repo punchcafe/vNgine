@@ -2,10 +2,8 @@ package dev.punchcafe.vngine.pom;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import dev.punchcafe.vngine.game.InvalidConfigurationFile;
-import dev.punchcafe.vngine.game.MissingConfigurationFile;
-import dev.punchcafe.vngine.pom.model.ChapterConfig;
 import dev.punchcafe.vngine.pom.model.GameStateVariableConfig;
+import dev.punchcafe.vngine.pom.model.ChapterConfig;
 import dev.punchcafe.vngine.pom.model.ProjectObjectModel;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -15,7 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static dev.punchcafe.vngine.game.GameConfigConstants.*;
+import static dev.punchcafe.vngine.pom.GameConfigConstants.*;
+
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PomLoader<N> {

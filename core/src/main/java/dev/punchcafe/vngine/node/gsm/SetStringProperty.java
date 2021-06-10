@@ -5,10 +5,12 @@ import dev.punchcafe.vngine.state.StateContainer;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Builder
 @Getter
 @EqualsAndHashCode
+@ToString
 public class SetStringProperty implements GameStateModification {
     private final String propertyName;
     private final String propertyValue;

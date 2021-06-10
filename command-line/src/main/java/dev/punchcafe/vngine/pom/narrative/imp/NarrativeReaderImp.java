@@ -1,7 +1,7 @@
-package dev.punchcafe.vngine.narrative.imp;
+package dev.punchcafe.vngine.pom.narrative.imp;
 
-import dev.punchcafe.vngine.narrative.Narrative;
-import dev.punchcafe.vngine.narrative.NarrativeReader;
+import dev.punchcafe.vngine.pom.narrative.Narrative;
+import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
 
 public class NarrativeReaderImp implements NarrativeReader<NarrativeImp> {
     @Override

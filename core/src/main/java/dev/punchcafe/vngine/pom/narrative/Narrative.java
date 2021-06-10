@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.narrative;
+package dev.punchcafe.vngine.pom.narrative;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

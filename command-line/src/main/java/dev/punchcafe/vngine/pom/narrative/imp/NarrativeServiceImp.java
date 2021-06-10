@@ -1,7 +1,7 @@
-package dev.punchcafe.vngine.narrative.imp;
+package dev.punchcafe.vngine.pom.narrative.imp;
 
-import dev.punchcafe.vngine.narrative.Narrative;
-import dev.punchcafe.vngine.narrative.NarrativeService;
+import dev.punchcafe.vngine.pom.narrative.Narrative;
+import dev.punchcafe.vngine.pom.narrative.NarrativeService;
 
 import java.util.Map;
 import java.util.Set;

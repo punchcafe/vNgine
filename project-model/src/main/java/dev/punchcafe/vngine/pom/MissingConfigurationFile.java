@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.game;
+package dev.punchcafe.vngine.pom;
 
 public class MissingConfigurationFile extends RuntimeException {
     public MissingConfigurationFile(final String missingFileName){

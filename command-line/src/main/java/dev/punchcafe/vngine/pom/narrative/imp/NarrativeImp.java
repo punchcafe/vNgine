@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.narrative.imp;
+package dev.punchcafe.vngine.pom.narrative.imp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

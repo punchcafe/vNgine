@@ -1,9 +1,9 @@
 package dev.punchcafe.vngine.game;
 
-import dev.punchcafe.vngine.narrative.imp.NarrativeImp;
-import dev.punchcafe.vngine.narrative.imp.NarrativeReaderImp;
-import dev.punchcafe.vngine.narrative.imp.NarrativeServiceImp;
 import dev.punchcafe.vngine.config.narrative.NarrativeParser;
+import dev.punchcafe.vngine.pom.narrative.imp.NarrativeImp;
+import dev.punchcafe.vngine.pom.narrative.imp.NarrativeReaderImp;
+import dev.punchcafe.vngine.pom.narrative.imp.NarrativeServiceImp;
 import dev.punchcafe.vngine.player.SimplePlayerObserver;
 import dev.punchcafe.vngine.pom.NarrativeAdaptor;
 import dev.punchcafe.vngine.pom.PomLoader;

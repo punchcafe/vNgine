@@ -1,6 +1,5 @@
-package dev.punchcafe.vngine.narrative;
+package dev.punchcafe.vngine.pom.narrative;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface NarrativeService<T> {
