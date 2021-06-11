@@ -6,7 +6,6 @@ import lombok.Getter;
 @Builder
 @Getter
 public class GameSave {
-    private String nodeId;
-    private String chapterId;
+    private NodeIdentifier nodeIdentifier;
     private SavedGameState savedGameState;
 }

@@ -24,7 +24,7 @@ public class LoadGameNode implements Node {
     public NodeGameStateChange getNodeGameStateChange() {
         final var loadGameState = LoadSavedGameState.builder()
                 .savedGameState(gameSave.getSavedGameState())
-                .chapterConfigOfSave(chapterConfigCache.get(gameSave.getChapterId()).orElseThrow())
+                .chapterConfigOfSave(chapterConfigCache.get(gameSave.getNodeIdentifier().getChapterId()).orElseThrow())
                 .build();
         return new NodeGameStateChange(List.of(loadGameState));
     }
@@ -36,6 +36,8 @@ public class LoadGameNode implements Node {
 
     @Override
     public Node getNextNode() {
-        return chapterBuilder.buildChapterAndStartAtNode(gameSave.getChapterId(), gameSave.getNodeId());
+        // TODO: if no node id, use chapter
+        return chapterBuilder.buildChapterAndStartAtNode(gameSave.getNodeIdentifier().getChapterId(),
+                gameSave.getNodeIdentifier().getNodeId());
     }
 }

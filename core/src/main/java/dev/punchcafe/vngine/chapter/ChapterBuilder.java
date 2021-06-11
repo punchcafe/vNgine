@@ -56,7 +56,7 @@ public class ChapterBuilder<N> {
 
     private Map<String, Node> buildChapterNodeCache(final ChapterConfig chapterConfig) {
         final var modelNodes = chapterConfig.getNodes().stream()
-                .map(this::convertToNodeWithoutLinks)
+                .map(configNode -> this.convertToNodeWithoutLinks(configNode, chapterConfig.getChapterId()))
                 .collect(toMap(StoryNode::getId, identity()));
         wireNodeEdges(modelNodes, chapterConfig);
         final var compileErrors = validateNodes(modelNodes.values(), gameState, narrativeService);
@@ -100,9 +100,11 @@ public class ChapterBuilder<N> {
         }
     }
 
-    private StoryNode convertToNodeWithoutLinks(final dev.punchcafe.vngine.config.yaml.Node node) {
+    private StoryNode convertToNodeWithoutLinks(final dev.punchcafe.vngine.config.yaml.Node node,
+                                                final String chapterId) {
         return StoryNode.builder()
                 .id(node.getId())
+                .chapterId(chapterId)
                 .narrativeId(node.getNarrativeId())
                 .nodeGameStateChange(GameStateModifierParser.parse(node.getGameStateModifiers()))
                 .build();

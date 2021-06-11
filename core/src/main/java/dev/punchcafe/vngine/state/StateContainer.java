@@ -1,5 +1,6 @@
 package dev.punchcafe.vngine.state;
 
+import com.google.common.collect.ImmutableMap;
 import dev.punchcafe.vngine.NoSuchPropertyException;
 import lombok.NonNull;
 
@@ -38,6 +39,18 @@ public abstract class StateContainer {
         for(final var key : stringPropertyMap.keySet()){
             stringPropertyMap.put(key, "none");
         }
+    }
+
+    public ImmutableMap<String, Integer> takeIntegerPropertySnapshot(){
+        return ImmutableMap.copyOf(this.integerPropertyMap);
+    }
+
+    public ImmutableMap<String, Boolean> takeBooleanPropertySnapshot(){
+        return ImmutableMap.copyOf(this.booleanPropertyMap);
+    }
+
+    public ImmutableMap<String, String> takeStringPropertySnapshot(){
+        return ImmutableMap.copyOf(this.stringPropertyMap);
     }
 
     public boolean doesIntegerPropertyExist(String propertyName) {

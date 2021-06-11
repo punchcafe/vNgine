@@ -5,6 +5,7 @@ import dev.punchcafe.vngine.chapter.ChapterBuilder;
 import dev.punchcafe.vngine.chapter.ChapterConfigCache;
 import dev.punchcafe.vngine.game.save.CorruptGameSave;
 import dev.punchcafe.vngine.game.save.GameSave;
+import dev.punchcafe.vngine.game.save.SaveDataUtils;
 import dev.punchcafe.vngine.node.LoadGameNode;
 import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
 import dev.punchcafe.vngine.pom.narrative.NarrativeService;
@@ -53,6 +54,10 @@ public class Game<N> {
     }
 
     public GameSave saveGame(){
+        // TODO: use visitor pattern to get node id/chapter id for saving
+        final var savedGameState = SaveDataUtils.takeSavedGameStateSnapshot(gameState);
+        GameSave.builder()
+                .savedGameState(savedGameState);
         return null;
     }
 

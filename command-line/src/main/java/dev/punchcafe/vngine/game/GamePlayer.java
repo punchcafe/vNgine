@@ -3,6 +3,7 @@ package dev.punchcafe.vngine.game;
 import com.google.common.collect.ImmutableMap;
 import dev.punchcafe.vngine.config.narrative.NarrativeParser;
 import dev.punchcafe.vngine.game.save.GameSave;
+import dev.punchcafe.vngine.game.save.NodeIdentifier;
 import dev.punchcafe.vngine.game.save.SavedGameState;
 import dev.punchcafe.vngine.game.save.StateSnapshot;
 import dev.punchcafe.vngine.pom.narrative.imp.NarrativeImp;
@@ -33,8 +34,10 @@ public class GamePlayer {
         final var game = gameBuilder.build();
         //game.startNewGame();
         final var saveFile = GameSave.builder()
-                .chapterId("ch_01")
-                .nodeId("1_2_2")
+                .nodeIdentifier(NodeIdentifier.builder()
+                        .chapterId("ch_01")
+                        .nodeId("1_2_2")
+                        .build())
                 .savedGameState(SavedGameState.builder()
                         .chapterStateSnapshot(StateSnapshot.builder()
                                 .booleanPropertyMap(Map.of())
@@ -51,6 +54,6 @@ public class GamePlayer {
         game.loadGame(saveFile)
                 .tick()
                 .tick()
-                .run();
+                .saveGame();
     }
 }

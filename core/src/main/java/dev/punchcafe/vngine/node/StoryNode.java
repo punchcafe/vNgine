@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
 public class StoryNode implements Node {
     private final String id;
     private final NodeGameStateChange nodeGameStateChange;
+    private final String chapterId;
     private String narrativeId;
     @Setter
     private NextNodeStrategy nextNodeStrategy;
