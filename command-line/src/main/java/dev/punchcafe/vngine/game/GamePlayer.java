@@ -48,6 +48,9 @@ public class GamePlayer {
                                 .build())
                         .build())
                 .build();
-        game.loadGame(saveFile);
+        game.loadGame(saveFile)
+                .tick()
+                .tick()
+                .run();
     }
 }

@@ -22,28 +22,33 @@ public class Game<N> {
     private final NarrativeReader<N> narrativeReader;
     private Node currentNode;
 
-    public void startNewGame(){
+    public Game<N> startNewGame(){
         currentNode = new Chapter(chapterConfigCache.getFirstChapter(), chapterBuilder);
-        run();
+        return this;
     }
 
-    public void loadGame(final GameSave gameSave){
+    public Game<N> loadGame(final GameSave gameSave){
         currentNode = LoadGameNode.builder()
                 .chapterBuilder(chapterBuilder)
                 .chapterConfigCache(chapterConfigCache)
                 .gameSave(gameSave)
                 .build();
-        run();
+        return this;
     }
 
-    private void run(){
+    public Game<N> tick() {
+        currentNode.getNodeGameStateChange().modify(gameState);
+        if(currentNode.getNarrativeId() != null && !currentNode.getNarrativeId().trim().equals("")){
+            final var narrative = narrativeService.getNarrative(currentNode.getNarrativeId());
+            narrativeReader.readNarrative(narrative);
+        }
+        currentNode = currentNode.getNextNode();
+        return this;
+    }
+
+    public void run(){
         while(currentNode != null){
-            currentNode.getNodeGameStateChange().modify(gameState);
-            if(currentNode.getNarrativeId() != null && !currentNode.getNarrativeId().trim().equals("")){
-                final var narrative = narrativeService.getNarrative(currentNode.getNarrativeId());
-                narrativeReader.readNarrative(narrative);
-            }
-            currentNode = currentNode.getNextNode();
+            tick();
         }
     }
 
