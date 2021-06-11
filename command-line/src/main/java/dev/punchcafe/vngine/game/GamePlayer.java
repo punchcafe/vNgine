@@ -1,17 +1,16 @@
 package dev.punchcafe.vngine.game;
 
-import com.google.common.collect.ImmutableMap;
 import dev.punchcafe.vngine.config.narrative.NarrativeParser;
 import dev.punchcafe.vngine.game.save.GameSave;
 import dev.punchcafe.vngine.game.save.NodeIdentifier;
 import dev.punchcafe.vngine.game.save.SavedGameState;
 import dev.punchcafe.vngine.game.save.StateSnapshot;
-import dev.punchcafe.vngine.pom.narrative.imp.NarrativeImp;
-import dev.punchcafe.vngine.pom.narrative.imp.NarrativeReaderImp;
-import dev.punchcafe.vngine.pom.narrative.imp.NarrativeServiceImp;
 import dev.punchcafe.vngine.player.SimplePlayerObserver;
 import dev.punchcafe.vngine.pom.NarrativeAdaptor;
 import dev.punchcafe.vngine.pom.PomLoader;
+import dev.punchcafe.vngine.pom.narrative.imp.NarrativeImp;
+import dev.punchcafe.vngine.pom.narrative.imp.NarrativeReaderImp;
+import dev.punchcafe.vngine.pom.narrative.imp.NarrativeServiceImp;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,9 +50,10 @@ public class GamePlayer {
                                 .build())
                         .build())
                 .build();
-        game.loadGame(saveFile)
+        final var saveGame = game.loadGame(saveFile)
                 .tick()
                 .tick()
                 .saveGame();
+        System.out.println("checkpoint");
     }
 }

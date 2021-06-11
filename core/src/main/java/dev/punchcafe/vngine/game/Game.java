@@ -1,10 +1,10 @@
 package dev.punchcafe.vngine.game;
 
-import dev.punchcafe.vngine.chapter.Chapter;
+import dev.punchcafe.vngine.chapter.ChapterNode;
 import dev.punchcafe.vngine.chapter.ChapterBuilder;
 import dev.punchcafe.vngine.chapter.ChapterConfigCache;
-import dev.punchcafe.vngine.game.save.CorruptGameSave;
 import dev.punchcafe.vngine.game.save.GameSave;
+import dev.punchcafe.vngine.game.save.NodeIdentifierRetrievalVisitor;
 import dev.punchcafe.vngine.game.save.SaveDataUtils;
 import dev.punchcafe.vngine.node.LoadGameNode;
 import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
@@ -23,12 +23,12 @@ public class Game<N> {
     private final NarrativeReader<N> narrativeReader;
     private Node currentNode;
 
-    public Game<N> startNewGame(){
-        currentNode = new Chapter(chapterConfigCache.getFirstChapter(), chapterBuilder);
+    public Game<N> startNewGame() {
+        currentNode = new ChapterNode(chapterConfigCache.getFirstChapter(), chapterBuilder);
         return this;
     }
 
-    public Game<N> loadGame(final GameSave gameSave){
+    public Game<N> loadGame(final GameSave gameSave) {
         currentNode = LoadGameNode.builder()
                 .chapterBuilder(chapterBuilder)
                 .chapterConfigCache(chapterConfigCache)
@@ -39,7 +39,7 @@ public class Game<N> {
 
     public Game<N> tick() {
         currentNode.getNodeGameStateChange().modify(gameState);
-        if(currentNode.getNarrativeId() != null && !currentNode.getNarrativeId().trim().equals("")){
+        if (currentNode.getNarrativeId() != null && !currentNode.getNarrativeId().trim().equals("")) {
             final var narrative = narrativeService.getNarrative(currentNode.getNarrativeId());
             narrativeReader.readNarrative(narrative);
         }
@@ -47,18 +47,19 @@ public class Game<N> {
         return this;
     }
 
-    public void run(){
-        while(currentNode != null){
+    public void run() {
+        while (currentNode != null) {
             tick();
         }
     }
 
-    public GameSave saveGame(){
-        // TODO: use visitor pattern to get node id/chapter id for saving
+    public GameSave saveGame() {
         final var savedGameState = SaveDataUtils.takeSavedGameStateSnapshot(gameState);
-        GameSave.builder()
-                .savedGameState(savedGameState);
-        return null;
+        final var nodeIdentifier = new NodeIdentifierRetrievalVisitor();
+        return GameSave.builder()
+                .savedGameState(savedGameState)
+                .nodeIdentifier(this.currentNode.acceptVisitor(nodeIdentifier))
+                .build();
     }
 
 

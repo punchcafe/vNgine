@@ -15,7 +15,12 @@ public class StoryNode implements Node {
     @Setter
     private NextNodeStrategy nextNodeStrategy;
 
-    public Node getNextNode(){
+    public Node getNextNode() {
         return nextNodeStrategy.getNextNode();
+    }
+
+    @Override
+    public <T> T acceptVisitor(NodeVisitor<T> visitor) {
+        return visitor.visitStoryNode(this);
     }
 }

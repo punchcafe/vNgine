@@ -40,4 +40,9 @@ public class LoadGameNode implements Node {
         return chapterBuilder.buildChapterAndStartAtNode(gameSave.getNodeIdentifier().getChapterId(),
                 gameSave.getNodeIdentifier().getNodeId());
     }
+
+    @Override
+    public <T> T acceptVisitor(NodeVisitor<T> visitor) {
+        return visitor.visitLoadGameNode(this);
+    }
 }

@@ -148,7 +148,7 @@ public class ChapterBuilder<N> {
         }
         final var chapterNodeConfig = chapterConfigCache.get(nodeId)
                 .orElseThrow(() -> new RuntimeException("node not found"));
-        return new Chapter(chapterNodeConfig, this);
+        return new ChapterNode(chapterNodeConfig, this);
     }
 
 

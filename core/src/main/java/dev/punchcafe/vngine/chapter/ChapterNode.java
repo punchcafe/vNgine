@@ -1,6 +1,7 @@
 package dev.punchcafe.vngine.chapter;
 
 import dev.punchcafe.vngine.node.Node;
+import dev.punchcafe.vngine.node.NodeVisitor;
 import dev.punchcafe.vngine.node.gsm.ChangeChapterState;
 import dev.punchcafe.vngine.node.gsm.NodeGameStateChange;
 import dev.punchcafe.vngine.config.yaml.ChapterConfig;
@@ -18,7 +19,7 @@ import java.util.List;
  * no internal track of next node, it should be able to clear memory as we pass thru chapters.
  */
 @AllArgsConstructor
-public class Chapter implements Node {
+public class ChapterNode implements Node {
 
     private final ChapterConfig chapterConfig;
     private final ChapterBuilder chapterBuilder;
@@ -46,5 +47,10 @@ public class Chapter implements Node {
     @Override
     public Node getNextNode() {
         return chapterBuilder.buildChapter(chapterConfig);
+    }
+
+    @Override
+    public <T> T acceptVisitor(NodeVisitor<T> visitor) {
+        return visitor.visitChapterNode(this);
     }
 }
