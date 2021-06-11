@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.game.save;
+package dev.punchcafe.vngine.save;
 
 import dev.punchcafe.vngine.state.GameState;
 import dev.punchcafe.vngine.state.StateContainer;

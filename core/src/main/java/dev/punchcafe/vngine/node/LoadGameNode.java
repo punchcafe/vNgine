@@ -2,7 +2,7 @@ package dev.punchcafe.vngine.node;
 
 import dev.punchcafe.vngine.chapter.ChapterBuilder;
 import dev.punchcafe.vngine.chapter.ChapterConfigCache;
-import dev.punchcafe.vngine.game.save.GameSave;
+import dev.punchcafe.vngine.save.GameSave;
 import dev.punchcafe.vngine.node.gsm.LoadSavedGameState;
 import dev.punchcafe.vngine.node.gsm.NodeGameStateChange;
 import lombok.Builder;

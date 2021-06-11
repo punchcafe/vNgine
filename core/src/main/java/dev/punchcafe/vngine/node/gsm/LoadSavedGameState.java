@@ -1,8 +1,8 @@
 package dev.punchcafe.vngine.node.gsm;
 
 import dev.punchcafe.vngine.config.yaml.ChapterConfig;
-import dev.punchcafe.vngine.game.save.SaveDataUtils;
-import dev.punchcafe.vngine.game.save.SavedGameState;
+import dev.punchcafe.vngine.save.SaveDataUtils;
+import dev.punchcafe.vngine.save.SavedGameState;
 import dev.punchcafe.vngine.node.NodeUtils;
 import dev.punchcafe.vngine.state.GameState;
 import lombok.Builder;

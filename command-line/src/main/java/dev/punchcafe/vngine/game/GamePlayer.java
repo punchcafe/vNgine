@@ -1,10 +1,10 @@
 package dev.punchcafe.vngine.game;
 
 import dev.punchcafe.vngine.config.narrative.NarrativeParser;
-import dev.punchcafe.vngine.game.save.GameSave;
-import dev.punchcafe.vngine.game.save.NodeIdentifier;
-import dev.punchcafe.vngine.game.save.SavedGameState;
-import dev.punchcafe.vngine.game.save.StateSnapshot;
+import dev.punchcafe.vngine.save.GameSave;
+import dev.punchcafe.vngine.save.NodeIdentifier;
+import dev.punchcafe.vngine.save.SavedGameState;
+import dev.punchcafe.vngine.save.StateSnapshot;
 import dev.punchcafe.vngine.player.SimplePlayerObserver;
 import dev.punchcafe.vngine.pom.NarrativeAdaptor;
 import dev.punchcafe.vngine.pom.PomLoader;

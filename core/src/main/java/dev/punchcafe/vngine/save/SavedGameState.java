@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.game.save;
+package dev.punchcafe.vngine.save;
 
 import lombok.Builder;
 import lombok.Getter;

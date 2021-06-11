@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.game.save;
+package dev.punchcafe.vngine.save;
 
 import dev.punchcafe.vngine.chapter.ChapterNode;
 import dev.punchcafe.vngine.node.LoadGameNode;
