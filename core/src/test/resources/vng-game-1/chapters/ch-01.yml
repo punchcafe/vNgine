@@ -1,0 +1,60 @@
+chapter-id: ch_01
+chapter-variables:
+  did-you-do-this: INT
+nodes:
+  - id: 1_2_1
+    type: AUTOMATIC
+    narrative-id: 1
+    game-state-modifiers:
+      - "increase $int.bishounen-one-relationship by 1"
+      - "increase @int.did-you-do-this by 1"
+    branches:
+      - predicate-expression: "@int.did-you-do-this less_than 2"
+        node-id: 1_2_1
+      - predicate-expression: "$str.first is 'none'"
+        node-id: ch_02
+      - predicate-expression: "$int.bishounen-one-relationship less_than 2"
+        node-id: 1_2_2
+      - predicate-expression: "$int.bishounen-one-relationship more_than 1"
+        node-id: 1_3_2
+      - predicate-expression: "($str.name is 'HI') and ($str.name isnt 'HI') and ($bool.bishounen-love isn't true) and ($bool.bishounen-love is false)"
+        node-id: 1_3_1
+  - id: 1_2_2
+    type: PLAYER
+    narrative-id: 2
+    game-state-modifiers:
+      - "set $bool.bishounen-love to true"
+      - "set $str.name to 'MY NAME VALUE'"
+    branches:
+      - prompt: "Get Angry"
+        node-id: 1_2_1
+      - prompt: "Stay Cool"
+        node-id: 1_2_3
+  - id: 1_2_3
+    type: PLAYER
+    narrative-id: 3
+    game-state-modifiers:
+      - "set $bool.bishounen-love to false"
+      - "set $str.name to 'MY OTHER NAME VALUE'"
+    branches:
+  - id: 1_3_2
+    type: PLAYER
+    narrative-id: 4
+    game-state-modifiers:
+      - "set $bool.bishounen-love to false"
+      - "set $str.name to 'MY OTHER NAME VALUE'"
+  - id: 1_3_1
+    type: PLAYER
+    narrative-id: 5
+    game-state-modifiers:
+      - "set $bool.bishounen-love to false"
+      - "set $str.name to 'MY OTHER NAME VALUE'"
+    branches:
+  - id: 1_3_3
+    type: AUTOMATIC
+    narrative-id: 6
+    game-state-modifiers:
+      - "set $str.first to 'yes'"
+    branches:
+      - predicate-expression: "$str.first is 'yes'"
+        node-id: 1_2_1
