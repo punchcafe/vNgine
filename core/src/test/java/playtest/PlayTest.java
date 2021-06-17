@@ -1,12 +1,13 @@
-import dev.punchcafe.vngine.fixture.ObservingNarrative;
-import dev.punchcafe.vngine.fixture.ObservingNarrativeReader;
-import dev.punchcafe.vngine.fixture.ObservingNarrativeService;
+package playtest;
+
+import playtest.fixture.ObservingNarrative;
+import playtest.fixture.ObservingNarrativeReader;
+import playtest.fixture.ObservingNarrativeService;
 import dev.punchcafe.vngine.game.Game;
 import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.pom.NarrativeAdaptor;
 import dev.punchcafe.vngine.pom.PomLoader;
 import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
-import dev.punchcafe.vngine.pom.narrative.NarrativeService;
 
 import java.io.File;
 import java.util.List;

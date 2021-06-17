@@ -1,7 +1,6 @@
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+package playtest;
+
+import org.junit.jupiter.api.*;
 
 import java.util.List;
 import java.util.Set;
@@ -63,7 +62,7 @@ public class GameStatePredicatesTest extends PlayTest {
         // Trigger through 3-0 to the end of the game;
         game.tick();
         // Assert all expected nodes have been visited by asserting on the observed narratives
-        assertEquals(this.narrativeService.getObservingNarrative().getAllReadNarratives(),
+        Assertions.assertEquals(this.narrativeService.getObservingNarrative().getAllReadNarratives(),
                 List.of("0", "1-0", "2", "3-0"));
     }
 
@@ -82,7 +81,7 @@ public class GameStatePredicatesTest extends PlayTest {
         // Trigger through 3-1 to the end of the game;
         game.tick();
         // Assert all expected nodes have been visited by asserting on the observed narratives
-        assertEquals(this.narrativeService.getObservingNarrative().getAllReadNarratives(),
+        Assertions.assertEquals(this.narrativeService.getObservingNarrative().getAllReadNarratives(),
                 List.of("0", "1-1", "2", "3-1"));
     }
 
@@ -101,7 +100,7 @@ public class GameStatePredicatesTest extends PlayTest {
         // Trigger through 3-2 to the end of the game;
         game.tick();
         // Assert all expected nodes have been visited by asserting on the observed narratives
-        assertEquals(this.narrativeService.getObservingNarrative().getAllReadNarratives(),
+        Assertions.assertEquals(this.narrativeService.getObservingNarrative().getAllReadNarratives(),
                 List.of("0", "1-2", "2", "3-2"));
     }
 }

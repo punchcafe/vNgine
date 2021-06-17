@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.fixture;
+package playtest.fixture;
 
 import dev.punchcafe.vngine.pom.narrative.Narrative;
 import dev.punchcafe.vngine.pom.narrative.NarrativeService;

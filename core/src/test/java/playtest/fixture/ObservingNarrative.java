@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.fixture;
+package playtest.fixture;
 
 import java.util.ArrayList;
 import java.util.List;
