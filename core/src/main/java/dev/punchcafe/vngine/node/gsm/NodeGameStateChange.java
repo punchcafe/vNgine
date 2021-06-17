@@ -11,6 +11,8 @@ import java.util.List;
 @Getter
 public class NodeGameStateChange {
 
+    public static NodeGameStateChange NO_STATE_CHANGE = new NodeGameStateChange(List.of());
+
     final private List<GameStateModification> modifications;
 
     public NodeGameStateChange(final @NonNull List<GameStateModification> modifications){

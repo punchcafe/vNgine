@@ -29,7 +29,8 @@ public class StateDeterminedNextNodeStrategy implements NextNodeStrategy {
                 return branch.getNode();
             }
         }
-        throw new RuntimeException();
+        //TODO: should have a default branch
+        return null;
     }
 
 }

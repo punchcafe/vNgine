@@ -14,3 +14,6 @@
 - File selection
 - Run script
 - User guide documentation
+
+## TODOs
+- how to handle case sensitivity? currently predicates and bool map always return lowercase, but where to put this in predicate?

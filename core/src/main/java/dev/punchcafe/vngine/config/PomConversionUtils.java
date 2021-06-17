@@ -32,6 +32,9 @@ public class PomConversionUtils {
 
     public static Map<String, VariableTypes> convertPomVariableTypesMap(
             final Map<String, dev.punchcafe.vngine.pom.model.VariableTypes> pomMap) {
+        if(pomMap == null){
+            return Map.of();
+        }
         return pomMap.entrySet().stream()
                 .collect(toMap(Map.Entry::getKey, entry -> convertFromPom(entry.getValue())));
     }

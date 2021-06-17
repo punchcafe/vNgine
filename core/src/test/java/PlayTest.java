@@ -1,45 +1,48 @@
+import dev.punchcafe.vngine.fixture.ObservingNarrative;
+import dev.punchcafe.vngine.fixture.ObservingNarrativeReader;
+import dev.punchcafe.vngine.fixture.ObservingNarrativeService;
 import dev.punchcafe.vngine.game.Game;
 import dev.punchcafe.vngine.player.PlayerObserver;
 import dev.punchcafe.vngine.pom.NarrativeAdaptor;
 import dev.punchcafe.vngine.pom.PomLoader;
-import dev.punchcafe.vngine.pom.narrative.Narrative;
 import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
 import dev.punchcafe.vngine.pom.narrative.NarrativeService;
-import dev.punchcafe.vngine.save.GameSave;
-import dev.punchcafe.vngine.save.NodeIdentifier;
-import dev.punchcafe.vngine.save.SavedGameState;
-import dev.punchcafe.vngine.save.StateSnapshot;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 public abstract class PlayTest {
 
-    protected NarrativeService<NarrativeTest> mockNarrativeService;
-    protected NarrativeReader<NarrativeTest> narrativeReader;
+    protected ObservingNarrativeService narrativeService;
+    protected NarrativeReader<ObservingNarrative> narrativeReader;
     protected PlayerObserver playerObserver;
-    protected Game<NarrativeTest> game;
+    protected Game<ObservingNarrative> game;
 
     void buildGame() {
-        mockNarrativeService = mock(NarrativeService.class);
-        narrativeReader = mock(NarrativeReader.class);
+        narrativeService = new ObservingNarrativeService(this.validNarrativeIds());
+        narrativeReader = new ObservingNarrativeReader();
         playerObserver = mock(PlayerObserver.class);
-        final dev.punchcafe.vngine.game.GameBuilder<NarrativeTest> gameBuilder = new dev.punchcafe.vngine.game.GameBuilder();
+        final dev.punchcafe.vngine.game.GameBuilder<ObservingNarrative> gameBuilder = new dev.punchcafe.vngine.game.GameBuilder();
         final NarrativeAdaptor<Object> narrativeReader = (file) -> List.of();
         final var pom = PomLoader.forGame(new File(this.gameConfigLocation()), narrativeReader).loadGameConfiguration();
         gameBuilder.setNarrativeReader(this.narrativeReader);
-        gameBuilder.setNarrativeService(this.mockNarrativeService);
+        gameBuilder.setNarrativeService(this.narrativeService);
         gameBuilder.setPlayerObserver(this.playerObserver);
         gameBuilder.setProjectObjectModel(pom);
         game = gameBuilder.build();
     }
 
+    void resetObservers(){
+        this.narrativeService.getObservingNarrative().reset();
+    }
+
     abstract String gameConfigLocation();
+
+    abstract Set<String> validNarrativeIds();
 
     // helpers
 

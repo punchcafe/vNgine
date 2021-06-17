@@ -16,6 +16,9 @@ public class GameStateModifierParser {
     private static Pattern DECREASE_INT_VARIABLE_PATTERN = Pattern.compile("^ *decrease (\\$|@)int\\.([^ ]+) by (\\d+)$");
 
     public static NodeGameStateChange parse(final List<String> expressions) {
+        if(expressions == null || expressions.isEmpty()){
+            return NodeGameStateChange.NO_STATE_CHANGE;
+        }
         final var modifiers =  expressions.stream()
                 .map(GameStateModifierParser::parse)
                 .collect(toList());
