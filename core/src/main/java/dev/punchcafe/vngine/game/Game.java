@@ -13,9 +13,11 @@ import dev.punchcafe.vngine.node.Node;
 import dev.punchcafe.vngine.state.GameState;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder(access = AccessLevel.PACKAGE)
 public class Game<N> {
+    @Getter
     private final GameState gameState;
     private final ChapterBuilder<N> chapterBuilder;
     private final ChapterConfigCache chapterConfigCache;

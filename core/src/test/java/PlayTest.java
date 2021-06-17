@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 public abstract class PlayTest {
@@ -24,7 +25,7 @@ public abstract class PlayTest {
     protected PlayerObserver playerObserver;
     protected Game<NarrativeTest> game;
 
-    void buildGame(){
+    void buildGame() {
         mockNarrativeService = mock(NarrativeService.class);
         narrativeReader = mock(NarrativeReader.class);
         playerObserver = mock(PlayerObserver.class);
@@ -39,4 +40,38 @@ public abstract class PlayTest {
     }
 
     abstract String gameConfigLocation();
+
+    // helpers
+
+    void assertGameStateIntVarEquals(final String varName, final int expectedValue) {
+        assertEquals(game.getGameState().getIntegerProperty(varName), expectedValue);
+    }
+
+    void assertGameStateStrVarEquals(final String varName, final String expectedValue) {
+        assertEquals(game.getGameState().getStringProperty(varName), expectedValue);
+    }
+
+    void assertGameStateBooleanVarIsTrue(final String varName) {
+        assertTrue(game.getGameState().getBooleanProperty(varName));
+    }
+
+    void assertGameStateBooleanVarIsFalse(final String varName) {
+        assertFalse(game.getGameState().getBooleanProperty(varName));
+    }
+
+    void assertCurrentChapterIntVarEquals(final String varName, final int expectedValue) {
+        assertEquals(game.getGameState().getChapterState().getIntegerProperty(varName), expectedValue);
+    }
+
+    void assertCurrentChapterStrVarEquals(final String varName, final String expectedValue) {
+        assertEquals(game.getGameState().getChapterState().getStringProperty(varName), expectedValue);
+    }
+
+    void assertCurrentChapterBooleanVarIsTrue(final String varName) {
+        assertTrue(game.getGameState().getChapterState().getBooleanProperty(varName));
+    }
+
+    void assertCurrentChapterBooleanVarIsFalse(final String varName) {
+        assertTrue(game.getGameState().getChapterState().getBooleanProperty(varName));
+    }
 }
