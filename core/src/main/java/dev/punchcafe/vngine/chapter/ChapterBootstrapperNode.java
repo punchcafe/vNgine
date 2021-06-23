@@ -19,7 +19,7 @@ import java.util.List;
  * no internal track of next node, it should be able to clear memory as we pass thru chapters.
  */
 @AllArgsConstructor
-public class ChapterNode implements Node {
+public class ChapterBootstrapperNode implements Node {
 
     private final ChapterConfig chapterConfig;
     private final ChapterBuilder chapterBuilder;

@@ -1,12 +1,12 @@
 package dev.punchcafe.vngine.node;
 
-import dev.punchcafe.vngine.chapter.ChapterNode;
+import dev.punchcafe.vngine.chapter.ChapterBootstrapperNode;
 
 public interface NodeVisitor<T> {
 
     T visitStoryNode(final StoryNode storyNode);
 
-    T visitChapterNode(final ChapterNode chapterNode);
+    T visitChapterNode(final ChapterBootstrapperNode chapterBootstrapperNode);
 
-    T visitLoadGameNode(final LoadGameNode loadGameNode);
+    T visitLoadGameNode(final LoadGameBootstrapperNode loadGameBootstrapperNode);
 }

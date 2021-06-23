@@ -10,7 +10,7 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public class LoadGameNode implements Node {
+public class LoadGameBootstrapperNode implements Node {
     private final ChapterBuilder<?> chapterBuilder;
     private final ChapterConfigCache chapterConfigCache;
     private final GameSave gameSave;

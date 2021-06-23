@@ -1,12 +1,12 @@
 package dev.punchcafe.vngine.game;
 
-import dev.punchcafe.vngine.chapter.ChapterNode;
+import dev.punchcafe.vngine.chapter.ChapterBootstrapperNode;
 import dev.punchcafe.vngine.chapter.ChapterBuilder;
 import dev.punchcafe.vngine.chapter.ChapterConfigCache;
 import dev.punchcafe.vngine.save.GameSave;
 import dev.punchcafe.vngine.save.NodeIdentifierRetrievalVisitor;
 import dev.punchcafe.vngine.save.SaveDataUtils;
-import dev.punchcafe.vngine.node.LoadGameNode;
+import dev.punchcafe.vngine.node.LoadGameBootstrapperNode;
 import dev.punchcafe.vngine.pom.narrative.NarrativeReader;
 import dev.punchcafe.vngine.pom.narrative.NarrativeService;
 import dev.punchcafe.vngine.node.Node;
@@ -26,12 +26,12 @@ public class Game<N> {
     private Node currentNode;
 
     public Game<N> startNewGame() {
-        currentNode = new ChapterNode(chapterConfigCache.getFirstChapter(), chapterBuilder);
+        currentNode = new ChapterBootstrapperNode(chapterConfigCache.getFirstChapter(), chapterBuilder);
         return this;
     }
 
     public Game<N> loadGame(final GameSave gameSave) {
-        currentNode = LoadGameNode.builder()
+        currentNode = LoadGameBootstrapperNode.builder()
                 .chapterBuilder(chapterBuilder)
                 .chapterConfigCache(chapterConfigCache)
                 .gameSave(gameSave)
