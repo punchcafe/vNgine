@@ -17,7 +17,8 @@ public class LoadSavedGameState implements GameStateModification {
     public void modify(GameState gameState) {
         SaveDataUtils.loadStateSnapshotIntoStateContainer(savedGameState.getGameStateSnapshot(), gameState);
         NodeUtils.initialiseNewChapterState(gameState, chapterConfigOfSave);
-        SaveDataUtils.loadStateSnapshotIntoStateContainer(savedGameState.getChapterStateSnapshot(), gameState);
+        SaveDataUtils.loadStateSnapshotIntoStateContainer(savedGameState.getChapterStateSnapshot(),
+                gameState.getChapterState());
     }
 
     @Override

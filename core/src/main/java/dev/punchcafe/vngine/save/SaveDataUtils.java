@@ -4,17 +4,17 @@ import dev.punchcafe.vngine.state.GameState;
 import dev.punchcafe.vngine.state.StateContainer;
 
 public class SaveDataUtils {
-    public static void loadStateSnapshotIntoStateContainer(final StateSnapshot stateSnapshot, final StateContainer gameState) {
+    public static void loadStateSnapshotIntoStateContainer(final StateSnapshot stateSnapshot,
+                                                           final StateContainer gameState) {
         gameState.clearState();
-        for (final var key : stateSnapshot.getIntegerPropertyMap().keySet()) {
-            gameState.setIntegerProperty(key, 0);
+        for (final var entry : stateSnapshot.getIntegerPropertyMap().entrySet()) {
+            gameState.setIntegerProperty(entry.getKey(), entry.getValue());
         }
-        for (final var key : stateSnapshot.getBooleanPropertyMap().keySet()) {
-            gameState.setBooleanProperty(key, false);
+        for (final var entry : stateSnapshot.getBooleanPropertyMap().entrySet()) {
+            gameState.setBooleanProperty(entry.getKey(), entry.getValue());
         }
-        //TODO: make this none a constant
-        for (final var key : stateSnapshot.getStringPropertyMap().keySet()) {
-            gameState.setStringProperty(key, "none");
+        for (final var entry : stateSnapshot.getStringPropertyMap().entrySet()) {
+            gameState.setStringProperty(entry.getKey(), entry.getValue());
         }
     }
 
