@@ -9,12 +9,26 @@
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
+    id 'maven-publish'
 }
 
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
+    mavenLocal()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'dev.punchcafe.vngine'
+            artifactId = 'core'
+            version = '0.1'
+
+            from components.java
+        }
+    }
 }
 
 dependencies {

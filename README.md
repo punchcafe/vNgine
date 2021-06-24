@@ -13,3 +13,4 @@
 - Tests around chapter variables within new chapters
 - `game_config.vng` file zipping style
 - Documented specification module
+- Yaml schema, JSON schema, XML RNG schema
