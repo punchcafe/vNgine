@@ -1,0 +1,29 @@
+chapter-id: ch-02
+chapter-variables:
+nodes:
+  - id: ch2-2
+    type: AUTOMATIC
+    narrative-id: 2
+    branches:
+      - predicate-expression: "$int.gs-int-var-1 more_than 0"
+        node-id: ch2-3-0
+      - predicate-expression: "$str.gs-str-var-1 is 'str-1-is-set'"
+        node-id: ch2-3-1
+      - predicate-expression: "$bool.gs-bool-var-1 is true"
+        node-id: ch2-3-2
+    # TODO: need default branch
+  - id: ch2-3-0
+    type: AUTOMATIC
+    narrative-id: 3-0
+    game-state-modifiers:
+    branches:
+  - id: ch2-3-1
+    type: AUTOMATIC
+    narrative-id: 3-1
+    game-state-modifiers:
+    branches:
+  - id: ch2-3-2
+    type: AUTOMATIC
+    narrative-id: 3-2
+    game-state-modifiers:
+    branches:
