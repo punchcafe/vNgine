@@ -1,10 +1,24 @@
 plugins {
     id 'java-library'
     id "io.freefair.lombok"
+    id 'maven-publish'
 }
 
 repositories {
     mavenCentral()
+    mavenLocal()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'dev.punchcafe.vngine'
+            artifactId = 'pom'
+            version = '0.1'
+
+            from components.java
+        }
+    }
 }
 
 dependencies {

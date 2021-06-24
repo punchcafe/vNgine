@@ -9,12 +9,15 @@ import java.util.Set;
 
 public class ObservingNarrativeService implements NarrativeService<ObservingNarrative> {
 
-    @Getter
     private final ObservingNarrative observingNarrative = new ObservingNarrative();
     private Set<String> legalNarrativeIds;
 
     public ObservingNarrativeService(final Set<String> legalNarrativeIds) {
         this.legalNarrativeIds = legalNarrativeIds;
+    }
+
+    public ObservingNarrative getObservingNarrative(){
+        return this.observingNarrative;
     }
 
     @Override
