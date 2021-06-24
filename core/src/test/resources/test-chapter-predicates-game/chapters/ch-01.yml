@@ -1,0 +1,74 @@
+chapter-id: ch-01
+chapter-variables:
+  ch-int-var-1: INT
+  ch-int-var-2: INT
+  ch-str-var-1: STR
+  ch-str-var-2: STR
+  ch-bool-var-1: BOOL
+  ch-bool-var-2: BOOL
+nodes:
+  - id: 0
+    type: PLAYER
+    narrative-id: 0
+    game-state-modifiers:
+    branches:
+      - prompt: "1-0"
+        node-id: 1-0
+      - prompt: "1-1"
+        node-id: 1-1
+      - prompt: "1-2"
+        node-id: 1-2
+  - id: 1-0
+    type: AUTOMATIC
+    narrative-id: 1-0
+    game-state-modifiers:
+      - "increase @int.ch-int-var-1 by 1"
+    branches:
+      - predicate-expression: "@int.ch-int-var-1 more_than 0"
+        node-id: 2
+    # TODO: need default branch
+  - id: 1-1
+    type: AUTOMATIC
+    narrative-id: 1-1
+    game-state-modifiers:
+# TODO: consider whether to ignore case?
+      - "set @str.ch-str-var-1 to 'str-1-is-set'"
+    branches:
+      - predicate-expression: "@str.ch-str-var-1 is 'str-1-is-set'"
+        node-id: 2
+    # TODO: need default branch
+  - id: 1-2
+    type: AUTOMATIC
+    narrative-id: 1-2
+    game-state-modifiers:
+      - "set @bool.ch-bool-var-1 to true"
+    branches:
+      - predicate-expression: "@bool.ch-bool-var-1 is true"
+        node-id: 2
+    # TODO: need default branch
+  - id: 2
+    type: AUTOMATIC
+    narrative-id: 2
+    branches:
+      - predicate-expression: "@int.ch-int-var-1 more_than 0"
+        node-id: 3-0
+      - predicate-expression: "@str.ch-str-var-1 is 'str-1-is-set'"
+        node-id: 3-1
+      - predicate-expression: "@bool.ch-bool-var-1 is true"
+        node-id: 3-2
+    # TODO: need default branch
+  - id: 3-0
+    type: AUTOMATIC
+    narrative-id: 3-0
+    game-state-modifiers:
+    branches:
+  - id: 3-1
+    type: AUTOMATIC
+    narrative-id: 3-1
+    game-state-modifiers:
+    branches:
+  - id: 3-2
+    type: AUTOMATIC
+    narrative-id: 3-2
+    game-state-modifiers:
+    branches:
