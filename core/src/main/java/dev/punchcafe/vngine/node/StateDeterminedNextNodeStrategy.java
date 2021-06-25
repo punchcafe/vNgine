@@ -24,13 +24,15 @@ public class StateDeterminedNextNodeStrategy implements NextNodeStrategy {
 
     @Override
     public Node getNextNode() {
-        for(final var branch : branches){
-            if(branch.getPredicate().evaluate(gameState)){
-                return branch.getNode();
-            }
-        }
-        //TODO: should have a default branch
-        return null;
+        return branches.stream()
+                .filter(this::branchEvaluatesToTrue)
+                .findFirst()
+                .map(Branch::getNode)
+                //TODO: implement default node
+                .orElse(null);
     }
 
+    private boolean branchEvaluatesToTrue(final Branch branch){
+        return branch.getPredicate().evaluate(this.gameState);
+    }
 }
