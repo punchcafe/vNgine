@@ -2,9 +2,15 @@ package dev.punchcafe.vngine.pom.model.vngpl.variable.bool;
 
 import dev.punchcafe.vngine.pom.model.vngpl.GameVariableLevelUtil;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
 
-@Builder
+@AllArgsConstructor
+@EqualsAndHashCode
+@Getter
+@ToString
 public class BoolGameVariable implements BooleanVariable {
 
     private static final String BOOL_VARIABLE_PREFIX = "bool";

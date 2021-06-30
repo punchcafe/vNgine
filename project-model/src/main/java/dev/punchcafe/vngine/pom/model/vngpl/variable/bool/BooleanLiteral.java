@@ -3,7 +3,9 @@ package dev.punchcafe.vngine.pom.model.vngpl.variable.bool;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class BooleanLiteral implements BooleanVariable {
+public enum BooleanLiteral implements BooleanVariable {
+
+    TRUE(true), FALSE(false);
 
     private static String VNGS_SCHEMA_BOOLEAN_LITERAL_TEMPLATE = "%b";
 

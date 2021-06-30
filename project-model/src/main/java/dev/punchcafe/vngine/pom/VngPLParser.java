@@ -2,6 +2,9 @@ package dev.punchcafe.vngine.pom;
 
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerVariable;
@@ -9,6 +12,7 @@ import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringVariable;
 
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -58,6 +62,29 @@ public class VngPLParser {
         }
         final var variableScope = parseGameVariableLevel(matcher.group(1).charAt(0));
         return new StringGameVariable(variableScope, matcher.group(2));
+    }
+
+    public static BooleanVariable parseAtomicBooleanVariable(final String atomicBooleanVariable){
+        final var trimmedString = atomicBooleanVariable.trim();
+        final var optionalLiteral = extractLiteralIfExists(trimmedString);
+        if(optionalLiteral.isPresent()){
+            return optionalLiteral.get();
+        }
+        final var matcher = BOOLEAN_VARIABLE_PATTERN.matcher(trimmedString);
+        if(!matcher.matches()){
+            throw new InvalidVngplExpression();
+        }
+        final var variableScope = parseGameVariableLevel(matcher.group(1).charAt(0));
+        return new BoolGameVariable(variableScope, matcher.group(2));
+    }
+
+    private static Optional<BooleanLiteral> extractLiteralIfExists(final String potentialBooleanLiteral){
+        if(potentialBooleanLiteral.equals("true")){
+            return Optional.of(BooleanLiteral.TRUE);
+        } else if(potentialBooleanLiteral.equals("false")) {
+            return Optional.of(BooleanLiteral.FALSE);
+        }
+        return Optional.empty();
     }
 
     private static boolean isStringLiteral(final String string){

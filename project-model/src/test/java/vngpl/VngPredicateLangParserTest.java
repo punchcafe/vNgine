@@ -3,6 +3,8 @@ package vngpl;
 import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.VngPLParser;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringGameVariable;
@@ -86,5 +88,43 @@ public class VngPredicateLangParserTest {
     void shouldNotParseStringLiteralIfNoQuotes(){
         final var expression = "my_variable";
         assertThrows(InvalidVngplExpression.class, () -> VngPLParser.parseAtomicStringVariable(expression));
+    }
+
+    @Test
+    void shouldParseBooleanGameVariable(){
+        final var expression = "$bool.my_variable";
+        final var expectedObject = new BoolGameVariable(GameVariableLevel.GAME, "my_variable");
+        assertEquals(expectedObject, VngPLParser.parseAtomicBooleanVariable(expression));
+    }
+
+    @Test
+    void shouldParseBooleanChapterVariable(){
+        final var expression = "@bool.my_variable";
+        final var expectedObject = new BoolGameVariable(GameVariableLevel.CHAPTER, "my_variable");
+        assertEquals(expectedObject, VngPLParser.parseAtomicBooleanVariable(expression));
+    }
+
+    @Test
+    void shouldParseTrueBooleanLiteral(){
+        final var expression = "true";
+        assertEquals(BooleanLiteral.TRUE, VngPLParser.parseAtomicBooleanVariable(expression));
+    }
+
+    @Test
+    void shouldParseFalseBooleanLiteral(){
+        final var expression = "false";
+        assertEquals(BooleanLiteral.FALSE, VngPLParser.parseAtomicBooleanVariable(expression));
+    }
+
+    @Test
+    void shouldParseFalseBooleanLiteralWithWhitespace(){
+        final var expression = " false   ";
+        assertEquals(BooleanLiteral.FALSE, VngPLParser.parseAtomicBooleanVariable(expression));
+    }
+
+    @Test
+    void shouldNotParseNonsenseBooleanLiteral(){
+        final var expression = "kuehdkwube";
+        assertThrows(InvalidVngplExpression.class, () -> VngPLParser.parseAtomicBooleanVariable(expression));
     }
 }
