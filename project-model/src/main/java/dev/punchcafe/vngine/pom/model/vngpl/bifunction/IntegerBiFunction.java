@@ -1,7 +1,7 @@
-package dev.punchcafe.vngine.pom.model.vngsl.bifunction;
+package dev.punchcafe.vngine.pom.model.vngpl.bifunction;
 
-import dev.punchcafe.vngine.pom.model.vngsl.PredicateExpression;
-import dev.punchcafe.vngine.pom.model.vngsl.variable.integer.IntegerVariable;
+import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerVariable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package dev.punchcafe.vngine.pom.model.vngsl.variable.bool;
+package dev.punchcafe.vngine.pom.model.vngpl.variable.bool;
 
 import lombok.AllArgsConstructor;
 

@@ -1,6 +1,6 @@
-package dev.punchcafe.vngine.pom.model.vngsl;
+package dev.punchcafe.vngine.pom.model.vngpl;
 
-import dev.punchcafe.vngine.pom.model.vngsl.variable.GameVariableLevel;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 
 public class GameVariableLevelUtil {
     public static String getGameVariableLevelPrefix(final GameVariableLevel level){

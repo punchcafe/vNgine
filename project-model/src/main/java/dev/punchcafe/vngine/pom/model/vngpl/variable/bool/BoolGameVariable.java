@@ -1,7 +1,7 @@
-package dev.punchcafe.vngine.pom.model.vngsl.variable.bool;
+package dev.punchcafe.vngine.pom.model.vngpl.variable.bool;
 
-import dev.punchcafe.vngine.pom.model.vngsl.GameVariableLevelUtil;
-import dev.punchcafe.vngine.pom.model.vngsl.variable.GameVariableLevel;
+import dev.punchcafe.vngine.pom.model.vngpl.GameVariableLevelUtil;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import lombok.Builder;
 
 @Builder

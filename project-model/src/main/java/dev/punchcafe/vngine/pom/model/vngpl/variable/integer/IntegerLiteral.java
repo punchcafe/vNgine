@@ -1,6 +1,5 @@
-package dev.punchcafe.vngine.pom.model.vngsl.variable.integer;
+package dev.punchcafe.vngine.pom.model.vngpl.variable.integer;
 
-import dev.punchcafe.vngine.pom.model.vngsl.variable.Variable;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

@@ -1,8 +1,7 @@
-package dev.punchcafe.vngine.pom.model.vngsl.bifunction;
+package dev.punchcafe.vngine.pom.model.vngpl.bifunction;
 
-import dev.punchcafe.vngine.pom.model.vngsl.PredicateExpression;
-import dev.punchcafe.vngine.pom.model.vngsl.variable.bool.BooleanVariable;
-import dev.punchcafe.vngine.pom.model.vngsl.variable.string.StringVariable;
+import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
+import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanVariable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

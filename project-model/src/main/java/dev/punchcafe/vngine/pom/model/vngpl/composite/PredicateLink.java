@@ -1,6 +1,6 @@
-package dev.punchcafe.vngine.pom.model.vngsl.composite;
+package dev.punchcafe.vngine.pom.model.vngpl.composite;
 
-import dev.punchcafe.vngine.pom.model.vngsl.PredicateExpression;
+import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
