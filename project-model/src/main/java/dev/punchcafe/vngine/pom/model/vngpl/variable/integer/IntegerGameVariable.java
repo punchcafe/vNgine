@@ -2,12 +2,17 @@ package dev.punchcafe.vngine.pom.model.vngpl.variable.integer;
 
 import dev.punchcafe.vngine.pom.model.vngpl.GameVariableLevelUtil;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-@Builder
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class IntegerGameVariable implements IntegerVariable {
 
-    private static final String INT_VARIABLE_PREFIX = "int";
+    private static final String INT_VARIABLE_PREFIX = "int.";
 
     private final GameVariableLevel gameVariableLevel;
     private final String variableName;
