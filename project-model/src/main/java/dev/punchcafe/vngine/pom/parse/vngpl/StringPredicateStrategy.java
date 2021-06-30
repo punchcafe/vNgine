@@ -3,16 +3,17 @@ package dev.punchcafe.vngine.pom.parse.vngpl;
 import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.VngPLParser;
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
-import dev.punchcafe.vngine.pom.model.vngpl.bifunction.BooleanBiFunction;
 import dev.punchcafe.vngine.pom.model.vngpl.bifunction.StringBiFunction;
-import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringVariable;
-import lombok.Builder;
 
+import java.util.List;
 import java.util.regex.Pattern;
+
+import static dev.punchcafe.vngine.pom.parse.vngpl.Utils.messageStartsWithAnyOf;
 
 public class StringPredicateStrategy implements ParsingStrategy {
 
     private static Pattern STRING_PREDICATE_PATTERN = Pattern.compile("^ *([\\$@]str\\.[^ ]+|'.+') +(is|isn't|isnt) +([\\$@]str\\.[^ ]+|'.+') *$");
+    private static List<String> STRING_VARIABLE_PREFIXES = List.of("@str.", "str.", "'");
 
     @Override
     public PredicateExpression parse(String message, PredicateParser predicateParser) {
@@ -32,7 +33,7 @@ public class StringPredicateStrategy implements ParsingStrategy {
 
     @Override
     public boolean isApplicable(String message) {
-        return message.trim().startsWith("'") || message.trim().startsWith("$str.") || message.trim().startsWith("@str.");
+        return messageStartsWithAnyOf(message, STRING_VARIABLE_PREFIXES);
     }
 
     @Override

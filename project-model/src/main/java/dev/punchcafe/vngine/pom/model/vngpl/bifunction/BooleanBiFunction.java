@@ -2,12 +2,12 @@ package dev.punchcafe.vngine.pom.model.vngpl.bifunction;
 
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanVariable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode
+@ToString
 public class BooleanBiFunction implements PredicateExpression {
 
     enum Operation{
