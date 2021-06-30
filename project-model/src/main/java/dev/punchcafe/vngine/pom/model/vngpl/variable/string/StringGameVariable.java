@@ -3,12 +3,13 @@ package dev.punchcafe.vngine.pom.model.vngpl.variable.string;
 import dev.punchcafe.vngine.pom.model.vngpl.GameVariableLevelUtil;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.Variable;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 
-@Builder
-public class StringGameVariable implements Variable {
+@AllArgsConstructor
+public class StringGameVariable implements StringVariable {
 
-    private static final String STRING_VARIABLE_PREFIX = "str";
+    private static final String STRING_VARIABLE_PREFIX = "str.";
 
     private final GameVariableLevel gameVariableLevel;
     private final String variableName;

@@ -1,8 +1,12 @@
 package dev.punchcafe.vngine.pom.model.vngpl.variable.integer;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class IntegerLiteral implements IntegerVariable {
 
     private static String VNGS_SCHEMA_INTEGER_LITERAL_TEMPLATE = "%d";

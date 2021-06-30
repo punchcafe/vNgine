@@ -1,10 +1,9 @@
 package dev.punchcafe.vngine.pom.model.vngpl.variable.string;
 
-import dev.punchcafe.vngine.pom.model.vngpl.variable.Variable;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class StringLiteral implements Variable {
+public class StringLiteral implements StringVariable {
 
     private static String VNGS_SCHEMA_STRING_LITERAL_TEMPLATE = "'%s'";
 
