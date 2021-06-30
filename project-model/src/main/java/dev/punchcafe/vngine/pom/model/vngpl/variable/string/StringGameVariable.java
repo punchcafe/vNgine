@@ -5,8 +5,12 @@ import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.Variable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class StringGameVariable implements StringVariable {
 
     private static final String STRING_VARIABLE_PREFIX = "str.";

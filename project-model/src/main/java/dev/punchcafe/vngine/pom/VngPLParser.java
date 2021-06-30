@@ -45,13 +45,14 @@ public class VngPLParser {
     }
 
     public static StringVariable parseAtomicStringVariable(final String atomicStringVariable){
-        if(!stringStartsWithChapterOrGlobalVariableSymbol(atomicStringVariable)){
-            if(!isStringLiteral(atomicStringVariable)){
+        final var trimmedString = atomicStringVariable.trim();
+        if(!stringStartsWithChapterOrGlobalVariableSymbol(trimmedString)){
+            if(!isStringLiteral(trimmedString)){
                 throw new InvalidVngplExpression();
             }
-            return new StringLiteral(atomicStringVariable.substring(1, atomicStringVariable.length() - 1));
+            return new StringLiteral(trimmedString.substring(1, trimmedString.length() - 1));
         }
-        final var matcher = STRING_VARIABLE_PATTERN.matcher(atomicStringVariable);
+        final var matcher = STRING_VARIABLE_PATTERN.matcher(trimmedString);
         if(!matcher.matches()){
             throw new InvalidVngplExpression();
         }
