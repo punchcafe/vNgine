@@ -1,6 +1,7 @@
 package dev.punchcafe.vngine.pom.model.vngpl.variable.integer;
 
 import dev.punchcafe.vngine.pom.model.vngpl.GameVariableLevelUtil;
+import dev.punchcafe.vngine.pom.model.vngpl.VariableVisitor;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,10 @@ public class IntegerGameVariable implements IntegerVariable {
         return GameVariableLevelUtil.getGameVariableLevelPrefix(this.gameVariableLevel)
                 + INT_VARIABLE_PREFIX
                 + this.variableName;
+    }
+
+    @Override
+    public <T> T acceptVisitor(VariableVisitor<T> visitor) {
+        return visitor.visitIntegerGameVariable(this);
     }
 }

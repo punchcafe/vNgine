@@ -1,6 +1,7 @@
 package dev.punchcafe.vngine.pom.model.vngpl.variable.string;
 
 import dev.punchcafe.vngine.pom.model.vngpl.GameVariableLevelUtil;
+import dev.punchcafe.vngine.pom.model.vngpl.VariableVisitor;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.Variable;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,10 @@ public class StringGameVariable implements StringVariable {
         return GameVariableLevelUtil.getGameVariableLevelPrefix(this.gameVariableLevel)
                 + STRING_VARIABLE_PREFIX
                 + this.variableName;
+    }
+
+    @Override
+    public <T> T acceptVisitor(VariableVisitor<T> visitor) {
+        return visitor.visitStringGameVariable(this);
     }
 }
