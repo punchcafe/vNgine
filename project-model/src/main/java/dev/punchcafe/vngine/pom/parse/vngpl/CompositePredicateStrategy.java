@@ -1,5 +1,6 @@
 package dev.punchcafe.vngine.pom.parse.vngpl;
 
+import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.composite.AndOrOperation;
 import dev.punchcafe.vngine.pom.model.vngpl.composite.CompositeExpression;
@@ -15,6 +16,7 @@ public class CompositePredicateStrategy implements ParsingStrategy {
 
     @Override
     public PredicateExpression parse(String message, PredicateParser predicateParser) {
+        final String trimmedMessage = message.trim();
         final List<PredicateLink> links = new ArrayList<>();
         int bracketScope = 0;
         Integer linkStart = null;
@@ -38,6 +40,8 @@ public class CompositePredicateStrategy implements ParsingStrategy {
             } else if (message.substring(i).startsWith(OR_JOINER) && bracketScope == 0) {
                 if (linkStart != null) {
                     links.add(PredicateLink.newLink(predicateParser.parse(message.substring(linkStart, i)), currentJoinOperation));
+                } else {
+                    links.add(PredicateLink.firstLink(predicateParser.parse(message.substring(0, i))));
                 }
                 currentJoinOperation = AndOrOperation.OR;
                 linkStart = i + OR_JOINER.length();
@@ -46,8 +50,13 @@ public class CompositePredicateStrategy implements ParsingStrategy {
             }
             i++;
         }
-        links.add(PredicateLink.newLink(predicateParser.parse(message.substring(linkStart)), currentJoinOperation));
-        return CompositeExpression.fromLinks(links);
+        if(!links.isEmpty()){
+            links.add(PredicateLink.newLink(predicateParser.parse(message.substring(linkStart)), currentJoinOperation));
+            return CompositeExpression.fromLinks(links);
+        } else if(trimmedMessage.startsWith("(") && trimmedMessage.endsWith(")")){
+            return parse(trimmedMessage.substring(1,trimmedMessage.length()-1), predicateParser);
+        }
+        throw new InvalidVngplExpression();
     }
 
     @Override
