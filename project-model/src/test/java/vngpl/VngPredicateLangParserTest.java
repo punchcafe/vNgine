@@ -2,7 +2,6 @@ package vngpl;
 
 import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.VngPLParser;
-import dev.punchcafe.vngine.pom.model.vngpl.bifunction.StringBiFunction;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
@@ -10,31 +9,12 @@ import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerGameVariable
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringLiteral;
-import dev.punchcafe.vngine.pom.parse.vngpl.PredicateParser;
-import dev.punchcafe.vngine.pom.parse.vngpl.StringPredicateStrategy;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VngPredicateLangParserTest {
-
-    private PredicateParser parser;
-
-    @BeforeEach
-    void beforeEach() {
-        parser = new PredicateParser(List.of(new StringPredicateStrategy()));
-    }
-
-    @Test
-    void canParseStringPredicates() {
-        final var expression = "'my_string' is 'mystring'";
-        final var expectedObject = StringBiFunction.is(new StringLiteral("my_string"), new StringLiteral("mystring"));
-        assertEquals(expectedObject, parser.parse(expression));
-    }
 
     @Test
     void shouldParseIntegerGameVariable() {

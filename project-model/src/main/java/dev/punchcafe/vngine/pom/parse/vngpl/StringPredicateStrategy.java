@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class StringPredicateStrategy implements ParsingStrategy {
 
-    private static Pattern STRING_PREDICATE_PATTERN = Pattern.compile("^ *([\\$@]str\\.|'[^ ]+') +(is|isn't|isnt) +([\\$@]str\\.|'[^ ]+') *$");
+    private static Pattern STRING_PREDICATE_PATTERN = Pattern.compile("^ *([\\$@]str\\.[^ ]+|'.+') +(is|isn't|isnt) +([\\$@]str\\.[^ ]+|'.+') *$");
 
     @Override
     public PredicateExpression parse(String message, PredicateParser predicateParser) {
