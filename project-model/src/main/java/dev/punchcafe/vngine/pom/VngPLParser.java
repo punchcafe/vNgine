@@ -24,10 +24,6 @@ public class VngPLParser {
     private static Pattern STRING_VARIABLE_PATTERN = Pattern.compile("^(@|\\$)str\\.([^ ]+)+$");
     private static Pattern BOOLEAN_VARIABLE_PATTERN = Pattern.compile("^(@|\\$)bool\\.([^ ]+)+$");
 
-    public PredicateExpression parseExpression(final String expression){
-        return null;
-    }
-
     /**
      * @param atomicIntegerPredicate predicate of form "some_variable more_than other_variable"
      * @return

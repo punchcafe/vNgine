@@ -2,15 +2,15 @@ package dev.punchcafe.vngine.pom.model.vngpl.bifunction;
 
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerVariable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class IntegerBiFunction implements PredicateExpression {
 
-    enum Operation{
+    public enum Operation{
         LESS_THAN, MORE_THAN, EQUALS
     }
 
