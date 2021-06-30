@@ -1,6 +1,7 @@
 package dev.punchcafe.vngine.pom.model.vngpl.composite;
 
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
+import dev.punchcafe.vngine.pom.model.vngpl.PredicateVisitor;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -21,5 +22,10 @@ public class CompositeExpression implements PredicateExpression {
     @Override
     public String asVngQL() {
         return null;
+    }
+
+    @Override
+    public <T> T acceptPredicateVisitor(PredicateVisitor<T> visitor) {
+        return visitor.visitCompositeExpression(this);
     }
 }

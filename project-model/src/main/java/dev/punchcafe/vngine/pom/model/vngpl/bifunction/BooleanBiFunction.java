@@ -1,6 +1,7 @@
 package dev.punchcafe.vngine.pom.model.vngpl.bifunction;
 
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
+import dev.punchcafe.vngine.pom.model.vngpl.PredicateVisitor;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanVariable;
 import lombok.*;
 
@@ -9,6 +10,11 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class BooleanBiFunction implements PredicateExpression {
+
+    @Override
+    public <T> T acceptPredicateVisitor(PredicateVisitor<T> visitor) {
+        return visitor.visitBooleanBiFunction(this);
+    }
 
     enum Operation{
         IS, ISNT
