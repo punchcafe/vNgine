@@ -1,13 +1,13 @@
 package dev.punchcafe.vngine.pom.model.vngpl.composite;
 
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import java.util.Optional;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@EqualsAndHashCode
+@ToString
 public class PredicateLink {
 
     public static PredicateLink firstLink(@NonNull final PredicateExpression expression){

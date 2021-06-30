@@ -37,7 +37,7 @@ public class IntegerPredicateStrategy implements ParsingStrategy {
 
     @Override
     public Integer priority() {
-        return 0;
+        return 1;
     }
 
     private IntegerBiFunction.Operation extractOperation(final String operationString) {

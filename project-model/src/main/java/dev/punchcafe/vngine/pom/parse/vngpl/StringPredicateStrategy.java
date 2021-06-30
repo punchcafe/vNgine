@@ -38,6 +38,6 @@ public class StringPredicateStrategy implements ParsingStrategy {
 
     @Override
     public Integer priority() {
-        return 0;
+        return 1;
     }
 }
