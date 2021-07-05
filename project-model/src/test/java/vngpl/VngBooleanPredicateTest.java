@@ -2,19 +2,14 @@ package vngpl;
 
 import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.bifunction.BooleanBiFunction;
-import dev.punchcafe.vngine.pom.model.vngpl.bifunction.StringBiFunction;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
-import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringGameVariable;
-import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringLiteral;
 import dev.punchcafe.vngine.pom.parse.vngpl.BooleanPredicateStrategy;
 import dev.punchcafe.vngine.pom.parse.vngpl.PredicateParser;
 import dev.punchcafe.vngine.pom.parse.vngpl.StringPredicateStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,7 +20,7 @@ public class VngBooleanPredicateTest {
 
     @BeforeEach
     void beforeEach() {
-        parser = new PredicateParser(List.of(new BooleanPredicateStrategy()));
+        parser = PredicateParser.withStrategies(new BooleanPredicateStrategy());
     }
 
     @Test

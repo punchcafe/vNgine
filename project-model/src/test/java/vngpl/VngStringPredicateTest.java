@@ -10,8 +10,6 @@ import dev.punchcafe.vngine.pom.parse.vngpl.StringPredicateStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -21,7 +19,7 @@ public class VngStringPredicateTest {
 
     @BeforeEach
     void beforeEach() {
-        parser = new PredicateParser(List.of(new StringPredicateStrategy()));
+        parser = PredicateParser.withStrategies(new StringPredicateStrategy());
     }
 
     @Test

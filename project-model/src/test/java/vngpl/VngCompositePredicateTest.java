@@ -23,10 +23,7 @@ public class VngCompositePredicateTest {
 
     @BeforeEach
     void beforeEach() {
-        parser = new PredicateParser(List.of(new CompositePredicateStrategy(),
-                new BooleanPredicateStrategy(),
-                new IntegerPredicateStrategy(),
-                new StringPredicateStrategy()));
+        parser = PredicateParser.defaultParser();
     }
 
     @Test

@@ -13,7 +13,7 @@ import static dev.punchcafe.vngine.pom.parse.vngpl.Utils.messageStartsWithAnyOf;
 public class StringPredicateStrategy implements ParsingStrategy {
 
     private static Pattern STRING_PREDICATE_PATTERN = Pattern.compile("^ *([\\$@]str\\.[^ ]+|'.+') +(is|isn't|isnt) +([\\$@]str\\.[^ ]+|'.+') *$");
-    private static List<String> STRING_VARIABLE_PREFIXES = List.of("@str.", "str.", "'");
+    private static List<String> STRING_VARIABLE_PREFIXES = List.of("@str.", "$str.", "'");
 
     @Override
     public PredicateExpression parse(String message, PredicateParser predicateParser) {
@@ -33,7 +33,7 @@ public class StringPredicateStrategy implements ParsingStrategy {
 
     @Override
     public boolean isApplicable(String message) {
-        return messageStartsWithAnyOf(message, STRING_VARIABLE_PREFIXES);
+        return messageStartsWithAnyOf(message.trim(), STRING_VARIABLE_PREFIXES);
     }
 
     @Override

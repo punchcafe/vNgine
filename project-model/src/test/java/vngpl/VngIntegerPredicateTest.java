@@ -25,7 +25,7 @@ public class VngIntegerPredicateTest {
 
     @BeforeEach
     void beforeEach() {
-        parser = new PredicateParser(List.of(new IntegerPredicateStrategy()));
+        parser = PredicateParser.withStrategies(new IntegerPredicateStrategy());
     }
 
     @Test

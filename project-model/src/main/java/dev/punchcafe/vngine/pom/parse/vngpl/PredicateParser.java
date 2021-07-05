@@ -3,14 +3,26 @@ package dev.punchcafe.vngine.pom.parse.vngpl;
 import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PredicateParser {
+
+    public static PredicateParser defaultParser(){
+        return new PredicateParser(List.of(new CompositePredicateStrategy(),
+                new BooleanPredicateStrategy(),
+                new IntegerPredicateStrategy(),
+                new StringPredicateStrategy()));
+    }
+
+    public static PredicateParser withStrategies(ParsingStrategy... strategies){
+        return new PredicateParser(Arrays.asList(strategies));
+    }
     private final List<ParsingStrategy> parsingStrategies;
 
-    public PredicateParser(final List<ParsingStrategy> strategies){
+    private PredicateParser(final List<ParsingStrategy> strategies){
         parsingStrategies = strategies.stream()
                 .sorted(Comparator.comparing(ParsingStrategy::priority))
                 .collect(Collectors.toUnmodifiableList());
