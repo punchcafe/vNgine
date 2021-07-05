@@ -1,14 +1,11 @@
 package vngpl;
 
-import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.bifunction.BooleanBiFunction;
 import dev.punchcafe.vngine.pom.model.vngpl.bifunction.IntegerBiFunction;
 import dev.punchcafe.vngine.pom.model.vngpl.bifunction.StringBiFunction;
 import dev.punchcafe.vngine.pom.model.vngpl.composite.AndOrOperation;
 import dev.punchcafe.vngine.pom.model.vngpl.composite.CompositeExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.composite.PredicateLink;
-import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
-import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringLiteral;
@@ -19,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VngCompositePredicateTest {
 
