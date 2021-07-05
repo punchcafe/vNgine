@@ -10,11 +10,13 @@ import java.util.stream.Collectors;
 
 public class PredicateParser {
 
+    private static final PredicateParser DEFAULT_PARSER = new PredicateParser(List.of(new CompositePredicateStrategy(),
+            new BooleanPredicateStrategy(),
+            new IntegerPredicateStrategy(),
+            new StringPredicateStrategy()));
+
     public static PredicateParser defaultParser(){
-        return new PredicateParser(List.of(new CompositePredicateStrategy(),
-                new BooleanPredicateStrategy(),
-                new IntegerPredicateStrategy(),
-                new StringPredicateStrategy()));
+        return DEFAULT_PARSER;
     }
 
     public static PredicateParser withStrategies(ParsingStrategy... strategies){
