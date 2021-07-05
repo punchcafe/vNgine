@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class BoolGameVariable implements BooleanVariable {
 
-    private static final String BOOL_VARIABLE_PREFIX = "bool";
+    private static final String BOOL_VARIABLE_PREFIX = "bool.";
 
     private final GameVariableLevel gameVariableLevel;
     private final String variableName;

@@ -65,7 +65,7 @@ public class GameStateMutationExpressionParser {
     }
 
     private Optional<DecreaseIntegerMutation> parseDecreaseIntegerExpression(final String expression){
-        final var matcher = INCREASE_INT_VARIABLE_PATTERN.matcher(expression);
+        final var matcher = DECREASE_INT_VARIABLE_PATTERN.matcher(expression);
         if(matcher.matches()){
             final var variable = new IntegerGameVariable(parseGameVariableLevel(matcher.group(1).charAt(0)),
                     matcher.group(2));
