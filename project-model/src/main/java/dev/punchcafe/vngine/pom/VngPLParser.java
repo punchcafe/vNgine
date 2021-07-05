@@ -1,7 +1,5 @@
 package dev.punchcafe.vngine.pom;
 
-import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
-import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanVariable;
@@ -14,6 +12,8 @@ import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringVariable;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
+
+import static dev.punchcafe.vngine.pom.parse.Utils.parseGameVariableLevel;
 
 /**
  * Utility class for parsing the vNgine Predicate Language into it's POM model.
@@ -86,15 +86,6 @@ public class VngPLParser {
     private static boolean isStringLiteral(final String string){
         final var trimmedString = string.trim();
         return trimmedString.startsWith("'") && trimmedString.endsWith("'");
-    }
-
-    public static GameVariableLevel parseGameVariableLevel(final char symbol){
-        if(symbol == '@'){
-            return GameVariableLevel.CHAPTER;
-        } else if (symbol == '$') {
-            return GameVariableLevel.GAME;
-        }
-        else throw new InvalidVngplExpression();
     }
 
     public static boolean stringStartsWithChapterOrGlobalVariableSymbol(final String string){

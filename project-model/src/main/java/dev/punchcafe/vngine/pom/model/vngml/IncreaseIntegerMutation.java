@@ -2,11 +2,11 @@ package dev.punchcafe.vngine.pom.model.vngml;
 
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerLiteral;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class IncreaseIntegerMutation implements GameStateMutationExpression {
     private IntegerGameVariable variableToModify;
     private IntegerLiteral increaseBy;

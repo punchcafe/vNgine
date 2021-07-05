@@ -2,11 +2,11 @@ package dev.punchcafe.vngine.pom.model.vngml;
 
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
+@Builder
 public class SetBooleanMutation implements GameStateMutationExpression {
     private BoolGameVariable variableToMutate;
     // TODO: consider allowing this to be other game variables

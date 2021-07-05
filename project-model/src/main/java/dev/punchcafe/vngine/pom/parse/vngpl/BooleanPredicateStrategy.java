@@ -4,12 +4,11 @@ import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.VngPLParser;
 import dev.punchcafe.vngine.pom.model.vngpl.PredicateExpression;
 import dev.punchcafe.vngine.pom.model.vngpl.bifunction.BooleanBiFunction;
-import dev.punchcafe.vngine.pom.model.vngpl.bifunction.StringBiFunction;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static dev.punchcafe.vngine.pom.parse.vngpl.Utils.messageStartsWithAnyOf;
+import static dev.punchcafe.vngine.pom.parse.Utils.messageStartsWithAnyOf;
 
 public class BooleanPredicateStrategy implements ParsingStrategy {
 
