@@ -12,10 +12,12 @@ import dev.punchcafe.vngine.pom.model.vngpl.variable.integer.IntegerLiteral;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.string.StringLiteral;
 import dev.punchcafe.vngine.pom.parse.vngml.GameStateMutationExpressionParser;
+import dev.punchcafe.vngine.pom.parse.vngml.InvalidVngmlExpression;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class VngMutationParserTest {
 
@@ -69,6 +71,24 @@ public class VngMutationParserTest {
     }
 
     @Test
+    void shouldThrowInvalidVngExceptionWhenMismatchOfLiteralsOnChapterLevelIntegerIncrease(){
+        final var expression = "increase @int.my_integer_var by false";
+        assertThrows(InvalidVngmlExpression.class, () -> parser.parseExpression(expression));
+    }
+
+    @Test
+    void shouldThrowInvalidVngExceptionWhenMismatchOfLiteralsOnGameLevelIntegerIncrease(){
+        final var expression = "increase $int.my_integer_var by 'hello world'";
+        assertThrows(InvalidVngmlExpression.class, () -> parser.parseExpression(expression));
+    }
+
+    @Test
+    void shouldThrowInvalidVngExceptionWhenMismatchOfOperationOnGameLevelIntegerIncrease(){
+        final var expression = "increase $int.my_integer_var to 5";
+        assertThrows(InvalidVngmlExpression.class, () -> parser.parseExpression(expression));
+    }
+
+    @Test
     void shouldParseDecreaseGameLevelIntegerMutation(){
         final var expression = "decrease $int.my_integer_var by 5";
         final var expectedMutation = DecreaseIntegerMutation.builder()
@@ -108,6 +128,24 @@ public class VngMutationParserTest {
                 .variableToModify(new IntegerGameVariable(GameVariableLevel.CHAPTER, "my_integer_var"))
                 .build();
         assertEquals(expectedExpression, mutation.asVngQL());
+    }
+
+    @Test
+    void shouldThrowInvalidVngExceptionWhenMismatchOfLiteralsOnChapterLevelIntegerDecrease(){
+        final var expression = "decrease @int.my_integer_var by false";
+        assertThrows(InvalidVngmlExpression.class, () -> parser.parseExpression(expression));
+    }
+
+    @Test
+    void shouldThrowInvalidVngExceptionWhenMismatchOfLiteralsOnGameLevelIntegerDecrease(){
+        final var expression = "decrease $int.my_integer_var by 'hello world'";
+        assertThrows(InvalidVngmlExpression.class, () -> parser.parseExpression(expression));
+    }
+
+    @Test
+    void shouldThrowInvalidVngExceptionWhenMismatchOfOperationOnGameLevelIntegerDecrease(){
+        final var expression = "decrease $int.my_integer_var to 5";
+        assertThrows(InvalidVngmlExpression.class, () -> parser.parseExpression(expression));
     }
 
     @Test
@@ -152,9 +190,6 @@ public class VngMutationParserTest {
         assertEquals(expectedExpression, mutation.asVngQL());
     }
 
-    // NEXT
-
-
     @Test
     void shouldParseSetGameLevelBooleanMutation(){
         final var expression = "set $bool.my_bool to false";
@@ -196,5 +231,4 @@ public class VngMutationParserTest {
                 .build();
         assertEquals(expectedExpression, mutation.asVngQL());
     }
-
 }

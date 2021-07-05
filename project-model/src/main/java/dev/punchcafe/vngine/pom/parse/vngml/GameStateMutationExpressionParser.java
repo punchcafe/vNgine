@@ -1,6 +1,5 @@
 package dev.punchcafe.vngine.pom.parse.vngml;
 
-import dev.punchcafe.vngine.pom.InvalidVngplExpression;
 import dev.punchcafe.vngine.pom.model.vngml.*;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BoolGameVariable;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.bool.BooleanLiteral;
@@ -32,7 +31,7 @@ public class GameStateMutationExpressionParser {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .findAny()
-                .orElseThrow(InvalidVngplExpression::new);
+                .orElseThrow(InvalidVngmlExpression::new);
     }
 
     private Optional<SetStringMutation> parseSetStringExpression(final String expression){
