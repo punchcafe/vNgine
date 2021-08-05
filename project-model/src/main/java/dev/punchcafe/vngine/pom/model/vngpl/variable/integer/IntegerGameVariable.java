@@ -3,11 +3,9 @@ package dev.punchcafe.vngine.pom.model.vngpl.variable.integer;
 import dev.punchcafe.vngine.pom.model.vngpl.GameVariableLevelUtil;
 import dev.punchcafe.vngine.pom.model.vngpl.VariableVisitor;
 import dev.punchcafe.vngine.pom.model.vngpl.variable.GameVariableLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
+@Getter
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString

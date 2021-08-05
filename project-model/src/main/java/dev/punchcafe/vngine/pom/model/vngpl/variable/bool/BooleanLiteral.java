@@ -2,8 +2,10 @@ package dev.punchcafe.vngine.pom.model.vngpl.variable.bool;
 
 import dev.punchcafe.vngine.pom.model.vngpl.VariableVisitor;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
 public enum BooleanLiteral implements BooleanVariable {
 
     TRUE(true), FALSE(false);

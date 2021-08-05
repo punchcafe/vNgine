@@ -16,7 +16,7 @@ public class StringBiFunction implements PredicateExpression {
         return visitor.visitStringBiFunction(this);
     }
 
-    enum Operation{
+    public enum Operation{
         IS, ISNT
     }
 

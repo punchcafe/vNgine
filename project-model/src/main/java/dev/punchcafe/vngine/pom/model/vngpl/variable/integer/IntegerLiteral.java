@@ -3,11 +3,13 @@ package dev.punchcafe.vngine.pom.model.vngpl.variable.integer;
 import dev.punchcafe.vngine.pom.model.vngpl.VariableVisitor;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.ToString;
 
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Getter
 public class IntegerLiteral implements IntegerVariable {
 
     private static String VNGS_SCHEMA_INTEGER_LITERAL_TEMPLATE = "%d";

@@ -20,7 +20,7 @@ public class PredicateLink {
     }
 
     private final AndOrOperation operation;
-    private final PredicateExpression predicateExpression;
+    @Getter private final PredicateExpression predicateExpression;
 
     public Optional<AndOrOperation> connectionOperation(){
         return Optional.ofNullable(operation);

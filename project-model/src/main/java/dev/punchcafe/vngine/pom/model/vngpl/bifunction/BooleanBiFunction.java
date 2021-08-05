@@ -16,7 +16,7 @@ public class BooleanBiFunction implements PredicateExpression {
         return visitor.visitBooleanBiFunction(this);
     }
 
-    enum Operation{
+    public enum Operation{
         IS, ISNT
     }
 
