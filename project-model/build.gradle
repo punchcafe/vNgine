@@ -9,6 +9,10 @@ repositories {
     mavenLocal()
 }
 
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
 publishing {
     publications {
         maven(MavenPublication) {
